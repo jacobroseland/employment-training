@@ -1,0 +1,105 @@
+.exercise-card {
+  /* Creates a flexible layout for the card's content. */
+  display: flex;
+  /* Stacks the title, description, status, and action vertically. */
+  flex-direction: column;
+  /* Adds consistent space between card content pieces. */
+  gap: 0.75rem;
+  /* Makes cards fill their grid cells to match row heights. */
+  height: 100%;
+  /* Gives card content comfortable internal spacing. */
+  padding: 1.25rem;
+  /* Rounds card corners for a softer surface. */
+  border-radius: 0.75rem;
+
+  border: 1px solid transparent;
+  /* Layers an inner bevel, dimensional card surface, and gradient border. */
+  background:
+    linear-gradient(
+        135deg,
+        rgb(255 255 255 / 95%) 0%,
+        transparent 28%,
+        transparent 68%,
+        rgb(15 23 42 / 14%) 100%
+      )
+      padding-box,
+    linear-gradient(145deg, #ffffff 0%, #f8fafc 48%, #e0e7ff 100%) padding-box,
+    linear-gradient(135deg, #bfdbfe, #e9d5ff, #fde68a) border-box;
+
+  /* Combines outer elevation with a more noticeable beveled inner edge. */
+  box-shadow:
+    0 3px 6px rgb(15 23 42 / 10%),
+    0 20px 36px rgb(15 23 42 / 16%),
+    inset 3px 3px 7px rgb(255 255 255 / 90%),
+    inset -4px -4px 9px rgb(15 23 42 / 12%);
+
+  > h3 {
+    /* Removes the browser's default heading spacing. */
+    margin: 0;
+    /* Establishes a clear card-title hierarchy. */
+    font-size: 1.25rem;
+  }
+
+  > p {
+    /* Lets the card's flex gap control paragraph spacing. */
+    margin: 0;
+  }
+
+  > .open {
+    /* Makes the action button span the card's available width. */
+    align-self: stretch;
+    /* Pushes the action to the card bottom when card heights differ. */
+    margin-top: auto;
+    /* Creates a comfortably clickable button area. */
+    padding: 0.5rem 0.75rem;
+    /* Defines the button edge using its dark action color. */
+    border: 1px solid #1a1a1a;
+    /* Matches the app's small rounded-control style. */
+    border-radius: 8px;
+    /* Makes the primary action visually prominent. */
+    background-color: #1a1a1a;
+    /* Provides high-contrast button-label text. */
+    color: #ffffff;
+    /* Signals that the action is clickable. */
+    cursor: pointer;
+
+    &:hover {
+      /* Lightens the button slightly during pointer hover. */
+      background-color: #3d3d3d;
+    }
+
+    &:focus-visible {
+      /* Draws a clear keyboard-focus indicator. */
+      outline: 2px solid #1a1a1a;
+      /* Separates the focus indicator from the button edge. */
+      outline-offset: 2px;
+    }
+  }
+
+  .exercise-card-status {
+    /* Keeps the status badge only as wide as its label. */
+    align-self: flex-start;
+    /* Creates compact space around the status text. */
+    padding: 0.25rem 0.5rem;
+    /* Produces a pill-shaped status badge. */
+    border-radius: 999px;
+    /* Makes supporting status text smaller than the title. */
+    font-size: 0.875rem;
+    /* Gives the status enough emphasis to scan quickly. */
+    font-weight: 600;
+
+    &.available {
+      /* Uses dark green text for the positive available state. */
+      color: #166534;
+      /* Uses a pale green badge background for that state. */
+      background-color: #dcfce7;
+    }
+
+    &.coming-soon {
+      /* Uses dark amber text for the planned state. */
+      color: #92400e;
+      /* Uses a pale amber badge background for that state. */
+      background-color: #fef3c7;
+    }
+  }
+}

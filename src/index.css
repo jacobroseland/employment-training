@@ -1,0 +1,63 @@
+:root {
+  /* Defines the default readable text color for the app. */
+  --color-text: #1a1a1a;
+  /* Defines the shared page background color. */
+  --color-page-background: #ffffff;
+
+  /* Lets text inherit the app's default text color. */
+  color: var(--color-text);
+  /* Paints the page with the shared background. */
+  background-color: var(--color-page-background);
+  /* Sets the desktop root size that rem-based spacing scales from. */
+  font-size: 18px;
+
+  .exercise-title {
+    /* Applies the shared display font to exercise titles. */
+    font-family: 'Fraunces', cursive;
+    /* Gives every exercise title the same compact line-height. */
+    line-height: 1.1;
+  }
+
+  @media (max-width: 1024px) {
+    /* Uses a slightly smaller root size on narrower screens. */
+    font-size: 16px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  /* Includes padding and borders in declared element dimensions. */
+  box-sizing: border-box;
+}
+
+body {
+  /* Removes the browser's default outer page margin. */
+  margin: 0;
+  /* Uses the platform's familiar system typeface first. */
+  font-family: system-ui, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  /* Makes form controls match surrounding typography by default. */
+  font: inherit;
+}
+
+img {
+  /* Removes inline-image baseline whitespace. */
+  display: block;
+  /* Prevents images from overflowing their containers. */
+  max-width: 100%;
+}
+
+#root {
+  /* Creates the app shell layout context. */
+  display: flex;
+  /* Stacks the header above the main content area. */
+  flex-direction: column;
+  /* Fills at least the visible viewport, including mobile browser UI changes. */
+  min-height: 100svh;
+}

@@ -1,0 +1,85 @@
+@property --hue {
+  /* Declares hue as a numeric value so browsers can interpolate it smoothly. */
+  syntax: '<number>';
+  /* Prevents a hue set on a parent from automatically affecting descendants. */
+  inherits: false;
+  /* Starts the hue value at red when no animation value is applied. */
+  initial-value: 0;
+}
+
+.hello-world {
+  /* Extends the exercise surface through main's horizontal gutters. */
+  width: calc(100% + 2rem);
+  /* Pulls the wider surface left and right by the gutter width. */
+  margin-inline: -1rem;
+  /* Keeps the title and animated message aligned with the standard content gutter. */
+  padding-inline: 1rem;
+  /* Creates a title row and a remaining area for the animated message. */
+  display: grid;
+  /* Reserves the first row for the title and gives remaining space to the message. */
+  grid-template-rows: auto 1fr;
+  /* Enables cqw units based on this track's width. */
+  container-type: inline-size;
+  /* Prevents the moving message from escaping the exercise width. */
+  overflow: hidden;
+  /* Matches the visual top spacing used by the other exercise titles. */
+  padding-top: 1.25rem;
+  /* Creates a dark, colorful stage that makes the animated message feel luminous. */
+  background:
+    radial-gradient(circle at 15% 25%, rgb(34 211 238 / 35%), transparent 35%),
+    radial-gradient(circle at 85% 70%, rgb(217 70 239 / 30%), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgb(59 130 246 / 25%), transparent 45%),
+    linear-gradient(135deg, #020617, #111827 55%, #1e1b4b);
+
+  /* Makes the static title readable against the dark background. */
+  color: #f8fafc;
+
+  > .exercise-title {
+    /* Lets the parent padding control title placement without consuming message-row space. */
+    margin: 0;
+  }
+
+  > .message {
+    /* Keeps the animated element only as wide as its text. */
+    width: max-content;
+    /* Centers the message vertically in the remaining space below the title. */
+    align-self: center;
+    /* Starts the message at the left before its animation moves it right. */
+    justify-self: start;
+    /* Removes the browser's default heading spacing. */
+    margin: 0;
+    translate: 0 -0.2rem;
+    /* Colors text from the animated hue with vivid, readable saturation and lightness. */
+    color: hsl(var(--hue) 85% 48%);
+    /* Moves the message horizontally while cycling it through the color spectrum. */
+    animation:
+      scroll-message 4s linear infinite alternate,
+      color-cycle 6s linear infinite;
+    /* Gives the moving color-cycling text a soft neon-like bloom. */
+    text-shadow: 0 0 0.75rem currentcolor;
+  }
+}
+
+@keyframes color-cycle {
+  from {
+    /* Begins the color cycle at red. */
+    --hue: 0;
+  }
+
+  to {
+    /* Completes one full hue rotation back to red. */
+    --hue: 360;
+  }
+}
+
+@keyframes scroll-message {
+  from {
+    /* Starts the message flush with the track's left edge. */
+    transform: translateX(0);
+  }
+
+  to {
+    /* Moves the text until its right edge reaches the track's right edge. */
+    transform: translateX(calc(100cqw - 100%));
+  }
+}

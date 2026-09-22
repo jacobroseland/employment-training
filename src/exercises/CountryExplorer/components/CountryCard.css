@@ -1,0 +1,147 @@
+.country-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  /* Creates even space between the card's direct children. */
+  gap: 0.75rem;
+
+  /* Adds breathing room inside the card. */
+  padding: 1.25rem;
+
+  /* Defines the card edge. */
+  border: 1px solid #dbe3ef;
+
+  /* Softens the outer card corners. */
+  border-radius: 0.75rem;
+
+  /* Creates a raised white surface above the page. */
+  background-color: #ffffff;
+
+  /* Adds subtle depth without making the card look heavy. */
+  box-shadow: 0 0.5rem 1.25rem rgb(15 23 42 / 8%);
+
+  .flag-frame {
+    /* Keeps every flag area the same height within the grid. */
+    aspect-ratio: 3 / 2;
+
+    /* Centers a differently proportioned flag within its frame. */
+    display: grid;
+
+    /* Centers the flag horizontally and vertically. */
+    place-items: center;
+
+    /* Fills unused frame space without adding a border around it. */
+    background-color: #f8fafc;
+
+    .flag {
+      /* Prevents the image from exceeding the frame width. */
+      max-width: 100%;
+
+      /* Prevents taller flags from exceeding the frame height. */
+      max-height: 100%;
+
+      /* Defines a border around only the visible image. */
+      border: 1px solid #d1d5db;
+
+      /* Softens the image corners. */
+      border-radius: 0.5rem;
+    }
+  }
+
+  > h3 {
+    /* Removes the browser's default heading margins. */
+    margin: 0;
+
+    /* Gives the country name a clear visual hierarchy. */
+    font-size: 1.25rem;
+
+    /* Keeps multi-line country names compact and readable. */
+    line-height: 1.2;
+  }
+
+  > p {
+    /* Removes the browser's default paragraph margins. */
+    margin: 0;
+  }
+
+  > .details {
+    /* Separates the details panel from the card summary above it. */
+    margin-top: 0.25rem;
+
+    /* Adds breathing room around the definition list. */
+    padding: 0.875rem;
+
+    /* Gives the expanded area a subtle boundary. */
+    border: 1px solid #dbe3ef;
+
+    /* Matches the softened corners used elsewhere in the app. */
+    border-radius: 0.5rem;
+
+    /* Makes the expanded area distinct from the main card surface. */
+    background-color: #f8fafc;
+
+    > dl {
+      /* Removes the browser's default definition-list margins. */
+      margin: 0;
+
+      /* Creates aligned label/value columns. */
+      display: grid;
+
+      /* Keeps labels only as wide as needed and gives values remaining space. */
+      grid-template-columns: max-content minmax(0, 1fr);
+
+      /* Separates labels from their values. */
+      column-gap: 0.75rem;
+
+      /* Separates each label/value row. */
+      row-gap: 0.5rem;
+
+      > dt {
+        /* Makes the metadata labels easier to distinguish. */
+        font-weight: 600;
+      }
+
+      > dd {
+        /* Removes the browser's default left indent. */
+        margin: 0;
+      }
+    }
+  }
+
+  > .details-toggle {
+    /* Pushes the control to the bottom of cards with shorter content. */
+    margin-top: auto;
+
+    /* Creates a comfortably sized interactive target. */
+    padding: 0.625rem 0.875rem;
+
+    /* Defines the button boundary. */
+    border: 1px solid #94a3b8;
+
+    /* Softens the button corners. */
+    border-radius: 0.5rem;
+
+    /* Keeps the secondary action visually light. */
+    background-color: #ffffff;
+
+    /* Uses the inherited application text color. */
+    color: inherit;
+
+    /* Signals that the button is interactive. */
+    cursor: pointer;
+
+    &:hover {
+      /* Adds subtle feedback for pointer users. */
+      background-color: #f1f5f9;
+    }
+
+    &:focus-visible {
+      /* Makes keyboard focus obvious. */
+      outline: 3px solid rgb(59 130 246 / 35%);
+
+      /* Separates the focus ring from the button edge. */
+      outline-offset: 2px;
+    }
+  }
+}

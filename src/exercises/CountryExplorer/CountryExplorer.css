@@ -1,0 +1,195 @@
+.country-explorer {
+  .country-search-form {
+    /* Creates a column layout for each field plus the submit action. */
+    display: grid;
+
+    /* Gives the search field more room than the region select. */
+    grid-template-columns: minmax(0, 1fr) minmax(10rem, 0.5fr) auto;
+
+    /* Adds consistent space between fields and the button. */
+    gap: 1rem;
+
+    /* Aligns the controls along their bottom edges. */
+    align-items: end;
+
+    /* Creates comfortable space inside the form panel. */
+    padding: 1rem;
+
+    /* Defines the panel boundary without making it visually heavy. */
+    border: 1px solid #dbe3ef;
+
+    /* Softens the panel corners. */
+    border-radius: 1rem;
+
+    /* Separates the form from the page background. */
+    background-color: #ffffff;
+
+    /* Adds subtle depth beneath the panel. */
+    box-shadow: 0 0.5rem 1.5rem rgb(15 23 42 / 8%);
+
+    > .field {
+      /* Stacks each label, control, and potential error message. */
+      display: grid;
+
+      /* Adds space between items within one field. */
+      gap: 0.375rem;
+
+      > label {
+        /* Makes labels easy to scan. */
+        font-weight: 600;
+      }
+
+      > input,
+      > select {
+        /* Ensures the fields fill their grid column. */
+        width: 100%;
+
+        /* Creates a comfortable clickable and tappable control height. */
+        min-height: 2.75rem;
+
+        /* Adds interior spacing around typed or selected text. */
+        padding: 0.625rem 0.75rem;
+
+        /* Defines the control boundary. */
+        border: 1px solid #94a3b8;
+
+        /* Rounds the control corners. */
+        border-radius: 0.5rem;
+
+        /* Keeps the control background clear and readable. */
+        background-color: #ffffff;
+
+        /* Uses the application text color. */
+        color: inherit;
+
+        &:focus-visible {
+          /* Makes keyboard focus obvious. */
+          outline: 3px solid rgb(59 130 246 / 35%);
+
+          /* Separates the focus ring from the field border. */
+          outline-offset: 2px;
+        }
+
+        &[aria-invalid='true'] {
+          /* Makes an invalid search field visibly distinct. */
+          border-color: #dc2626;
+        }
+      }
+
+      > [role='alert'] {
+        /* Removes the browser's default paragraph margins. */
+        margin: 0;
+
+        /* Uses an accessible error color. */
+        color: #b91c1c;
+
+        /* Makes the message slightly smaller than body text. */
+        font-size: 0.875rem;
+      }
+    }
+
+    > .submit {
+      /* Matches the input control height. */
+      min-height: 2.75rem;
+
+      /* Creates a comfortably sized action target. */
+      padding: 0.625rem 1rem;
+
+      /* Removes the browser's default button border. */
+      border: 0;
+
+      /* Rounds the button corners. */
+      border-radius: 0.5rem;
+
+      /* Gives the primary action strong visual emphasis. */
+      background-color: #1e3a5f;
+
+      /* Makes the button label readable against the dark background. */
+      color: #ffffff;
+
+      /* Signals that the element is interactive. */
+      cursor: pointer;
+
+      &:hover {
+        /* Darkens the button slightly during pointer hover. */
+        background-color: #162d4a;
+      }
+
+      &:focus-visible {
+        /* Makes keyboard focus obvious. */
+        outline: 3px solid rgb(59 130 246 / 45%);
+
+        /* Separates the focus ring from the button edge. */
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  @media (max-width: 44rem) {
+    .country-search-form {
+      /* Stacks the fields and action on narrower screens. */
+      grid-template-columns: 1fr;
+
+      > .submit {
+        /* Lets the action button fill the available mobile width. */
+        width: 100%;
+      }
+    }
+  }
+
+  .country-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  > .load-more {
+    /* Centers the action beneath the results grid. */
+    display: block;
+
+    /* Creates a comfortably sized interactive target. */
+    padding: 0.75rem 1.125rem;
+
+    /* Defines the button boundary. */
+    border: 1px solid #1e3a5f;
+
+    /* Softens the button corners. */
+    border-radius: 999px;
+
+    /* Keeps this secondary action visually lighter than Search. */
+    background-color: #ffffff;
+
+    /* Matches the primary app color. */
+    color: #1e3a5f;
+
+    /* Makes the button label easy to scan. */
+    font-weight: 600;
+
+    /* Signals that the element is interactive. */
+    cursor: pointer;
+
+    /* Adds restrained depth to the standalone control. */
+    box-shadow: 0 0.25rem 0.75rem rgb(15 23 42 / 8%);
+
+    margin: 1rem auto 1rem;
+
+    &:hover {
+      /* Fills the control on pointer hover. */
+      background-color: #1e3a5f;
+
+      /* Keeps the text readable after the hover fill. */
+      color: #ffffff;
+    }
+
+    &:focus-visible {
+      /* Makes keyboard focus obvious. */
+      outline: 3px solid rgb(59 130 246 / 40%);
+
+      /* Separates the focus ring from the button edge. */
+      outline-offset: 3px;
+    }
+  }
+}

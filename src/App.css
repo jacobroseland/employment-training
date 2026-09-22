@@ -1,0 +1,260 @@
+.training-app-header {
+  /* Enables independent placement of the title and back button. */
+  display: grid;
+  /* Keeps the title centered between equal flexible columns. */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  /* Vertically aligns the header's grid items. */
+  align-items: center;
+  /* Adds compact vertical space and responsive horizontal space. */
+  padding: 1rem clamp(1rem, 4vw, 3rem);
+  /* Separates the header from page content. */
+  border-bottom: 1px solid #1e3a8a;
+  /* Gives the app shell a subtle navy gradient. */
+  background: linear-gradient(135deg, #0f172a, #1d4ed8);
+  /* Supplies high-contrast text for the dark header. */
+  color: #f8fafc;
+  /* Keeps the header height stable whether or not the back button is present. */
+  min-height: 70px;
+
+  > h1 {
+    /* Places the title in the fixed center grid column. */
+    grid-column: 2;
+    /* Removes the browser's default heading spacing. */
+    margin: 0;
+    /* Centers text inside its grid cell. */
+    text-align: center;
+    /* Scales the title within readable minimum and maximum sizes. */
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    /* Tightens large heading letters slightly for a polished look. */
+    letter-spacing: -0.02em;
+
+    > a {
+      /* Removes the browser's default underline from the title link. */
+      text-decoration: none;
+      /* Keeps the title link the same high-contrast header color. */
+      color: inherit;
+    }
+  }
+
+  > .back {
+    /* Places the control in the left balancing column. */
+    grid-column: 1;
+    /* Keeps the control aligned with the title row. */
+    grid-row: 1;
+    /* Anchors the button to the left edge of its grid cell. */
+    justify-self: start;
+    /* Lays out the arrow and label in one flexible row. */
+    display: inline-flex;
+    /* Separates the arrow icon from its label. */
+    gap: 0.5rem;
+    /* Vertically aligns the arrow and text. */
+    align-items: center;
+    /* Creates a comfortably clickable hit area. */
+    padding: 0.5rem 0.75rem;
+    /* Keeps the border visible against the navy background. */
+    border: 1px solid rgb(255 255 255 / 40%);
+    /* Softens the button's corners. */
+    border-radius: 8px;
+    /* Adds a subtle translucent button surface. */
+    background-color: rgb(255 255 255 / 10%);
+    /* Uses the header's high-contrast text color. */
+    color: inherit;
+    /* Removes the browser's default underline from the back link. */
+    text-decoration: none;
+    /* Signals that this control is clickable. */
+    cursor: pointer;
+
+    &:hover {
+      /* Makes the button more visible during pointer hover. */
+      background-color: rgb(255 255 255 / 20%);
+    }
+
+    &:focus-visible {
+      /* Draws a visible keyboard-focus indicator. */
+      outline: 2px solid currentcolor;
+      /* Separates the focus indicator from the button edge. */
+      outline-offset: 2px;
+    }
+  }
+
+  > .learning-docs {
+    /* Places the learning control in the right balancing column. */
+    grid-column: 3;
+    /* Keeps the control aligned with the title row. */
+    grid-row: 1;
+    /* Anchors the button to the right edge of its grid cell. */
+    justify-self: end;
+    /* Creates a comfortably clickable hit area. */
+    padding: 0.5rem 0.75rem;
+    /* Keeps the border visible against the navy background. */
+    border: 1px solid rgb(255 255 255 / 40%);
+    /* Softens the button's corners. */
+    border-radius: 8px;
+    /* Adds a subtle translucent button surface. */
+    background-color: rgb(255 255 255 / 10%);
+    /* Uses the header's high-contrast text color. */
+    color: inherit;
+    /* Removes the browser's default underline from the learning link. */
+    text-decoration: none;
+    /* Signals that this control is clickable. */
+    cursor: pointer;
+
+    &:hover {
+      /* Makes the button more visible during pointer hover. */
+      background-color: rgb(255 255 255 / 20%);
+    }
+
+    &:focus-visible {
+      /* Draws a visible keyboard-focus indicator. */
+      outline: 2px solid currentcolor;
+      /* Separates the focus indicator from the button edge. */
+      outline-offset: 2px;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    /* Switches to one column when space is limited. */
+    grid-template-columns: 1fr;
+    /* Adds space between the stacked title and button. */
+    gap: 0.75rem;
+
+    > h1 {
+      /* Moves the title into the single available column. */
+      grid-column: 1;
+      /* Keeps the title first in the mobile header. */
+      grid-row: 1;
+    }
+
+    > .back {
+      /* Moves the button into the single available column. */
+      grid-column: 1;
+      /* Places the button beneath the title on small screens. */
+      grid-row: 2;
+      /* Centers the stacked button for balanced mobile layout. */
+      justify-self: center;
+    }
+
+    > .learning-docs {
+      /* Keeps the learning control on the same mobile action row as back. */
+      grid-column: 1;
+      /* Places the learning control beneath the title on small screens. */
+      grid-row: 2;
+      /* Anchors the paired action to the right side of the row. */
+      justify-self: end;
+    }
+  }
+}
+
+main {
+  /* Fills the viewport space remaining below the header. */
+  flex: 1;
+  /* Lets individual exercise views choose their own grid alignment. */
+  display: grid;
+  /* Adds consistent horizontal page gutters without shifting vertical centering. */
+  padding: 0 1rem;
+
+  > .exercise-catalog {
+    /* Limits line length and grid width on wide displays. */
+    max-width: 70rem;
+    /* Centers the capped catalog within the page. */
+    margin-inline: auto;
+    background-color: #f8fafc;
+    /* Adds breathing room after the catalog without affecting exercises. */
+    padding-bottom: 3rem;
+
+    .exercise-grid {
+      /* Creates the responsive layout for exercise cards. */
+      display: grid;
+      /* Fits as many readable-width cards as each row allows. */
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      /* Creates equal space between cards. */
+      gap: 1rem;
+      /* Removes the browser's default list margin. */
+      margin: 0;
+      /* Removes the browser's default list indentation. */
+      padding: 0;
+      /* Hides bullets because cards provide the visual grouping. */
+      list-style: none;
+    }
+  }
+
+  > .learning-catalog,
+  > .learning-document {
+    /* Limits long document lines and card layouts on wide displays. */
+    width: min(100%, 70rem);
+    /* Centers the learning content within the page. */
+    margin-inline: auto;
+    /* Adds space below learning content without affecting exercise views. */
+    padding-bottom: 3rem;
+  }
+
+  .learning-catalog-intro {
+    /* Separates the short description from the learning-material grid. */
+    margin: 0 0 1.5rem;
+  }
+
+  .learning-grid {
+    /* Creates a responsive layout for learning-material cards. */
+    display: grid;
+    /* Fits as many readable-width cards as each row allows. */
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    /* Creates equal space between learning cards. */
+    gap: 1rem;
+    /* Removes the browser's default list margin. */
+    margin: 0;
+    /* Removes the browser's default list indentation. */
+    padding: 0;
+    /* Hides bullets because cards provide the visual grouping. */
+    list-style: none;
+  }
+
+  .learning-card {
+    /* Lets the card fill its list item for a generous click target. */
+    width: 100%;
+    /* Uses a column layout for title, description, and action label. */
+    display: flex;
+    /* Stacks the card's text content vertically. */
+    flex-direction: column;
+    /* Creates consistent vertical rhythm inside the card. */
+    gap: 0.75rem;
+    /* Aligns card content to the left for comfortable reading. */
+    text-align: left;
+    /* Adds a raised-card surface. */
+    padding: 1.25rem;
+    /* Defines the card's visible boundary. */
+    border: 1px solid #cbd5e1;
+    /* Softens the card's corners. */
+    border-radius: 0.75rem;
+    /* Adds a subtle depth cue. */
+    background: linear-gradient(145deg, #ffffff, #eff6ff);
+    /* Signals that the complete card is clickable. */
+    cursor: pointer;
+
+    &:hover {
+      /* Strengthens the card border during pointer hover. */
+      border-color: #3b82f6;
+    }
+
+    &:focus-visible {
+      /* Draws a visible keyboard-focus indicator. */
+      outline: 2px solid #1d4ed8;
+      /* Separates the focus indicator from the card edge. */
+      outline-offset: 3px;
+    }
+
+    > h3,
+    > p {
+      /* Removes default margins because flexbox gap controls spacing. */
+      margin: 0;
+    }
+
+    > span {
+      /* Pushes the action label toward the card's bottom edge. */
+      margin-top: auto;
+      /* Emphasizes the action label as an interactive affordance. */
+      font-weight: 700;
+      /* Uses the app's navy accent color for the action label. */
+      color: #1d4ed8;
+    }
+  }
+}

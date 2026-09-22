@@ -1,0 +1,65 @@
+.markdown-document {
+  /* Improves paragraph readability without making document lines too wide. */
+  max-width: 72ch;
+  /* Adds space below the document for comfortable reading. */
+  padding-bottom: 3rem;
+  /* Uses a readable line height for longer reference material. */
+  line-height: 1.6;
+
+  > :first-child {
+    /* Removes the first element's top gap so the document aligns with its container. */
+    margin-top: 0;
+  }
+
+  h1,
+  h2,
+  h3 {
+    /* Separates each heading from the content above it. */
+    margin-top: 2rem;
+    /* Keeps headings close to the content they introduce. */
+    margin-bottom: 0.75rem;
+    /* Uses the document's inherited readable line height. */
+    line-height: 1.2;
+  }
+
+  p,
+  li {
+    /* Limits line spacing to a comfortable reading rhythm. */
+    line-height: 1.6;
+  }
+
+  ul,
+  ol {
+    /* Indents lists while preserving the browser's semantic markers. */
+    padding-left: 1.5rem;
+  }
+
+  code {
+    /* Distinguishes short code references from surrounding prose. */
+    padding: 0.125rem 0.25rem;
+    /* Gives inline code a subtle visual surface. */
+    border-radius: 0.25rem;
+    /* Uses a light neutral background for inline code. */
+    background-color: #e2e8f0;
+  }
+
+  pre {
+    /* Allows long code lines to scroll rather than stretching the page. */
+    overflow-x: auto;
+    /* Adds space between code and its container edge. */
+    padding: 1rem;
+    /* Rounds the code block's corners. */
+    border-radius: 0.5rem;
+    /* Uses a dark surface that clearly separates code from prose. */
+    background-color: #0f172a;
+    /* Provides high contrast for code inside the dark block. */
+    color: #f8fafc;
+
+    code {
+      /* Removes inline-code styling inside a full code block. */
+      padding: 0;
+      /* Lets the code block provide the background surface. */
+      background-color: transparent;
+    }
+  }
+}
