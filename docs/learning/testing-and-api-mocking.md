@@ -1,6 +1,6 @@
 # Testing and API mocking
 
-> Current foundation: Jest, React Testing Library, user-event, Jest DOM, jsdom, and SWC transformation are installed. Jest runs in ESM mode so it can test React Router v8, which is ESM-only. Playwright and MSW are planned next-stage tools.
+> Current foundation: Jest, React Testing Library, user-event, Jest DOM, jsdom, SWC transformation, and Playwright are installed. Jest runs in ESM mode so it can test React Router v8, which is ESM-only. MSW is a planned next-stage tool.
 
 ## Current Jest setup
 
@@ -24,6 +24,7 @@ These are development dependencies: CI installs them before it runs tests, but a
 - `src/test/setup.ts` imports `@testing-library/jest-dom/jest-globals`, adding matchers such as `toBeInTheDocument()` to the `expect` imported from `@jest/globals`.
 - `src/test/setup.ts` also exposes Node's `TextEncoder` and `TextDecoder` on `globalThis`, because React Router expects those web APIs and jsdom does not provide them in this test environment.
 - `moduleNameMapper` replaces CSS, Vite `?raw` Markdown imports, and the ESM-only `react-markdown` package with small test mocks.
+- `testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}']` limits Jest to colocated unit and feature tests under `src/`. This prevents Jest from attempting to run Playwright's `e2e/*.spec.ts` browser tests in jsdom.
 
 ## Test structure
 
@@ -35,6 +36,11 @@ Country Explorer has a feature-level test file because its behavior spans fetchi
     const originalFetch = globalThis.fetch
 
 Use `globalThis`, not Node's `global`, because the app TypeScript configuration models browser APIs.
+
+Browser tests use the separate `e2e/` directory and the `.spec.ts` suffix. Keeping the locations and suffixes distinct makes the responsible runner clear:
+
+    src/**/*.test.tsx  -> Jest + React Testing Library
+    e2e/**/*.spec.ts   -> Playwright
 
 ## Writing tests
 
@@ -90,9 +96,23 @@ Prefer tests that cover observable behavior over implementation details:
 
 ## Playwright browser tests
 
-Playwright will test essential journeys in a real browser, such as selecting an exercise, returning to the catalog, searching countries, expanding details, and loading additional results. It can run the local Vite app before tests, so it does not require deployment or a database.
+Playwright runs essential journeys in a real Chromium browser. Its configuration uses Vite's local server as `baseURL`, starts Vite when needed, and reuses an already-running local server outside CI. Run the suite with:
 
-Mock external API requests in the default browser suite. When the project later has a backend, add a smaller integration suite that uses isolated test data rather than production data.
+    npm run test:e2e
+    npm run test:e2e:headed
+    npm run test:e2e:ui
+
+The initial suite runs Chromium only to keep feedback quick while learning. Firefox and WebKit are installed locally and can be added later as cross-browser projects.
+
+The existing browser tests cover catalog-to-exercise navigation and Country Explorer's search/details, empty-form validation, region filter, and load-more boundary. They use role-based locators and assert actual URLs and visible browser state.
+
+Mock external API requests with `page.route()` before `page.goto()`. The component still calls `fetch`, but Playwright fulfills the matching browser request with stable fixture data:
+
+    component fetch -> Playwright page.route -> mocked response
+
+This keeps the default browser suite fast and deterministic. When the project later has a backend, add a smaller integration suite that uses isolated test data rather than production data.
+
+Playwright reports behavior and browser-test results, not source line/branch coverage by default. Keep Jest as the source-coverage tool. Playwright has lower-level Chromium-only coverage APIs, but mapping bundled browser execution back to TypeScript source requires additional tooling and is not part of this baseline.
 
 ## Test wrappers
 

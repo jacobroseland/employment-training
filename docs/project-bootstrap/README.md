@@ -23,9 +23,11 @@ The bootstrap should exclude sandbox-specific material: the exercise catalog, He
 - Prettier for formatting
 - ESLint with simple-import-sort
 - Jest, React Testing Library, user-event, and Jest DOM
+- Playwright with a Vite `webServer`, Chromium project, HTML reports, and deterministic browser-request interception
 - React Router with a shared app layout, nested routes, and URL parameters
-- `format`, `format:check`, `lint`, `build`, `test`, `test:watch`, and `test:coverage` scripts
+- `format`, `format:check`, `lint`, `build`, `test`, `test:watch`, `test:coverage`, `test:e2e`, `test:e2e:headed`, and `test:e2e:ui` scripts
 - A root `jest.config.cjs` with jsdom, SWC TypeScript/TSX transformation, deterministic asset/Markdown mocks, and an explicit production-coverage scope
+- Clear test-runner boundaries: colocated Jest tests under `src/**/*.test.tsx` and Playwright browser tests under `e2e/**/*.spec.ts`
 - A minimal app shell, one example shared component, and one example test
 - A source structure that favors colocation before abstraction
 
@@ -51,7 +53,7 @@ Build and validate one layer at a time:
 
 1. **Complete:** establish Jest, React Testing Library, component and feature tests, intentional production coverage scope, and a 100%-coverage learning milestone.
 2. **Complete:** add React Router, a shared app layout, nested catalog and learning routes, URL parameters, and corrective redirects.
-3. Add Playwright end-to-end tests for essential user journeys.
+3. **Complete:** add Playwright end-to-end tests for catalog navigation and key Country Explorer behaviors, including deterministic API interception.
 4. Run a focused Figma MCP design-to-code experiment.
 5. Add Storybook and MSW-backed stories.
 6. Add a GitHub Actions quality workflow that runs formatting, linting, builds, unit tests, and Playwright tests.
@@ -62,7 +64,7 @@ Set practical CI coverage thresholds only after the project has more than the in
 
 ## Browser and integration testing
 
-Playwright belongs in the browser-testing layer after routing; it does not require a database. Start with end-to-end tests for catalog navigation, exercise navigation, Country Explorer search/filtering, details toggles, validation, and loading more results.
+Playwright belongs in the browser-testing layer after routing; it does not require a database. Use a Vite `webServer` and `baseURL` so local and CI runs are self-contained. Start with Chromium and a focused set of observable journeys: catalog navigation plus Country Explorer search/filtering, details toggles, validation, and loading more results. Keep source line and branch coverage in Jest rather than adding bundled-browser coverage to the initial baseline.
 
 The default CI suite should mock external API traffic so it is fast and deterministic. Once a backend exists, add a smaller integration suite that uses isolated, controlled test data in a dedicated test database. Never run integration tests against production data.
 
