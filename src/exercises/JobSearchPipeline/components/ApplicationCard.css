@@ -1,0 +1,336 @@
+.application-card {
+  /* Let the card distribute its content vertically. */
+  display: flex;
+
+  /* Stack the card's sections from top to bottom. */
+  flex-direction: column;
+
+  /* Fill the grid cell when neighboring cards have different content heights. */
+  height: 100%;
+
+  /* Create comfortable space around the card content. */
+  padding: 1.25rem;
+
+  /* Define the card boundary without making it visually heavy. */
+  border: 1px solid #d1d5db;
+
+  /* Soften the card shape. */
+  border-radius: 0.75rem;
+
+  /* Separate the card from the page background. */
+  background-color: #ffffff;
+
+  /* Add subtle depth so cards feel lifted from the page. */
+  box-shadow: 0 0.5rem 1rem rgb(15 23 42 / 8%);
+}
+
+.application-card-header {
+  /* Place the company information and status badge side by side. */
+  display: flex;
+
+  /* Keep the company information at the left and status at the right. */
+  justify-content: space-between;
+
+  /* Align the badge with the top of the company information. */
+  align-items: flex-start;
+
+  /* Preserve space when the company or role text wraps. */
+  gap: 1rem;
+}
+
+.application-card h3 {
+  /* Remove the browser default so this component controls heading spacing. */
+  margin: 0;
+
+  /* Give company names a clear visual hierarchy. */
+  font-size: 1.25rem;
+}
+
+.application-card-role {
+  /* Separate the role from the company name. */
+  margin: 0.25rem 0 0;
+
+  /* Make the supporting role text less visually dominant. */
+  color: #4b5563;
+}
+
+.application-card-status {
+  /* Keep the status badge sized to its text. */
+  flex-shrink: 0;
+
+  /* Give the label room to breathe. */
+  padding: 0.25rem 0.5rem;
+
+  /* Create a pill-shaped status treatment. */
+  border-radius: 999px;
+
+  /* Keep badge text compact. */
+  font-size: 0.875rem;
+
+  /* Make the status easy to scan. */
+  font-weight: 600;
+}
+
+.application-card-status--saved {
+  /* Use a calm neutral-blue color for saved opportunities. */
+  color: #1d4ed8;
+
+  /* Give the saved state a light matching background. */
+  background-color: #dbeafe;
+}
+
+.application-card-status--applied {
+  /* Use a deeper blue for submitted applications. */
+  color: #1e40af;
+
+  /* Give the applied state a light matching background. */
+  background-color: #bfdbfe;
+}
+
+.application-card-status--interviewing {
+  /* Use purple to distinguish active interview activity. */
+  color: #6b21a8;
+
+  /* Give the interviewing state a light matching background. */
+  background-color: #e9d5ff;
+}
+
+.application-card-status--offer {
+  /* Use green for a positive offer outcome. */
+  color: #166534;
+
+  /* Give the offer state a light matching background. */
+  background-color: #dcfce7;
+}
+
+.application-card-status--closed {
+  /* Use muted text for applications that are no longer active. */
+  color: #4b5563;
+
+  /* Give the closed state a subdued background. */
+  background-color: #e5e7eb;
+}
+
+.application-card-details {
+  /* Separate application metadata from the card header. */
+  margin: 1.25rem 0 0;
+
+  /* Stack metadata groups with consistent rhythm. */
+  display: grid;
+
+  /* Add space between each metadata group. */
+  gap: 0.75rem;
+}
+
+.application-card-details div {
+  /* Keep each label directly above its value. */
+  display: grid;
+
+  /* Create a small, readable gap between label and value. */
+  gap: 0.25rem;
+}
+
+.application-card-details dt {
+  /* Make metadata labels easy to distinguish from their values. */
+  color: #6b7280;
+
+  /* Keep metadata labels compact. */
+  font-size: 0.875rem;
+
+  /* Make metadata labels easy to scan. */
+  font-weight: 600;
+}
+
+.application-card-details dd {
+  /* Remove the browser's default definition-description margin. */
+  margin: 0;
+}
+
+.application-card-notes {
+  /* Separate notes from the metadata above. */
+  margin: 1.25rem 0 0;
+
+  /* Keep supporting notes visually quieter than key details. */
+  color: #4b5563;
+
+  /* Improve readability for multi-line notes. */
+  line-height: 1.5;
+}
+
+.application-card-actions {
+  /* Push the card actions to the bottom when cards have different note lengths. */
+  margin-top: auto;
+
+  /* Separate the actions from notes or metadata above them. */
+  padding-top: 1.25rem;
+
+  /* Keep available card actions aligned and consistently spaced. */
+  display: flex;
+
+  /* Allow actions to wrap rather than overflow narrow cards. */
+  flex-wrap: wrap;
+
+  /* Create compact space between actions. */
+  gap: 0.75rem;
+}
+
+.application-card-edit {
+  /* Remove the default button border for the text-style action. */
+  padding: 0;
+
+  /* Remove the browser-provided button boundary. */
+  border: 0;
+
+  /* Let the card surface show behind the text action. */
+  background-color: transparent;
+
+  /* Match the job-listing action color. */
+  color: #1d4ed8;
+
+  /* Make the text action easy to identify. */
+  font: inherit;
+
+  /* Keep the action visibly interactive. */
+  font-weight: 600;
+
+  /* Use the familiar link treatment for this secondary action. */
+  text-decoration: underline;
+
+  /* Indicate that the text action is interactive. */
+  cursor: pointer;
+}
+
+.application-card-delete {
+  /* Remove the default button border for the text-style action. */
+  padding: 0;
+
+  /* Remove the browser-provided button boundary. */
+  border: 0;
+
+  /* Let the card surface show behind the text action. */
+  background-color: transparent;
+
+  /* Use a conventional destructive-action color. */
+  color: #b91c1c;
+
+  /* Match surrounding action text. */
+  font: inherit;
+
+  /* Make the text action easy to identify. */
+  font-weight: 600;
+
+  /* Use the familiar link treatment for this secondary action. */
+  text-decoration: underline;
+
+  /* Indicate that the text action is interactive. */
+  cursor: pointer;
+}
+
+.application-card-edit:hover,
+.application-card-delete:hover {
+  /* Reinforce that the action can be selected. */
+  text-decoration-thickness: 2px;
+}
+
+.application-card-edit:focus-visible,
+.application-card-delete:focus-visible,
+.application-card-link:focus-visible {
+  /* Provide a clear keyboard-focus indicator. */
+  outline: 2px solid currentcolor;
+
+  /* Separate the focus outline from the action text. */
+  outline-offset: 3px;
+}
+
+.application-card-delete-confirmation {
+  /* Keep the confirmation copy and controls together. */
+  display: flex;
+
+  /* Allow confirmation controls to wrap within narrow cards. */
+  flex-wrap: wrap;
+
+  /* Align the confirmation controls with its prompt text. */
+  align-items: center;
+
+  /* Create compact space between confirmation elements. */
+  gap: 0.75rem;
+
+  /* Give the destructive action a distinct, cautionary surface. */
+  color: #7f1d1d;
+}
+
+.application-card-delete-confirm,
+.application-card-delete-cancel {
+  /* Give the confirmation controls an easy-to-target size. */
+  padding: 0.375rem 0.625rem;
+
+  /* Define the confirmation-control boundaries. */
+  border: 1px solid currentcolor;
+
+  /* Match the rest of the exercise's rounded treatment. */
+  border-radius: 0.375rem;
+
+  /* Keep confirmation labels readable. */
+  font: inherit;
+
+  /* Indicate that the confirmation controls are interactive. */
+  cursor: pointer;
+}
+
+.application-card-delete-confirm {
+  /* Give the destructive confirmation a clear visual hierarchy. */
+  background-color: #b91c1c;
+
+  /* Keep the destructive action text readable. */
+  color: #ffffff;
+}
+
+.application-card-delete-confirm:hover {
+  /* Darken the destructive action for pointer feedback. */
+  background-color: #991b1b;
+}
+
+.application-card-delete-cancel {
+  /* Keep the cancel action visually quieter than confirmation. */
+  background-color: #ffffff;
+
+  /* Match cancel text to the confirmation copy. */
+  color: #7f1d1d;
+}
+
+.application-card-delete-cancel:hover {
+  /* Give the cancel action subtle pointer feedback. */
+  background-color: #fef2f2;
+}
+
+.application-card-delete-confirm:focus-visible,
+.application-card-delete-cancel:focus-visible {
+  /* Preserve a clear keyboard-focus indicator for confirmation controls. */
+  outline: 2px solid currentcolor;
+
+  /* Separate the focus indicator from the control boundary. */
+  outline-offset: 3px;
+}
+
+.application-card-link {
+  /* Make the job-listing action easy to identify. */
+  color: #1d4ed8;
+
+  /* Make the job-listing action easy to identify. */
+  color: #1d4ed8;
+
+  /* Keep the action visibly interactive. */
+  font-weight: 600;
+}
+
+.application-card-link:hover {
+  /* Reinforce that the link can be selected. */
+  text-decoration-thickness: 2px;
+}
+
+@media (max-width: 30rem) {
+  .application-card-header {
+    /* Stack the badge below the company information on narrow screens. */
+    flex-direction: column;
+  }
+}

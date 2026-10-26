@@ -1,5 +1,6 @@
 import CountryExplorer from './CountryExplorer/CountryExplorer'
 import HelloWorld from './HelloWorld/HelloWorld'
+import JobSearchPipeline from './JobSearchPipeline/JobSearchPipeline'
 import type { ComponentType } from 'react'
 
 export type ExerciseStatus = 'available' | 'coming-soon'
@@ -43,5 +44,13 @@ export const exerciseCatalog: Exercise[] = [
       'Search for countries, filter returned results by region, and expand a country for details such as capital, population, languages, and flag.',
     status: 'available',
     Component: CountryExplorer,
+  },
+  {
+    id: 'job-search-pipeline',
+    title: 'Job Search Pipeline',
+    description:
+      'Track applications, organize follow-ups, and manage each role through your job search.',
+    status: 'available',
+    Component: JobSearchPipeline,
   },
 ]

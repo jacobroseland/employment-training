@@ -1,0 +1,213 @@
+.job-search-pipeline {
+  /* Fill available page width without exceeding the intended reading width. */
+  width: min(100%, 1120px);
+
+  /* Center the content within the page. */
+  margin-inline: auto;
+
+  /* Add horizontal breathing room on smaller screens. */
+  padding-inline: 1rem;
+}
+
+.application-form-toggle {
+  /* Separate the reveal action from the exercise title. */
+  margin-top: 1rem;
+
+  /* Remove button styling so the action reads like an inline link. */
+  padding: 0;
+
+  /* Remove the browser's default button border. */
+  border: 0;
+
+  /* Let the page background show through the text action. */
+  background-color: transparent;
+
+  /* Match the app's interactive link color. */
+  color: #1d4ed8;
+
+  /* Make the action easy to distinguish from surrounding copy. */
+  font-weight: 600;
+
+  /* Provide the conventional visual cue for a text action. */
+  text-decoration: underline;
+
+  /* Indicate that the text action is interactive. */
+  cursor: pointer;
+}
+
+.application-form-toggle:hover {
+  /* Reinforce the interactive state for pointer users. */
+  color: #1e40af;
+}
+
+.application-form-toggle:focus-visible {
+  /* Preserve a clear keyboard-focus indicator. */
+  outline: 2px solid currentcolor;
+
+  /* Separate the focus outline from the action text. */
+  outline-offset: 3px;
+}
+
+.application-form-section {
+  /* Separate the form from the exercise title. */
+  margin-top: 0.75rem;
+
+  /* Create room around the form without competing with application cards. */
+  padding: 1.25rem;
+
+  /* Define the form boundary. */
+  border: 1px solid #d1d5db;
+
+  /* Match the rounded treatment used elsewhere in the exercise. */
+  border-radius: 0.75rem;
+
+  /* Give the form a subtle surface distinct from the page. */
+  background-color: #f8fafc;
+}
+
+.application-form-section > h3 {
+  /* Remove the browser default so this component controls heading spacing. */
+  margin: 0 0 1.25rem;
+
+  /* Keep the form heading distinct from company card headings. */
+  font-size: 1.25rem;
+}
+
+.application-filters {
+  /* Lay filter controls out side by side when room allows. */
+  display: flex;
+
+  /* Let controls move to a new row instead of overflowing on smaller screens. */
+  flex-wrap: wrap;
+
+  /* Align the bottoms of controls when their labels have different heights. */
+  align-items: flex-end;
+
+  /* Create consistent space between filter controls. */
+  gap: 1rem;
+
+  /* Keep the existing declarations below. */
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  background-color: #f8fafc;
+}
+
+.application-filter-label {
+  /* Allow each control group to grow while keeping a useful preferred width. */
+  flex: 1 1 16rem;
+
+  /* Allow controls to shrink instead of forcing horizontal overflow. */
+  min-width: 0;
+
+  /* Keep the existing declarations below. */
+  display: grid;
+  gap: 0.5rem;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.application-filter-label select {
+  /* Let the wrapper control the select's overall width. */
+  width: 100%;
+
+  /* Remove the inconsistent browser-provided arrow. */
+  appearance: none;
+
+  /* Give the native control a comfortable click target. */
+  padding: 0.625rem 2.5rem 0.625rem 0.75rem;
+
+  /* Define the select boundary. */
+  border: 1px solid #9ca3af;
+
+  /* Match the component's rounded corners. */
+  border-radius: 0.5rem;
+
+  /* Keep the select readable against the filter background. */
+  background-color: #ffffff;
+
+  /* Use the app's inherited text styling. */
+  font: inherit;
+
+  /* Indicate that the native select is interactive. */
+  cursor: pointer;
+}
+
+.application-select-wrapper {
+  /* Give the custom arrow a positioning context. */
+  position: relative;
+
+  /* Keep the filter control from becoming too wide. */
+  width: min(100%, 16rem);
+}
+
+.application-select-wrapper::after {
+  /* Render a consistent, visible dropdown indicator. */
+  content: '▾';
+
+  /* Position the indicator inside the select's right side. */
+  position: absolute;
+
+  /* Center the indicator vertically. */
+  top: 50%;
+
+  /* Leave comfortable space between the arrow and control edge. */
+  right: 0.75rem;
+
+  /* Offset the indicator by half of its own height. */
+  transform: translateY(-50%);
+
+  /* Make the custom arrow easier to notice. */
+  color: #4b5563;
+
+  /* Prevent the decorative arrow from blocking select clicks. */
+  pointer-events: none;
+}
+
+.application-filter-label select:hover {
+  /* Give pointer users subtle feedback before selecting. */
+  border-color: #4b5563;
+}
+
+.application-filter-label select:focus-visible {
+  /* Preserve a strong keyboard-focus indicator. */
+  outline: 2px solid #1d4ed8;
+
+  /* Separate the focus indicator from the control border. */
+  outline-offset: 2px;
+}
+
+.application-list-section {
+  /* Separate the application list from the exercise title. */
+  margin-top: 2rem;
+}
+
+.application-list-section > h3 {
+  /* Let the list heading control its own spacing. */
+  margin: 0 0 1rem;
+
+  /* Keep the heading distinct from each company name. */
+  font-size: 1.25rem;
+}
+
+.application-list {
+  /* Lay application cards out in responsive columns. */
+  display: grid;
+
+  /* Use as many columns as fit while keeping cards readable. */
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+
+  /* Create consistent space between cards. */
+  gap: 1rem;
+
+  /* Remove the browser's default list spacing. */
+  margin: 0;
+
+  /* Remove the browser's default left indent. */
+  padding: 0;
+
+  /* Remove bullet markers because cards provide visual grouping. */
+  list-style: none;
+}

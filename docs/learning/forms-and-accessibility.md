@@ -9,6 +9,26 @@ A controlled input uses React state for its displayed value. Country Explorer ke
 
 On submit, trim whitespace before validation and saving the query. Trimming avoids searches that differ only because of accidental leading or trailing spaces.
 
+## Form values versus application data
+
+Form controls work with strings, even when an empty optional value should become `null` in the application's data. Keep the controlled form values local to the form component, then let the parent convert a valid submission into the domain object it owns.
+
+    type ApplicationFormValues = {
+      companyName: string
+      location: string
+    }
+
+    type JobApplication = {
+      companyName: string
+      location: string | null
+    }
+
+    function toOptionalValue(value: string) {
+      return value || null
+    }
+
+This keeps inputs easy to control and makes the boundary where data is normalized explicit. The Job Search Pipeline parent also creates fields owned by the application rather than the form, such as `id` and `createdAt`.
+
 ## Custom validation
 
 Use a real `<form>` with `onSubmit`; it supports Enter-to-submit and gives the interaction clear semantics. `noValidate` is appropriate when React is providing the validation message rather than the browser's default popup.

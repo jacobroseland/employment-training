@@ -1,0 +1,160 @@
+.application-form {
+  /* Separate the field grid from the submit action. */
+  display: grid;
+
+  /* Keep spacing consistent between form sections. */
+  gap: 1.25rem;
+}
+
+.application-form-grid {
+  /* Lay fields out in responsive columns. */
+  display: grid;
+
+  /* Use two fields per row when space permits. */
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+
+  /* Create consistent space between fields. */
+  gap: 1rem;
+}
+
+.application-form-field {
+  /* Keep each label, control, and possible error together. */
+  display: grid;
+
+  /* Add a compact, readable gap between field parts. */
+  gap: 0.5rem;
+
+  /* Make field labels easy to scan. */
+  color: #374151;
+
+  /* Keep label text slightly smaller than application content. */
+  font-size: 0.875rem;
+
+  /* Give field labels sufficient emphasis. */
+  font-weight: 600;
+}
+
+.application-form-field--full-width {
+  /* Let notes occupy an entire grid row. */
+  grid-column: 1 / -1;
+}
+
+.application-form-field input,
+.application-form-field select,
+.application-form-field textarea {
+  /* Make controls fill their field column. */
+  width: 100%;
+
+  /* Give controls a comfortable pointer and keyboard target. */
+  padding: 0.625rem 0.75rem;
+
+  /* Define controls without visually heavy borders. */
+  border: 1px solid #9ca3af;
+
+  /* Match the exercise's rounded visual language. */
+  border-radius: 0.5rem;
+
+  /* Ensure controls remain readable against the form background. */
+  background-color: #ffffff;
+
+  /* Keep the text aligned at the top of the notes field. */
+  vertical-align: top;
+}
+
+.application-form-field textarea {
+  /* Let users resize notes vertically without breaking the form layout. */
+  resize: vertical;
+}
+
+.application-form-field input:hover,
+.application-form-field select:hover,
+.application-form-field textarea:hover {
+  /* Give pointer users subtle feedback before interacting. */
+  border-color: #4b5563;
+}
+
+.application-form-field input:focus-visible,
+.application-form-field select:focus-visible,
+.application-form-field textarea:focus-visible {
+  /* Preserve a prominent keyboard-focus indicator. */
+  outline: 2px solid #1d4ed8;
+
+  /* Separate the focus outline from the control boundary. */
+  outline-offset: 2px;
+}
+
+.application-form-field input[aria-invalid='true'] {
+  /* Make validation failures visible without relying on color alone. */
+  border-width: 2px;
+
+  /* Use a conventional error color for invalid controls. */
+  border-color: #b91c1c;
+}
+
+.application-form-error {
+  /* Keep validation feedback visually distinct from normal labels. */
+  color: #b91c1c;
+
+  /* Keep the error message compact and readable. */
+  font-size: 0.875rem;
+}
+
+.application-form-actions {
+  /* Keep the primary form action aligned with the form's left edge. */
+  display: flex;
+
+  /* Create readable space between the primary and secondary actions. */
+  gap: 0.75rem;
+}
+
+.application-form-actions button {
+  /* Make the primary action comfortable to click or tap. */
+  padding: 0.625rem 1rem;
+
+  /* Remove the browser's default button border. */
+  border: 0;
+
+  /* Match buttons with the component's rounded treatment. */
+  border-radius: 0.5rem;
+
+  /* Give the primary action a clear visual hierarchy. */
+  background-color: #1d4ed8;
+
+  /* Ensure button text is readable against the blue background. */
+  color: #ffffff;
+
+  /* Make the action label easy to scan. */
+  font-weight: 600;
+
+  /* Indicate that the button is interactive. */
+  cursor: pointer;
+}
+
+.application-form-actions button:hover {
+  /* Provide pointer feedback without shifting layout. */
+  background-color: #1e40af;
+}
+
+.application-form-actions button:focus-visible {
+  /* Preserve a visible keyboard-focus indicator for the primary action. */
+  outline: 2px solid #1d4ed8;
+
+  /* Separate the focus outline from the filled button. */
+  outline-offset: 3px;
+}
+
+.application-form-actions .application-form-clear {
+  /* Define the secondary action without competing with the save action. */
+  border: 1px solid #9ca3af;
+
+  /* Use the form surface rather than a filled treatment for the secondary action. */
+  background-color: #ffffff;
+
+  /* Keep the secondary action text easy to read. */
+  color: #374151;
+}
+
+.application-form-actions .application-form-clear:hover {
+  /* Give pointer users subtle feedback without resembling the primary action. */
+  background-color: #f3f4f6;
+}
