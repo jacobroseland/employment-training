@@ -1,0 +1,244 @@
+.application-draft-panel {
+  /* Separate the optional draft workflow from the standard form below it. */
+  margin-bottom: 1.25rem;
+
+  /* Define the optional AI-assisted intake area. */
+  padding: 0.75rem 1rem;
+
+  /* Give the collapsed panel a distinct but calm boundary. */
+  border: 1px solid #bfdbfe;
+
+  /* Match the rounded treatment used across the exercise. */
+  border-radius: 0.75rem;
+
+  /* Differentiate the draft area from the regular form surface. */
+  background-color: #eff6ff;
+}
+
+.application-draft-panel summary {
+  /* Make the disclosure label clearly interactive. */
+  cursor: pointer;
+
+  /* Give the optional workflow enough emphasis to be discoverable. */
+  color: #1d4ed8;
+
+  /* Match the form's action-label weight. */
+  font-weight: 600;
+}
+
+.application-draft-panel summary:focus-visible {
+  /* Preserve a clear keyboard-focus indicator. */
+  outline: 2px solid #1d4ed8;
+
+  /* Separate the outline from the summary text. */
+  outline-offset: 3px;
+}
+
+.application-draft-panel-content {
+  /* Create space between the summary and expanded content. */
+  margin-top: 1rem;
+
+  /* Keep the draft workflow's content vertically organized. */
+  display: grid;
+
+  /* Create consistent space between expanded-content sections. */
+  gap: 1rem;
+}
+
+.application-draft-panel-content > p {
+  /* Remove default paragraph spacing inside the component. */
+  margin: 0;
+
+  /* Keep explanatory copy readable without competing with form labels. */
+  color: #374151;
+}
+
+.application-draft-panel form {
+  /* Keep the textarea and primary action together. */
+  display: grid;
+
+  /* Create consistent space between form elements. */
+  gap: 0.75rem;
+}
+
+.application-draft-panel label {
+  /* Keep the label and textarea as one accessible visual unit. */
+  display: grid;
+
+  /* Separate the label from its control. */
+  gap: 0.5rem;
+
+  /* Give the label suitable emphasis. */
+  color: #374151;
+
+  /* Keep label text compact. */
+  font-size: 0.875rem;
+
+  /* Make the label easy to scan. */
+  font-weight: 600;
+}
+
+.application-draft-panel textarea {
+  /* Let the textarea fill the available panel width. */
+  width: 100%;
+
+  /* Provide a comfortable area for pasted listing text. */
+  padding: 0.75rem;
+
+  /* Define the textarea boundary. */
+  border: 1px solid #93c5fd;
+
+  /* Match the exercise's rounded visual language. */
+  border-radius: 0.5rem;
+
+  /* Keep pasted content readable against the panel surface. */
+  background-color: #ffffff;
+
+  /* Let users make the paste area taller when needed. */
+  resize: vertical;
+}
+
+.application-draft-panel textarea:hover {
+  /* Give pointer users subtle interaction feedback. */
+  border-color: #3b82f6;
+}
+
+.application-draft-panel textarea:focus-visible,
+.application-draft-panel button:focus-visible {
+  /* Preserve a prominent keyboard-focus indicator. */
+  outline: 2px solid #1d4ed8;
+
+  /* Separate the focus outline from the control edge. */
+  outline-offset: 2px;
+}
+
+.application-draft-panel textarea[aria-invalid='true'] {
+  /* Make an invalid paste field visibly distinct. */
+  border-width: 2px;
+
+  /* Use the shared conventional error tone. */
+  border-color: #b91c1c;
+}
+
+.application-draft-panel button {
+  /* Keep actions sized to their label instead of filling the whole panel. */
+  justify-self: start;
+
+  /* Create a comfortable click target. */
+  padding: 0.625rem 1rem;
+
+  /* Remove the browser-provided button border. */
+  border: 0;
+
+  /* Match the rounded button treatment used in the form. */
+  border-radius: 0.5rem;
+
+  /* Make the primary draft action distinct. */
+  background-color: #1d4ed8;
+
+  /* Keep the button label readable. */
+  color: #ffffff;
+
+  /* Give action labels enough emphasis. */
+  font: inherit;
+  font-weight: 600;
+
+  /* Indicate that the control is interactive. */
+  cursor: pointer;
+}
+
+.application-draft-panel button:hover:not(:disabled) {
+  /* Provide pointer feedback without moving the layout. */
+  background-color: #1e40af;
+}
+
+.application-draft-panel button:disabled {
+  /* Make an in-progress action visibly unavailable. */
+  opacity: 0.7;
+
+  /* Avoid implying that a disabled action can be selected. */
+  cursor: wait;
+}
+
+.application-draft-error {
+  /* Keep validation feedback distinct from the helper copy. */
+  margin: 0;
+
+  /* Use a conventional error color. */
+  color: #b91c1c;
+
+  /* Keep the message compact. */
+  font-size: 0.875rem;
+}
+
+.application-draft-status {
+  /* Avoid browser default paragraph spacing around status feedback. */
+  margin: 0;
+
+  /* Distinguish async progress from errors. */
+  color: #1e40af;
+
+  /* Keep the status text compact. */
+  font-size: 0.875rem;
+}
+
+.application-draft-result {
+  /* Separate the reviewed draft from the input workflow. */
+  display: grid;
+
+  /* Keep the result's elements comfortably spaced. */
+  gap: 0.75rem;
+
+  /* Give the draft result a clear inner surface. */
+  padding: 1rem;
+
+  /* Distinguish the suggested values from the blue intake surface. */
+  border: 1px solid #bfdbfe;
+
+  /* Match the rest of the exercise's rounded treatments. */
+  border-radius: 0.5rem;
+
+  /* Keep the result easy to read. */
+  background-color: #ffffff;
+}
+
+.application-draft-result h4,
+.application-draft-result dl {
+  /* Let the result component manage its own spacing. */
+  margin: 0;
+}
+
+.application-draft-result dl {
+  /* Lay suggested fields out in responsive columns. */
+  display: grid;
+
+  /* Keep each field readable when the panel narrows. */
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+
+  /* Create space between suggested field groups. */
+  gap: 0.75rem;
+}
+
+.application-draft-result dl > div {
+  /* Keep each definition pair vertically grouped. */
+  display: grid;
+
+  /* Add compact space between a definition term and value. */
+  gap: 0.25rem;
+}
+
+.application-draft-result dt {
+  /* Differentiate field labels from their suggested values. */
+  color: #4b5563;
+
+  /* Keep labels compact. */
+  font-size: 0.875rem;
+
+  /* Give the labels visual emphasis. */
+  font-weight: 600;
+}
+
+.application-draft-result dd {
+  /* Remove the browser's definition-description indentation. */
+  margin: 0;
+}

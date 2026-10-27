@@ -1,8 +1,10 @@
 import './JobSearchPipeline.css'
 import ApplicationCard from './components/ApplicationCard'
+import ApplicationDraftPanel from './components/ApplicationDraftPanel'
 import ApplicationForm from './components/ApplicationForm'
 import { loadApplications, saveApplications } from './JobSearchPipeline.storage'
 import type {
+  ApplicationDraft,
   ApplicationFormValues,
   JobApplication,
 } from './JobSearchPipeline.types'
@@ -136,6 +138,9 @@ function JobSearchPipeline() {
   const [pendingDeletionApplicationId, setPendingDeletionApplicationId] =
     useState<string | null>(null)
 
+  const [isResetConfirmationVisible, setIsResetConfirmationVisible] =
+    useState(false)
+
   const [isApplicationFormVisible, setIsApplicationFormVisible] =
     useState(false)
 
@@ -224,6 +229,15 @@ function JobSearchPipeline() {
     }))
   }
 
+  function handleUseDraft(draft: ApplicationDraft) {
+    setFormValues({
+      ...emptyApplicationFormValues,
+      ...draft,
+    })
+    setEditingApplicationId(null)
+    setIsApplicationFormVisible(true)
+  }
+
   function handleFormClear() {
     setFormValues(emptyApplicationFormValues)
 
@@ -254,6 +268,12 @@ function JobSearchPipeline() {
     setPendingDeletionApplicationId(null)
   }
 
+  function handleResetSampleData() {
+    setApplications(initialApplications)
+    setPendingDeletionApplicationId(null)
+    setIsResetConfirmationVisible(false)
+  }
+
   return (
     <section
       className="job-search-pipeline"
@@ -263,19 +283,55 @@ function JobSearchPipeline() {
         Job Search Pipeline
       </h2>
 
-      <button
-        className="application-form-toggle"
-        type="button"
-        aria-controls="application-form-panel"
-        aria-expanded={isApplicationFormVisible}
-        onClick={() => setIsApplicationFormVisible((isVisible) => !isVisible)}
-      >
-        {isApplicationFormVisible
-          ? 'Hide application form'
-          : editingApplication
-            ? 'Resume editing application'
-            : 'Add an application'}
-      </button>
+      <div className="application-management-actions">
+        <button
+          className="application-form-toggle"
+          type="button"
+          aria-controls="application-form-panel"
+          aria-expanded={isApplicationFormVisible}
+          onClick={() => setIsApplicationFormVisible((isVisible) => !isVisible)}
+        >
+          {isApplicationFormVisible
+            ? 'Hide application form'
+            : editingApplication
+              ? 'Resume editing application'
+              : 'Add an application'}
+        </button>
+
+        {isResetConfirmationVisible ? (
+          <div
+            className="application-reset-confirmation"
+            role="group"
+            aria-label="Reset sample data confirmation"
+          >
+            <span>Replace saved applications with sample data?</span>
+
+            <button
+              type="button"
+              className="application-reset-confirm"
+              onClick={handleResetSampleData}
+            >
+              Confirm reset
+            </button>
+
+            <button
+              type="button"
+              className="application-reset-cancel"
+              onClick={() => setIsResetConfirmationVisible(false)}
+            >
+              Keep saved applications
+            </button>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="application-reset"
+            onClick={() => setIsResetConfirmationVisible(true)}
+          >
+            Reset sample data
+          </button>
+        )}
+      </div>
 
       <section
         ref={applicationFormSectionRef}
@@ -287,6 +343,10 @@ function JobSearchPipeline() {
         <h3 id="add-application-heading">
           {editingApplication ? 'Edit application' : 'New application'}
         </h3>
+
+        {!editingApplication ? (
+          <ApplicationDraftPanel onUseDraft={handleUseDraft} />
+        ) : null}
 
         <ApplicationForm
           key={editingApplicationId ?? 'new-application'}

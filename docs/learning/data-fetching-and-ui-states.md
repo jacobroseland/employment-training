@@ -53,3 +53,11 @@ Account for each user-visible outcome:
 - More results: render **Load more countries** only when more filtered countries exist.
 
 Current filtering is client-side after the country list is loaded. If a future API supports server-side search or pagination, preserve these same UI states while the request parameters change.
+
+## Keep async generation behind a service boundary
+
+An asynchronous UI component should not need to know whether its data comes from a temporary mock, a REST endpoint, or a local LLM. Give the component one focused service function and keep the implementation details behind it:
+
+    const draft = await generateApplicationDraft(jobDescription)
+
+In Job Search Pipeline, `ApplicationDraftPanel` owns user-visible request states (`idle`, `loading`, `success`, and `error`). `ApplicationDraftService` owns how the draft is produced. The current implementation waits briefly and returns a predictable practice-mode result; a future version can make a Node/Ollama request while preserving the panel's interaction and the parent form's review-before-save workflow.

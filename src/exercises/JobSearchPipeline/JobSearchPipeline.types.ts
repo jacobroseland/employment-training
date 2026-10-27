@@ -52,6 +52,16 @@ export type ApplicationFormValues = {
   notes: string
 }
 
+export type ApplicationDraft = Pick<
+  ApplicationFormValues,
+  | 'companyName'
+  | 'roleTitle'
+  | 'workArrangement'
+  | 'location'
+  | 'jobUrl'
+  | 'notes'
+>
+
 export const emptyApplicationFormValues: ApplicationFormValues = {
   companyName: '',
   roleTitle: '',

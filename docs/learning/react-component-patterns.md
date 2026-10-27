@@ -89,7 +89,7 @@ useEffect(() => {
 }, [applications])
 ```
 
-The lazy initializer reads storage only during initial state setup. The effect writes whenever the application list changes. Because browser storage can be manually edited, corrupted, or outdated, parse it as `unknown`, validate the records, and fall back to sample data when it is invalid.
+The lazy initializer reads storage only during initial state setup. The effect writes whenever the application list changes. Because browser storage can be manually edited, corrupted, or outdated, parse it as `unknown`, validate the records, and fall back to sample data when it is invalid. A development-only reset action can simply set state back to known sample data; the existing persistence effect then replaces the browser's saved value.
 
 ## Inline confirmation state
 

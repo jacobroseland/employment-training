@@ -33,12 +33,35 @@ This keeps inputs easy to control and makes the boundary where data is normalize
 
 Use a real `<form>` with `onSubmit`; it supports Enter-to-submit and gives the interaction clear semantics. `noValidate` is appropriate when React is providing the validation message rather than the browser's default popup.
 
+## Cross-field validation
+
+Some rules depend on more than one field. In Job Search Pipeline, a follow-up date cannot be earlier than the applied date:
+
+    if (
+      values.dateApplied &&
+      values.nextFollowUpDate &&
+      values.nextFollowUpDate < values.dateApplied
+    ) {
+      nextErrors.nextFollowUpDate =
+        'Choose a follow-up date on or after the application date.'
+    }
+
+Both native date inputs use `YYYY-MM-DD` values, so comparing two populated strings is a reliable chronological comparison. Attach the error to the field the user should change with `aria-invalid`, `aria-describedby`, and an error message using `role="alert"`.
+
 For an invalid field:
 
 - Connect the visible `<label>` using `htmlFor` and `id`.
 - Set `aria-invalid={true}` only while invalid.
 - Point `aria-describedby` to the error message's `id`.
 - Give the error `role="alert"` when it needs immediate announcement.
+
+## Draft-before-save workflow
+
+An AI-assisted intake feature should suggest values without silently saving or overwriting an application. Keep the draft panel separate from the validated application form, display the suggested values, and require an explicit **Use this draft** action before copying them into form state.
+
+For an early UI-only version, use a deterministic asynchronous mock. It lets us practice loading, error, review, and accept states without an API key or backend. Be transparent that the result is a practice-mode example; later, the same component boundary can call a Node/Ollama endpoint instead.
+
+Keep the asynchronous generation implementation behind a narrowly named service function, such as `generateApplicationDraft(jobDescription)`. The UI panel should manage the interaction states and call that function, while the service owns how a draft is produced. This lets a mock become an API request later without reshaping the form workflow.
 
 ## Native elements first
 

@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# Employment Training
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A hands-on React, TypeScript, and frontend-engineering sandbox for rebuilding practical coding fluency and practicing production-oriented patterns.
 
-Currently, two official plugins are available:
+The app is a catalog of small, self-contained exercises. Each exercise introduces a focused set of concepts while the repository also practices shared tooling, testing, documentation, and accessibility conventions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Exercises
 
-## React Compiler
+- **Hello World** — React component basics and CSS animation.
+- **Country Explorer** — data fetching, loading/error/empty states, search, filtering, expandable details, and responsive cards.
+- **Job Search Pipeline** — controlled forms, validation, create/edit/delete workflows, sorting/filtering, localStorage persistence, inline confirmation, and a practice-mode AI draft workflow.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The Job Search Pipeline's draft feature currently uses a deterministic local mock. It is intentionally separated behind `generateApplicationDraft()` so a future Node/Ollama implementation can replace the mock without changing the form workflow.
 
-## Expanding the ESLint configuration
+## Tech stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Vite, React, and TypeScript
+- React Router
+- Plain scoped CSS with instructional comments
+- ESLint, Prettier, and simple-import-sort
+- Jest, React Testing Library, and user-event
+- Playwright for end-to-end coverage
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Run locally
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Open the local URL printed by Vite, normally `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Quality checks
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run format
+npm run lint
+npm run build
+npm test
+npm run test:coverage
+npm run test:e2e
 ```
+
+## Documentation
+
+Concise learning notes live in [docs/learning](docs/learning/). Reusable starter-project decisions and future automation ideas live in [docs/project-bootstrap](docs/project-bootstrap/).
+
+## Current boundaries
+
+- Application data persists locally in the browser with `localStorage`.
+- The AI draft flow is a local practice mock, not an LLM integration.
+- A Node API, Ollama, SQLite, authentication, Storybook, MSW, and CI remain future learning milestones.

@@ -16,7 +16,7 @@ type ApplicationFormProps = {
 }
 
 type ApplicationFormErrors = Partial<
-  Record<'companyName' | 'roleTitle' | 'jobUrl', string>
+  Record<'companyName' | 'roleTitle' | 'jobUrl' | 'nextFollowUpDate', string>
 >
 
 function isValidJobUrl(value: string) {
@@ -45,11 +45,14 @@ function ApplicationForm({
     if (
       field === 'companyName' ||
       field === 'roleTitle' ||
-      field === 'jobUrl'
+      field === 'jobUrl' ||
+      field === 'dateApplied' ||
+      field === 'nextFollowUpDate'
     ) {
       setErrors((currentErrors) => ({
         ...currentErrors,
         [field]: undefined,
+        nextFollowUpDate: undefined,
       }))
     }
   }
@@ -69,6 +72,15 @@ function ApplicationForm({
 
     if (values.jobUrl && !isValidJobUrl(values.jobUrl.trim())) {
       nextErrors.jobUrl = 'Enter a valid HTTP or HTTPS URL.'
+    }
+
+    if (
+      values.dateApplied &&
+      values.nextFollowUpDate &&
+      values.nextFollowUpDate < values.dateApplied
+    ) {
+      nextErrors.nextFollowUpDate =
+        'Choose a follow-up date on or after the application date.'
     }
 
     if (Object.keys(nextErrors).length > 0) {
@@ -251,6 +263,10 @@ function ApplicationForm({
           <span>Next follow-up date</span>
 
           <input
+            aria-describedby={
+              errors.nextFollowUpDate ? 'next-follow-up-date-error' : undefined
+            }
+            aria-invalid={Boolean(errors.nextFollowUpDate)}
             id="next-follow-up-date"
             name="nextFollowUpDate"
             type="date"
@@ -259,6 +275,16 @@ function ApplicationForm({
               updateFormValue('nextFollowUpDate', event.target.value)
             }
           />
+
+          {errors.nextFollowUpDate ? (
+            <span
+              id="next-follow-up-date-error"
+              className="application-form-error"
+              role="alert"
+            >
+              {errors.nextFollowUpDate}
+            </span>
+          ) : null}
         </label>
 
         <label

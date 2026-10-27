@@ -1,6 +1,6 @@
 import JobSearchPipeline from './JobSearchPipeline'
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 function getRenderedApplicationNames() {
@@ -169,6 +169,124 @@ describe('JobSearchPipeline', () => {
     expect(
       screen.getByRole('textbox', { name: /company name/i }),
     ).toHaveAttribute('aria-invalid', 'true')
+  })
+
+  test('prevents a follow-up date before the application date', async () => {
+    const user = userEvent.setup()
+
+    render(<JobSearchPipeline />)
+
+    await user.click(screen.getByRole('button', { name: 'Add an application' }))
+    await user.type(
+      screen.getByRole('textbox', { name: /company name/i }),
+      'Example Labs',
+    )
+    await user.type(
+      screen.getByRole('textbox', { name: /role title/i }),
+      'Frontend Engineer',
+    )
+    fireEvent.change(screen.getByLabelText('Date applied'), {
+      target: { value: '2026-10-20' },
+    })
+    fireEvent.change(screen.getByLabelText('Next follow-up date'), {
+      target: { value: '2026-10-19' },
+    })
+    await user.click(screen.getByRole('button', { name: 'Save application' }))
+
+    expect(
+      screen.getByText(
+        'Choose a follow-up date on or after the application date.',
+      ),
+    ).toBeInTheDocument()
+    expect(screen.getByLabelText(/Next follow-up date/)).toHaveAttribute(
+      'aria-invalid',
+      'true',
+    )
+    expect(
+      screen.queryByRole('heading', { level: 3, name: 'Example Labs' }),
+    ).not.toBeInTheDocument()
+  })
+
+  test('uses a generated draft to populate a new application form', async () => {
+    const user = userEvent.setup()
+
+    render(<JobSearchPipeline />)
+
+    await user.click(screen.getByRole('button', { name: 'Add an application' }))
+    await user.click(screen.getByText('Draft from a job description'))
+
+    await user.type(
+      screen.getByLabelText('Job description'),
+      'Example listing for a hybrid role at https://example.com/jobs/123',
+    )
+    await user.click(screen.getByRole('button', { name: 'Generate draft' }))
+
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Reviewing the job description…',
+    )
+    expect(
+      screen.getByRole('button', { name: 'Generating draft…' }),
+    ).toBeDisabled()
+
+    expect(
+      await screen.findByRole('heading', {
+        level: 4,
+        name: 'Suggested details',
+      }),
+    ).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Use this draft' }))
+
+    expect(screen.getByRole('textbox', { name: /company name/i })).toHaveValue(
+      'Example Company',
+    )
+    expect(screen.getByRole('textbox', { name: /role title/i })).toHaveValue(
+      'Senior Software Engineer',
+    )
+    expect(screen.getByLabelText('Work arrangement')).toHaveValue('hybrid')
+    expect(screen.getByLabelText('Job listing URL')).toHaveValue(
+      'https://example.com/jobs/123',
+    )
+  })
+
+  test('shows an error when draft generation has no job description', async () => {
+    const user = userEvent.setup()
+
+    render(<JobSearchPipeline />)
+
+    await user.click(screen.getByRole('button', { name: 'Add an application' }))
+    await user.click(screen.getByText('Draft from a job description'))
+    await user.click(screen.getByRole('button', { name: 'Generate draft' }))
+
+    expect(
+      screen.getByText('Paste a job description before generating a draft.'),
+    ).toBeInTheDocument()
+    expect(screen.getByLabelText('Job description')).toHaveAttribute(
+      'aria-invalid',
+      'true',
+    )
+  })
+
+  test('does not offer job-description drafting while editing an application', async () => {
+    const user = userEvent.setup()
+
+    render(<JobSearchPipeline />)
+
+    const ownerApplication = screen
+      .getByRole('heading', { level: 3, name: 'Owner' })
+      .closest('article')
+
+    expect(ownerApplication).not.toBeNull()
+
+    await user.click(
+      within(ownerApplication as HTMLElement).getByRole('button', {
+        name: 'Edit Owner',
+      }),
+    )
+
+    expect(
+      screen.queryByText('Draft from a job description'),
+    ).not.toBeInTheDocument()
   })
 
   test('adds a validated application and clears the form', async () => {
@@ -427,6 +545,66 @@ describe('JobSearchPipeline', () => {
     ).toBeInTheDocument()
     expect(
       screen.getByRole('button', { name: 'Delete Assured' }),
+    ).toBeInTheDocument()
+  })
+
+  test('confirms before restoring the sample applications', async () => {
+    const user = userEvent.setup()
+
+    render(<JobSearchPipeline />)
+
+    const assuredApplication = screen
+      .getByRole('heading', { level: 3, name: 'Assured' })
+      .closest('article')
+
+    expect(assuredApplication).not.toBeNull()
+
+    await user.click(
+      within(assuredApplication as HTMLElement).getByRole('button', {
+        name: 'Delete Assured',
+      }),
+    )
+    await user.click(screen.getByRole('button', { name: 'Confirm delete' }))
+
+    expect(
+      screen.queryByRole('heading', { level: 3, name: 'Assured' }),
+    ).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Reset sample data' }))
+
+    expect(
+      screen.getByRole('group', { name: 'Reset sample data confirmation' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.queryByRole('heading', { level: 3, name: 'Assured' }),
+    ).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Confirm reset' }))
+
+    expect(
+      screen.getByRole('heading', { level: 3, name: 'Assured' }),
+    ).toBeInTheDocument()
+    expect(screen.getAllByRole('listitem')).toHaveLength(3)
+    expect(localStorage.getItem('job-search-pipeline-applications')).toContain(
+      'assured-staff-frontend-engineer',
+    )
+  })
+
+  test('cancels a pending reset without changing saved applications', async () => {
+    const user = userEvent.setup()
+
+    render(<JobSearchPipeline />)
+
+    await user.click(screen.getByRole('button', { name: 'Reset sample data' }))
+    await user.click(
+      screen.getByRole('button', { name: 'Keep saved applications' }),
+    )
+
+    expect(
+      screen.getByRole('heading', { level: 3, name: 'Assured' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Reset sample data' }),
     ).toBeInTheDocument()
   })
 

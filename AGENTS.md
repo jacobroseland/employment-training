@@ -38,4 +38,4 @@ Run the relevant commands after application changes:
 
 ## Current tooling
 
-Vite, React, TypeScript, React Router, ESLint, Prettier, simple-import-sort, Jest, React Testing Library, and user-event are installed. Storybook, MSW, Playwright, CI, and a backend are planned learning foundations; they are not installed yet.
+Vite, React, TypeScript, React Router, ESLint, Prettier, simple-import-sort, Jest, React Testing Library, user-event, and Playwright are installed. Storybook, MSW, CI, and a backend are planned learning foundations.

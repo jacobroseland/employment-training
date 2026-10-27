@@ -9,10 +9,24 @@
   padding-inline: 1rem;
 }
 
-.application-form-toggle {
-  /* Separate the reveal action from the exercise title. */
+.application-management-actions {
+  /* Separate management controls from the exercise title. */
   margin-top: 1rem;
 
+  /* Keep related actions grouped while allowing narrow layouts to wrap. */
+  display: flex;
+
+  /* Allow controls to move to another line instead of overflowing. */
+  flex-wrap: wrap;
+
+  /* Align the baseline of text-style actions and confirmation controls. */
+  align-items: center;
+
+  /* Create compact space between each management action. */
+  gap: 0.75rem;
+}
+
+.application-form-toggle {
   /* Remove button styling so the action reads like an inline link. */
   padding: 0;
 
@@ -45,6 +59,115 @@
   outline: 2px solid currentcolor;
 
   /* Separate the focus outline from the action text. */
+  outline-offset: 3px;
+}
+
+.application-reset {
+  /* Remove the default button boundary for the text-style action. */
+  padding: 0;
+
+  /* Remove the browser-provided border. */
+  border: 0;
+
+  /* Let the page background show through the action. */
+  background-color: transparent;
+
+  /* Use a muted tone because reset is a secondary action. */
+  color: #4b5563;
+
+  /* Match the form-toggle typography. */
+  font: inherit;
+
+  /* Make the secondary action easy to identify. */
+  font-weight: 600;
+
+  /* Use the familiar text-action treatment. */
+  text-decoration: underline;
+
+  /* Indicate that the action is interactive. */
+  cursor: pointer;
+}
+
+.application-reset:hover {
+  /* Give pointer users subtle feedback. */
+  color: #1f2937;
+}
+
+.application-reset:focus-visible {
+  /* Preserve a clear keyboard-focus indicator. */
+  outline: 2px solid currentcolor;
+
+  /* Separate the focus outline from the action text. */
+  outline-offset: 3px;
+}
+
+.application-reset-confirmation {
+  /* Keep reset copy and confirmation controls together. */
+  display: flex;
+
+  /* Allow confirmation controls to wrap in narrow layouts. */
+  flex-wrap: wrap;
+
+  /* Align confirmation controls with the prompt text. */
+  align-items: center;
+
+  /* Create compact space between confirmation elements. */
+  gap: 0.75rem;
+
+  /* Keep the warning copy readable without using a destructive color. */
+  color: #374151;
+}
+
+.application-reset-confirm,
+.application-reset-cancel {
+  /* Give confirmation controls a comfortable click target. */
+  padding: 0.375rem 0.625rem;
+
+  /* Define the control boundaries. */
+  border: 1px solid currentcolor;
+
+  /* Match the exercise's rounded visual treatment. */
+  border-radius: 0.375rem;
+
+  /* Match surrounding text styling. */
+  font: inherit;
+
+  /* Indicate that the controls are interactive. */
+  cursor: pointer;
+}
+
+.application-reset-confirm {
+  /* Make the confirmed reset clear without implying a destructive delete. */
+  background-color: #1d4ed8;
+
+  /* Keep the button label readable. */
+  color: #ffffff;
+}
+
+.application-reset-confirm:hover {
+  /* Darken the primary confirmation for pointer feedback. */
+  background-color: #1e40af;
+}
+
+.application-reset-cancel {
+  /* Keep the cancel action visually secondary. */
+  background-color: #ffffff;
+
+  /* Use a neutral, readable text color. */
+  color: #374151;
+}
+
+.application-reset-cancel:hover {
+  /* Give the secondary action subtle pointer feedback. */
+  background-color: #f3f4f6;
+}
+
+.application-reset-confirm:focus-visible,
+.application-reset-cancel:focus-visible {
+  /* Preserve a visible keyboard-focus indicator. */
+  outline: 2px solid currentcolor;
+
+  /* Separate the focus indicator from the controls. */
   outline-offset: 3px;
 }
 
