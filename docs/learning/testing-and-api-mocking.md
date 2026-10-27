@@ -82,7 +82,7 @@ Coverage is a diagnostic, not the goal. It measures statements, branches, functi
       '!src/**/*.types.ts',
     ]
 
-At this stage, the 21-test suite reaches 100% statement, branch, function, and line coverage across the included production source. Do not add a permanent 100% threshold merely because this learning milestone was reached; choose practical CI thresholds after the application grows.
+Run `npm run test:coverage` after production-code changes to review statement, branch, function, and line coverage together. Do not add a permanent 100% threshold merely because an early learning milestone reached it; choose practical CI thresholds after the application grows.
 
 ## Test focus
 
@@ -104,7 +104,9 @@ Playwright runs essential journeys in a real Chromium browser. Its configuration
 
 The initial suite runs Chromium only to keep feedback quick while learning. Firefox and WebKit are installed locally and can be added later as cross-browser projects.
 
-The existing browser tests cover catalog-to-exercise navigation and Country Explorer's search/details, empty-form validation, region filter, and load-more boundary. They use role-based locators and assert actual URLs and visible browser state.
+The existing browser tests cover catalog-to-exercise navigation, Country Explorer's search/details, empty-form validation, region filter, and load-more boundary, plus Job Search Pipeline's draft-to-form journey. They use role-based locators and assert actual URLs and visible browser state.
+
+The Job Search Pipeline test demonstrates a useful browser-test shape: follow one complete user journey through a native disclosure, a loading state, an asynchronous result, and its effect on a separate form. Use role- and label-based locators that identify the intended control precisely; a text label can also appear elsewhere in the page, such as in a sort option.
 
 Mock external API requests with `page.route()` before `page.goto()`. The component still calls `fetch`, but Playwright fulfills the matching browser request with stable fixture data:
 
