@@ -26,6 +26,7 @@ The bootstrap should exclude sandbox-specific material: the exercise catalog, He
 - Playwright with a Vite `webServer`, Chromium project, HTML reports, and deterministic browser-request interception
 - Storybook with Docs and accessibility addons, colocated component stories, and an ignored static-build output
 - MSW with a generated public service worker and deterministic Storybook API states
+- GitHub Actions quality workflow that uses Node 24 and runs formatting/linting, builds, Jest API/unit tests, Chromium Playwright tests, and the Storybook build
 - React Router with a shared app layout, nested routes, and URL parameters
 - `format`, `format:check`, `lint`, `build`, `test`, `test:watch`, `test:coverage`, `test:e2e`, `test:e2e:headed`, `test:e2e:ui`, `storybook`, and `build-storybook` scripts
 - A root `jest.config.cjs` with jsdom, SWC TypeScript/TSX transformation, deterministic asset/Markdown mocks, and an explicit production-coverage scope
@@ -60,7 +61,7 @@ Build and validate one layer at a time:
 4. Run a focused Figma MCP design-to-code experiment.
 5. **Complete:** add Storybook with Docs and accessibility addons, a root configuration directory, colocated component stories, and full-exercise stories where useful.
 6. **Complete:** add MSW-backed stories for API loading, success, and error states.
-7. Add a GitHub Actions quality workflow that runs formatting, linting, builds, unit tests, and Playwright tests.
+7. **Complete:** add a GitHub Actions quality workflow that runs formatting/linting, builds, Jest API/unit tests, Chromium Playwright tests, and the Storybook build on pull requests and changes pushed to `main`.
 8. Choose a deployment host.
 9. Add a small backend experiment, such as Node/Express or a managed Postgres service such as Supabase; introduce GraphQL only when the exercise benefits from it.
 

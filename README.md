@@ -22,6 +22,7 @@ The Job Search Pipeline's draft feature uses a small local Express API and Ollam
 - Playwright for end-to-end coverage
 - Storybook with Docs and accessibility addons for isolated component and feature development
 - Mock Service Worker for deterministic API-backed Storybook states
+- GitHub Actions quality checks on pull requests and changes pushed to `main`
 
 ## Run locally
 
