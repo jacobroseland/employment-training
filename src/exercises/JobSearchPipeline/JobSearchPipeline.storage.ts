@@ -20,6 +20,10 @@ function isNullableString(value: unknown): value is string | null {
   return typeof value === 'string' || value === null
 }
 
+function isOptionalNullableString(value: unknown) {
+  return value === undefined || isNullableString(value)
+}
+
 function isJobApplication(value: unknown): value is JobApplication {
   if (!value || typeof value !== 'object') {
     return false
@@ -35,11 +39,19 @@ function isJobApplication(value: unknown): value is JobApplication {
     jobStatuses.includes(application.status as JobStatus) &&
     workArrangements.includes(application.workArrangement as WorkArrangement) &&
     isNullableString(application.location) &&
+    isOptionalNullableString(application.salaryRange) &&
     isNullableString(application.jobUrl) &&
     isNullableString(application.dateApplied) &&
     isNullableString(application.nextFollowUpDate) &&
     isNullableString(application.notes)
   )
+}
+
+function normalizeApplication(application: JobApplication): JobApplication {
+  return {
+    ...application,
+    salaryRange: application.salaryRange ?? null,
+  }
 }
 
 export function loadApplications(
@@ -58,7 +70,7 @@ export function loadApplications(
       Array.isArray(parsedApplications) &&
       parsedApplications.every(isJobApplication)
     ) {
-      return parsedApplications
+      return parsedApplications.map(normalizeApplication)
     }
   } catch {
     // Ignore invalid or outdated browser data and use the sample applications.

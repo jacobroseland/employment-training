@@ -8,9 +8,9 @@ The app is a catalog of small, self-contained exercises. Each exercise introduce
 
 - **Hello World** — React component basics and CSS animation.
 - **Country Explorer** — data fetching, loading/error/empty states, search, filtering, expandable details, and responsive cards.
-- **Job Search Pipeline** — controlled forms, validation, create/edit/delete workflows, sorting/filtering, localStorage persistence, inline confirmation, and a practice-mode AI draft workflow.
+- **Job Search Pipeline** — controlled forms, validation, create/edit/delete workflows, sorting/filtering, localStorage persistence, inline confirmation, and a local AI draft workflow.
 
-The Job Search Pipeline's draft feature currently uses a deterministic local mock. It is intentionally separated behind `generateApplicationDraft()` so a future Node/Ollama implementation can replace the mock without changing the form workflow.
+The Job Search Pipeline's draft feature uses a small local Express API and Ollama. The browser calls a relative `/api` route through Vite's development proxy; Express validates requests and model output with Zod before returning editable suggestions to the form. The draft flow remains separated behind `generateApplicationDraft()`, so the UI is not coupled to the model provider.
 
 ## Tech stack
 
@@ -28,7 +28,23 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite, normally `http://localhost:5173`.
+`npm run dev` starts Vite and the local Express API together. Open the local URL printed by Vite, normally `http://localhost:5173`.
+
+### Local AI draft setup
+
+The Job Search Pipeline draft feature requires [Ollama](https://ollama.com/) and a compatible local model. The current default is `gemma4:e2b`:
+
+```bash
+ollama pull gemma4:e2b
+ollama serve
+```
+
+Start the app in a separate terminal with `npm run dev`. You can override the local model or API URL before starting the server:
+
+```bash
+OLLAMA_MODEL=your-model npm run dev:server
+OLLAMA_API_URL=http://127.0.0.1:11434/api/chat npm run dev:server
+```
 
 ## Quality checks
 
@@ -48,5 +64,5 @@ Concise learning notes live in [docs/learning](docs/learning/). Reusable starter
 ## Current boundaries
 
 - Application data persists locally in the browser with `localStorage`.
-- The AI draft flow is a local practice mock, not an LLM integration.
-- A Node API, Ollama, SQLite, authentication, Storybook, MSW, and CI remain future learning milestones.
+- The AI draft API and Ollama model run only on the local machine; no job-listing text is sent to a hosted AI provider.
+- A database, authentication, Storybook, MSW, CI, and deployment remain future learning milestones.

@@ -93,6 +93,7 @@ function ApplicationForm({
       companyName: values.companyName.trim(),
       roleTitle: values.roleTitle.trim(),
       location: values.location.trim(),
+      salaryRange: values.salaryRange.trim(),
       jobUrl: values.jobUrl.trim(),
       notes: values.notes.trim(),
     })
@@ -217,6 +218,20 @@ function ApplicationForm({
             value={values.location}
             onChange={(event) =>
               updateFormValue('location', event.target.value)
+            }
+          />
+        </label>
+
+        <label className="application-form-field" htmlFor="salary-range">
+          <span>Salary range</span>
+
+          <input
+            id="salary-range"
+            name="salaryRange"
+            type="text"
+            value={values.salaryRange}
+            onChange={(event) =>
+              updateFormValue('salaryRange', event.target.value)
             }
           />
         </label>

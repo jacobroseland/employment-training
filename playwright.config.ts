@@ -35,8 +35,8 @@ export default defineConfig({
   ],
 
   webServer: {
-    // Start Vite automatically when no local server is already running.
-    command: 'npm run dev -- --host 127.0.0.1',
+    // Browser tests intercept the draft API, so they need only the Vite client.
+    command: 'npm run dev:client -- --host 127.0.0.1',
 
     // Playwright waits for this address to respond before testing.
     url: 'http://127.0.0.1:5173',

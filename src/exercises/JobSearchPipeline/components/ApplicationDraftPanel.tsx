@@ -52,8 +52,8 @@ function ApplicationDraftPanel({ onUseDraft }: ApplicationDraftPanelProps) {
 
       <div className="application-draft-panel-content">
         <p>
-          Paste a listing to practice an AI-assisted intake workflow. This local
-          version returns an example draft, so review every value before saving.
+          Paste a listing to generate a draft with your local AI model. Review
+          every suggested value before saving.
         </p>
 
         <form onSubmit={handleGenerateDraft}>
@@ -127,6 +127,12 @@ function ApplicationDraftPanel({ onUseDraft }: ApplicationDraftPanelProps) {
                 <dt>Location</dt>
                 <dd>{draft.location}</dd>
               </div>
+              {draft.salaryRange ? (
+                <div>
+                  <dt>Salary range</dt>
+                  <dd>{draft.salaryRange}</dd>
+                </div>
+              ) : null}
             </dl>
 
             <button type="button" onClick={handleUseDraft}>

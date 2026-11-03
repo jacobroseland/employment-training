@@ -60,4 +60,16 @@ An asynchronous UI component should not need to know whether its data comes from
 
     const draft = await generateApplicationDraft(jobDescription)
 
-In Job Search Pipeline, `ApplicationDraftPanel` owns user-visible request states (`idle`, `loading`, `success`, and `error`). `ApplicationDraftService` owns how the draft is produced. The current implementation waits briefly and returns a predictable practice-mode result; a future version can make a Node/Ollama request while preserving the panel's interaction and the parent form's review-before-save workflow.
+In Job Search Pipeline, `ApplicationDraftPanel` owns user-visible request states (`idle`, `loading`, `success`, and `error`). `ApplicationDraftService` owns the browser request, while the Express API owns the Ollama request and response validation. The panel continues to preserve the parent form's review-before-save workflow.
+
+## Keep browser, server, and model contracts explicit
+
+The Job Search Pipeline draft workflow uses three boundaries:
+
+    browser → POST /api/application-draft → Express → local Ollama
+
+`ApplicationDraft.contract.ts` holds the Zod schema that both browser and server use. The browser validates the API envelope before displaying it, and the server validates Ollama's JSON before returning it. This prevents an unexpected model response from becoming an unchecked form value.
+
+The model returns empty strings for unknown optional values such as `salaryRange`. The form preserves that editable string, while the saved `JobApplication` converts an empty optional value to `null`. This keeps the AI contract simple and makes absent saved data explicit.
+
+The browser calls the relative `/api` route. Vite proxies it to the local Express port during development, so the UI does not know the Ollama host and does not need browser CORS permissions. Tests mock `fetch` at the service boundary; they do not require a local model to be installed or running.

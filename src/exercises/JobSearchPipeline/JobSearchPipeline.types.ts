@@ -3,6 +3,8 @@ export type JobStatus =
 
 export type WorkArrangement = 'remote' | 'hybrid' | 'on-site'
 
+export type { ApplicationDraft } from './ApplicationDraft.contract'
+
 export const jobStatusOptions: { label: string; value: JobStatus }[] = [
   { label: 'Saved', value: 'saved' },
   { label: 'Applied', value: 'applied' },
@@ -33,6 +35,7 @@ export type JobApplication = {
   status: JobStatus
   workArrangement: WorkArrangement
   location: string | null
+  salaryRange: string | null
   jobUrl: string | null
   dateApplied: string | null
   nextFollowUpDate: string | null
@@ -46,21 +49,12 @@ export type ApplicationFormValues = {
   status: JobStatus
   workArrangement: WorkArrangement
   location: string
+  salaryRange: string
   jobUrl: string
   dateApplied: string
   nextFollowUpDate: string
   notes: string
 }
-
-export type ApplicationDraft = Pick<
-  ApplicationFormValues,
-  | 'companyName'
-  | 'roleTitle'
-  | 'workArrangement'
-  | 'location'
-  | 'jobUrl'
-  | 'notes'
->
 
 export const emptyApplicationFormValues: ApplicationFormValues = {
   companyName: '',
@@ -68,6 +62,7 @@ export const emptyApplicationFormValues: ApplicationFormValues = {
   status: 'saved',
   workArrangement: 'remote',
   location: '',
+  salaryRange: '',
   jobUrl: '',
   dateApplied: '',
   nextFollowUpDate: '',

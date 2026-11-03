@@ -1,5 +1,12 @@
 import JobSearchPipeline from './JobSearchPipeline'
-import { beforeEach, describe, expect, jest, test } from '@jest/globals'
+import {
+  afterAll,
+  beforeEach,
+  describe,
+  expect,
+  jest,
+  test,
+} from '@jest/globals'
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -9,9 +16,18 @@ function getRenderedApplicationNames() {
     .map((heading) => heading.textContent ?? '')
 }
 
+const originalFetch = globalThis.fetch
+const fetchMock = jest.fn<typeof fetch>()
+
 describe('JobSearchPipeline', () => {
   beforeEach(() => {
     localStorage.clear()
+    fetchMock.mockReset()
+    globalThis.fetch = fetchMock as typeof fetch
+  })
+
+  afterAll(() => {
+    globalThis.fetch = originalFetch
   })
 
   test('renders its labelled exercise region and seeded applications', () => {
@@ -61,7 +77,7 @@ describe('JobSearchPipeline', () => {
     ).not.toBeInTheDocument()
   })
 
-  test('loads valid saved applications instead of sample applications', () => {
+  test('loads saved applications created before the salary field existed', () => {
     localStorage.setItem(
       'job-search-pipeline-applications',
       JSON.stringify([
@@ -209,6 +225,13 @@ describe('JobSearchPipeline', () => {
 
   test('uses a generated draft to populate a new application form', async () => {
     const user = userEvent.setup()
+    let resolveFetch: ((response: Response) => void) | undefined
+
+    fetchMock.mockReturnValue(
+      new Promise((resolve) => {
+        resolveFetch = resolve
+      }),
+    )
 
     render(<JobSearchPipeline />)
 
@@ -228,6 +251,25 @@ describe('JobSearchPipeline', () => {
       screen.getByRole('button', { name: 'Generating draft…' }),
     ).toBeDisabled()
 
+    if (!resolveFetch) {
+      throw new Error('The draft request did not start.')
+    }
+
+    resolveFetch({
+      ok: true,
+      json: async () => ({
+        draft: {
+          companyName: 'Example Labs',
+          roleTitle: 'Senior Frontend Engineer',
+          workArrangement: 'hybrid',
+          location: 'Austin, Texas',
+          salaryRange: '$160,000–$190,000 annually',
+          jobUrl: 'https://example.com/jobs/123',
+          notes: 'Accessible React and TypeScript product work.',
+        },
+      }),
+    } as Response)
+
     expect(
       await screen.findByRole('heading', {
         level: 4,
@@ -238,12 +280,15 @@ describe('JobSearchPipeline', () => {
     await user.click(screen.getByRole('button', { name: 'Use this draft' }))
 
     expect(screen.getByRole('textbox', { name: /company name/i })).toHaveValue(
-      'Example Company',
+      'Example Labs',
     )
     expect(screen.getByRole('textbox', { name: /role title/i })).toHaveValue(
-      'Senior Software Engineer',
+      'Senior Frontend Engineer',
     )
     expect(screen.getByLabelText('Work arrangement')).toHaveValue('hybrid')
+    expect(screen.getByLabelText('Salary range')).toHaveValue(
+      '$160,000–$190,000 annually',
+    )
     expect(screen.getByLabelText('Job listing URL')).toHaveValue(
       'https://example.com/jobs/123',
     )
@@ -311,6 +356,10 @@ describe('JobSearchPipeline', () => {
     )
     await user.type(screen.getByLabelText('Location'), 'Remote')
     await user.type(
+      screen.getByLabelText('Salary range'),
+      '$150,000–$180,000 annually',
+    )
+    await user.type(
       screen.getByLabelText('Job listing URL'),
       'https://example.com/jobs/frontend-engineer',
     )
@@ -330,6 +379,9 @@ describe('JobSearchPipeline', () => {
       exampleApplicationDetails.getByText('Frontend Engineer'),
     ).toBeInTheDocument()
     expect(exampleApplicationDetails.getByText('Hybrid')).toBeInTheDocument()
+    expect(
+      exampleApplicationDetails.getByText('$150,000–$180,000 annually'),
+    ).toBeInTheDocument()
     expect(
       exampleApplicationDetails.getByText('A promising role.'),
     ).toBeInTheDocument()
@@ -355,6 +407,7 @@ describe('JobSearchPipeline', () => {
           roleTitle: 'Frontend Engineer',
           status: 'applied',
           workArrangement: 'hybrid',
+          salaryRange: '$150,000–$180,000 annually',
         }),
       ]),
     )

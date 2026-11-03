@@ -68,6 +68,13 @@ function ApplicationCard({
           </div>
         )}
 
+        {application.salaryRange && (
+          <div>
+            <dt>Salary range</dt>
+            <dd>{application.salaryRange}</dd>
+          </div>
+        )}
+
         <div>
           <dt>Date applied</dt>
           <dd>{appliedDate ?? 'Not yet applied'}</dd>

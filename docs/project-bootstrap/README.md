@@ -30,6 +30,7 @@ The bootstrap should exclude sandbox-specific material: the exercise catalog, He
 - Clear test-runner boundaries: colocated Jest tests under `src/**/*.test.tsx` and Playwright browser tests under `e2e/**/*.spec.ts`
 - A minimal app shell, one example shared component, and one example test
 - A source structure that favors colocation before abstraction
+- An optional local backend pattern: Express, Zod runtime contracts, a Vite `/api` proxy, and concurrent client/server development scripts
 
 ## Test foundation recipe
 

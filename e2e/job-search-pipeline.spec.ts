@@ -1,8 +1,29 @@
 import { expect, test } from '@playwright/test'
 
-test('generates a practice draft and applies it to a new application form', async ({
+test('generates an API draft and applies it to a new application form', async ({
   page,
 }) => {
+  await page.route('**/api/application-draft', async (route) => {
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100)
+    })
+
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({
+        draft: {
+          companyName: 'Example Labs',
+          roleTitle: 'Senior Frontend Engineer',
+          workArrangement: 'hybrid',
+          location: 'Austin, Texas',
+          salaryRange: '$160,000–$190,000 annually',
+          jobUrl: 'https://example.com/jobs/frontend-engineer',
+          notes: '',
+        },
+      }),
+    })
+  })
+
   await page.goto('/exercises/job-search-pipeline')
 
   await page.getByRole('button', { name: 'Add an application' }).click()
@@ -34,11 +55,14 @@ test('generates a practice draft and applies it to a new application form', asyn
 
   await expect(
     page.getByRole('textbox', { name: 'Company name', exact: true }),
-  ).toHaveValue('Example Company')
+  ).toHaveValue('Example Labs')
   await expect(
     page.getByRole('textbox', { name: 'Role title', exact: true }),
-  ).toHaveValue('Senior Software Engineer')
+  ).toHaveValue('Senior Frontend Engineer')
   await expect(page.getByLabel('Work arrangement')).toHaveValue('hybrid')
+  await expect(page.getByLabel('Salary range')).toHaveValue(
+    '$160,000–$190,000 annually',
+  )
   await expect(page.getByLabel('Job listing URL')).toHaveValue(
     'https://example.com/jobs/frontend-engineer',
   )

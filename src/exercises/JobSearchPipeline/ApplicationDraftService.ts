@@ -1,43 +1,24 @@
-import type {
-  ApplicationDraft,
-  WorkArrangement,
-} from './JobSearchPipeline.types'
-
-function getWorkArrangement(jobDescription: string): WorkArrangement {
-  const normalizedDescription = jobDescription.toLowerCase()
-
-  if (normalizedDescription.includes('hybrid')) {
-    return 'hybrid'
-  }
-
-  if (
-    normalizedDescription.includes('on-site') ||
-    normalizedDescription.includes('onsite')
-  ) {
-    return 'on-site'
-  }
-
-  return 'remote'
-}
-
-function getJobUrl(jobDescription: string) {
-  return jobDescription.match(/https?:\/\/[^\s)]+/)?.[0] ?? ''
-}
+import { applicationDraftResponseSchema } from './ApplicationDraft.contract'
+import type { ApplicationDraft } from './JobSearchPipeline.types'
 
 export async function generateApplicationDraft(
   jobDescription: string,
 ): Promise<ApplicationDraft> {
-  await new Promise<void>((resolve) => {
-    window.setTimeout(resolve, 400)
+  const response = await fetch('/api/application-draft', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ jobDescription }),
   })
 
-  return {
-    companyName: 'Example Company',
-    roleTitle: 'Senior Software Engineer',
-    workArrangement: getWorkArrangement(jobDescription),
-    location: 'Remote - United States',
-    jobUrl: getJobUrl(jobDescription),
-    notes:
-      'Practice-mode draft: review and replace these suggested details before saving.',
+  if (!response.ok) {
+    throw new Error('Unable to generate a draft.')
   }
+
+  const responseData = applicationDraftResponseSchema.parse(
+    await response.json(),
+  )
+
+  return responseData.draft
 }
