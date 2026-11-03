@@ -7,6 +7,10 @@ const config: StorybookConfig = {
     '@storybook/addon-docs',
     'msw-storybook-addon',
   ],
+  features: {
+    menuOnboardingChecklist: false,
+    sidebarOnboardingChecklist: false,
+  },
   framework: '@storybook/react-vite',
   staticDirs: ['../public'],
 }

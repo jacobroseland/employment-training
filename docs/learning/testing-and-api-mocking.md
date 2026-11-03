@@ -128,6 +128,8 @@ Storybook is an isolated component workbench. It runs separately from the produc
 
 Keep Storybook configuration in the root `.storybook/` directory. Colocate each story with the component it documents using the `ComponentName.stories.tsx` suffix. The sidebar distinguishes a composed `Full Exercise` from exercise-specific `Components`; shared components remain under `Shared`.
 
+The generic Storybook onboarding checklist is disabled through `features.menuOnboardingChecklist` and `features.sidebarOnboardingChecklist` in `.storybook/main.ts`. It is helpful during first-time setup but does not document this project’s components.
+
 The production entry point does not import story files, so stories under `src/` are not part of the production application. `storybook-static/` is the generated output from `npm run build-storybook`; it is ignored by Git and should not be edited or committed.
 
 Use `fn()` from `storybook/test` for callback props. It provides an action visible in Storybook’s interactions panel without changing the production component. Use a story `play` function with `userEvent` and `within` when the desired state requires real interaction, such as submitting a form or expanding a disclosure.
