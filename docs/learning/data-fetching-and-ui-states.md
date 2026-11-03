@@ -73,3 +73,14 @@ The Job Search Pipeline draft workflow uses three boundaries:
 The model returns empty strings for unknown optional values such as `salaryRange`. The form preserves that editable string, while the saved `JobApplication` converts an empty optional value to `null`. This keeps the AI contract simple and makes absent saved data explicit.
 
 The browser calls the relative `/api` route. Vite proxies it to the local Express port during development, so the UI does not know the Ollama host and does not need browser CORS permissions. Tests mock `fetch` at the service boundary; they do not require a local model to be installed or running.
+
+## Prefer explicit user hints over AI inference
+
+Job listings sometimes omit the company name or mix it with promotional text. The draft textarea accepts optional labeled hints in its first two non-empty lines:
+
+    Company: Angel Studios
+    Role: Sr Front End Engineer
+
+    [job listing text]
+
+The API preserves those explicitly provided values after the model returns, while still using the model to extract the remaining fields. This is more reliable than assuming that any two unlabeled lines always contain a company and role, and it keeps the user in control of important data.

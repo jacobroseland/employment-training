@@ -238,6 +238,14 @@ describe('JobSearchPipeline', () => {
     await user.click(screen.getByRole('button', { name: 'Add an application' }))
     await user.click(screen.getByText('Draft from a job description'))
 
+    expect(
+      screen.getByText(/For the most reliable company and role details/i),
+    ).toBeInTheDocument()
+    expect(screen.getByLabelText('Job description')).toHaveAttribute(
+      'aria-describedby',
+      'job-description-hint',
+    )
+
     await user.type(
       screen.getByLabelText('Job description'),
       'Example listing for a hybrid role at https://example.com/jobs/123',

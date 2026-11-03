@@ -9,7 +9,10 @@ module.exports = {
     '!src/**/*.types.ts',
   ],
   testEnvironment: 'jsdom',
-  testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}'],
+  testMatch: [
+    '<rootDir>/src/**/*.test.{ts,tsx}',
+    '<rootDir>/server/**/*.test.ts',
+  ],
   setupFilesAfterEnv: ['<rootDir>/src/test/setup.ts'],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   transform: {

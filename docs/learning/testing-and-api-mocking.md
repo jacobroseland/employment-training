@@ -24,7 +24,7 @@ These are development dependencies: CI installs them before it runs tests, but a
 - `src/test/setup.ts` imports `@testing-library/jest-dom/jest-globals`, adding matchers such as `toBeInTheDocument()` to the `expect` imported from `@jest/globals`.
 - `src/test/setup.ts` also exposes Node's `TextEncoder` and `TextDecoder` on `globalThis`, because React Router expects those web APIs and jsdom does not provide them in this test environment.
 - `moduleNameMapper` replaces CSS, Vite `?raw` Markdown imports, and the ESM-only `react-markdown` package with small test mocks.
-- `testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}']` limits Jest to colocated unit and feature tests under `src/`. This prevents Jest from attempting to run Playwright's `e2e/*.spec.ts` browser tests in jsdom.
+- `testMatch` includes colocated unit and feature tests under `src/`, plus `server/**/*.test.ts` for local API route tests. It deliberately excludes Playwright's `e2e/*.spec.ts` browser tests.
 
 ## Test structure
 
@@ -40,7 +40,10 @@ Use `globalThis`, not Node's `global`, because the app TypeScript configuration 
 Browser tests use the separate `e2e/` directory and the `.spec.ts` suffix. Keeping the locations and suffixes distinct makes the responsible runner clear:
 
     src/**/*.test.tsx  -> Jest + React Testing Library
+    server/**/*.test.ts -> Jest + Supertest
     e2e/**/*.spec.ts   -> Playwright
+
+The Express application is created by `createApplicationDraftApp()` instead of being coupled directly to the port-listening entry point. Its route tests inject a draft-generator function, then use Supertest to verify the success response, invalid request response, explicit Company/Role header behavior, and safe model-failure response without calling Ollama.
 
 ## Writing tests
 

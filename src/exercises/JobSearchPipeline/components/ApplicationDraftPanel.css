@@ -78,6 +78,20 @@
   font-weight: 600;
 }
 
+.application-draft-hint {
+  /* Remove browser paragraph spacing inside the form layout. */
+  margin: 0;
+
+  /* De-emphasize optional input guidance while keeping it readable. */
+  color: #4b5563;
+
+  /* Make the multi-line template easier to scan without competing with the label. */
+  font-size: 0.8125rem;
+
+  /* Return helper text to normal weight after inheriting from the label. */
+  font-weight: 400;
+}
+
 .application-draft-panel textarea {
   /* Let the textarea fill the available panel width. */
   width: 100%;

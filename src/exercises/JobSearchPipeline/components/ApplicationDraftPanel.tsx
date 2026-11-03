@@ -61,12 +61,18 @@ function ApplicationDraftPanel({ onUseDraft }: ApplicationDraftPanelProps) {
             <span>Job description</span>
 
             <textarea
-              aria-describedby={
-                errorMessage ? 'job-description-error' : undefined
-              }
+              aria-describedby={[
+                'job-description-hint',
+                errorMessage ? 'job-description-error' : undefined,
+              ]
+                .filter(Boolean)
+                .join(' ')}
               aria-invalid={Boolean(errorMessage)}
               id="job-description"
               name="jobDescription"
+              placeholder={
+                'Company: Example Labs\nRole: Senior Frontend Engineer\n\nPaste the listing below.'
+              }
               rows={6}
               value={jobDescription}
               onChange={(event) => {
@@ -79,6 +85,12 @@ function ApplicationDraftPanel({ onUseDraft }: ApplicationDraftPanelProps) {
               }}
             />
           </label>
+
+          <p id="job-description-hint" className="application-draft-hint">
+            For the most reliable company and role details, begin with labeled{' '}
+            <strong>Company:</strong> and <strong>Role:</strong> lines, then
+            paste the listing. These hints are optional.
+          </p>
 
           {errorMessage ? (
             <p
