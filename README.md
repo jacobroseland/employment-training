@@ -20,6 +20,8 @@ The Job Search Pipeline's draft feature uses a small local Express API and Ollam
 - ESLint, Prettier, and simple-import-sort
 - Jest, React Testing Library, and user-event
 - Playwright for end-to-end coverage
+- Storybook with Docs and accessibility addons for isolated component and feature development
+- Mock Service Worker for deterministic API-backed Storybook states
 
 ## Run locally
 
@@ -55,7 +57,13 @@ npm run build
 npm test
 npm run test:coverage
 npm run test:e2e
+npm run storybook
+npm run build-storybook
 ```
+
+## Component workbench
+
+Run `npm run storybook` to inspect shared components, exercise-specific components, and selected full exercises in isolation. Stories are colocated with the components they document as `ComponentName.stories.tsx`; API-backed states use MSW so success, loading, empty, and error states remain repeatable without calling a real service. `npm run build-storybook` validates that the static Storybook site can be built. Its generated `storybook-static/` folder is intentionally ignored by Git.
 
 ## Documentation
 
@@ -65,4 +73,4 @@ Concise learning notes live in [docs/learning](docs/learning/). Reusable starter
 
 - Application data persists locally in the browser with `localStorage`.
 - The AI draft API and Ollama model run only on the local machine; no job-listing text is sent to a hosted AI provider.
-- A database, authentication, Storybook, MSW, CI, and deployment remain future learning milestones.
+- A database, authentication, CI, and deployment remain future learning milestones.

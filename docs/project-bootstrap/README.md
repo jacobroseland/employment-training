@@ -24,8 +24,10 @@ The bootstrap should exclude sandbox-specific material: the exercise catalog, He
 - ESLint with simple-import-sort
 - Jest, React Testing Library, user-event, and Jest DOM
 - Playwright with a Vite `webServer`, Chromium project, HTML reports, and deterministic browser-request interception
+- Storybook with Docs and accessibility addons, colocated component stories, and an ignored static-build output
+- MSW with a generated public service worker and deterministic Storybook API states
 - React Router with a shared app layout, nested routes, and URL parameters
-- `format`, `format:check`, `lint`, `build`, `test`, `test:watch`, `test:coverage`, `test:e2e`, `test:e2e:headed`, and `test:e2e:ui` scripts
+- `format`, `format:check`, `lint`, `build`, `test`, `test:watch`, `test:coverage`, `test:e2e`, `test:e2e:headed`, `test:e2e:ui`, `storybook`, and `build-storybook` scripts
 - A root `jest.config.cjs` with jsdom, SWC TypeScript/TSX transformation, deterministic asset/Markdown mocks, and an explicit production-coverage scope
 - Clear test-runner boundaries: colocated Jest tests under `src/**/*.test.tsx` and Playwright browser tests under `e2e/**/*.spec.ts`
 - A minimal app shell, one example shared component, and one example test
@@ -44,8 +46,8 @@ Configure `jest.config.cjs` because the starter uses an ES module package. When 
 
 1. **Scaffold:** create the Vite project and apply baseline configuration.
 2. **Quality:** formatting, linting, type-checking, tests, and CI.
-3. **UI development:** Storybook.
-4. **API development:** MSW, environment variables, and a backend/client choice.
+3. **UI development:** Storybook and MSW-backed API states.
+4. **API development:** environment variables and a backend/client choice.
 5. **Deployment:** a hosting configuration and a preview/production workflow.
 
 ## Proposed rollout
@@ -56,10 +58,11 @@ Build and validate one layer at a time:
 2. **Complete:** add React Router, a shared app layout, nested catalog and learning routes, URL parameters, and corrective redirects.
 3. **Complete:** add Playwright end-to-end tests for catalog navigation and key Country Explorer behaviors, including deterministic API interception.
 4. Run a focused Figma MCP design-to-code experiment.
-5. Add Storybook and MSW-backed stories.
-6. Add a GitHub Actions quality workflow that runs formatting, linting, builds, unit tests, and Playwright tests.
-7. Choose a deployment host.
-8. Add a small backend experiment, such as Node/Express or a managed Postgres service such as Supabase; introduce GraphQL only when the exercise benefits from it.
+5. **Complete:** add Storybook with Docs and accessibility addons, a root configuration directory, colocated component stories, and full-exercise stories where useful.
+6. **Complete:** add MSW-backed stories for API loading, success, and error states.
+7. Add a GitHub Actions quality workflow that runs formatting, linting, builds, unit tests, and Playwright tests.
+8. Choose a deployment host.
+9. Add a small backend experiment, such as Node/Express or a managed Postgres service such as Supabase; introduce GraphQL only when the exercise benefits from it.
 
 Set practical CI coverage thresholds only after the project has more than the initial learning exercises. The current 100% result is a useful baseline and teaching tool, not a mandate that every future project must enforce 100%.
 

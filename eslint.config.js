@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from 'eslint-plugin-storybook'
+
 import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
@@ -7,7 +10,7 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 
 export default defineConfig([
-  globalIgnores(['coverage', 'dist']),
+  globalIgnores(['coverage', 'dist', 'storybook-static']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -38,4 +41,5 @@ export default defineConfig([
       globals: globals.node,
     },
   },
+  ...storybook.configs['flat/recommended'],
 ])

@@ -1,6 +1,6 @@
 # Testing and API mocking
 
-> Current foundation: Jest, React Testing Library, user-event, Jest DOM, jsdom, SWC transformation, and Playwright are installed. Jest runs in ESM mode so it can test React Router v8, which is ESM-only. MSW is a planned next-stage tool.
+> Current foundation: Jest, React Testing Library, user-event, Jest DOM, jsdom, SWC transformation, Playwright, Storybook, and MSW are installed. Jest runs in ESM mode so it can test React Router v8, which is ESM-only.
 
 ## Current Jest setup
 
@@ -119,6 +119,21 @@ This keeps the default browser suite fast and deterministic. When the project la
 
 Playwright reports behavior and browser-test results, not source line/branch coverage by default. Keep Jest as the source-coverage tool. Playwright has lower-level Chromium-only coverage APIs, but mapping bundled browser execution back to TypeScript source requires additional tooling and is not part of this baseline.
 
+## Storybook
+
+Storybook is an isolated component workbench. It runs separately from the production Vite application and renders a component in named states called stories. Use it to inspect a component’s visual states, controls, documentation, and accessibility checks without navigating through the entire app.
+
+    npm run storybook
+    npm run build-storybook
+
+Keep Storybook configuration in the root `.storybook/` directory. Colocate each story with the component it documents using the `ComponentName.stories.tsx` suffix. The sidebar distinguishes a composed `Full Exercise` from exercise-specific `Components`; shared components remain under `Shared`.
+
+The production entry point does not import story files, so stories under `src/` are not part of the production application. `storybook-static/` is the generated output from `npm run build-storybook`; it is ignored by Git and should not be edited or committed.
+
+Use `fn()` from `storybook/test` for callback props. It provides an action visible in Storybook’s interactions panel without changing the production component. Use a story `play` function with `userEvent` and `within` when the desired state requires real interaction, such as submitting a form or expanding a disclosure.
+
+Interactive components can otherwise retain hook state while switching between stories. The project preview decorator gives each rendered `<Story>` a `key` based on `context.id`, forcing a fresh mount for every story so its state is independent.
+
 ## Test wrappers
 
 Providers usually belong in a shared test utility, not production component code. For example, a future `src/test/render.tsx` could wrap components with a router, theme, or other providers required by many tests.
@@ -129,7 +144,28 @@ Mock Service Worker (MSW) intercepts requests made by the application and respon
 
     component fetch -> MSW interceptor -> matching handler -> mock response
 
-Handlers make loading, HTTP-error, network-error, and successful responses deterministic without modifying the component.
+Install the current Storybook setup with:
+
+    npm install --save-dev msw msw-storybook-addon
+    npx msw init public/ --save
+
+The second command creates `public/mockServiceWorker.js`. Storybook copies `public/` through `staticDirs`, and `.storybook/preview.tsx` adds `mswLoader()` from `msw-storybook-addon/csf3`. The `/csf3` entry point is intentional: this repo uses standard Component Story Format story objects and `parameters.msw` handlers.
+
+Handlers make loading, HTTP-error, and successful responses deterministic without modifying the component. Put a handler on the specific story that needs it:
+
+    parameters: {
+      msw: {
+        handlers: [
+          http.get('https://example.com/items', () => {
+            return HttpResponse.json(items)
+          }),
+        ],
+      },
+    }
+
+The Country Explorer full-exercise stories use this pattern for search results, empty results, loading, and request-error states. Application Draft Panel uses it for generated-draft, loading, and request-error states. `delay('infinite')` intentionally leaves a request pending so the UI's loading state can be inspected.
+
+MSW is currently a Storybook fixture tool in this repository. A later improvement can reuse shared handlers in Jest and Playwright where that produces a clearer test than directly mocking `fetch` or using Playwright's `page.route()`.
 
 ## Mock placement
 
