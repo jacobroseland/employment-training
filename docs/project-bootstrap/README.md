@@ -62,8 +62,13 @@ Build and validate one layer at a time:
 5. **Complete:** add Storybook with Docs and accessibility addons, a root configuration directory, colocated component stories, and full-exercise stories where useful.
 6. **Complete:** add MSW-backed stories for API loading, success, and error states.
 7. **Complete:** add a GitHub Actions quality workflow that runs formatting/linting, builds, Jest API/unit tests, Chromium Playwright tests, and the Storybook build on pull requests and changes pushed to `main`.
-8. Choose a deployment host.
-9. Add a small backend experiment, such as Node/Express or a managed Postgres service such as Supabase; introduce GraphQL only when the exercise benefits from it.
+8. **Complete:** deploy the Vite single-page app to Vercel through its GitHub integration. Commit a root `vercel.json` catch-all rewrite to `index.html` so direct React Router URLs work in production. Vercel auto-detects Vite and uses its `npm run build` / `dist` defaults.
+9. **Complete (local-only):** add a small Node/Express backend experiment for the Ollama-powered application draft endpoint.
+10. Add persistent data and a hosted backend, such as managed Postgres/Supabase. Introduce GraphQL only when the exercise benefits from it.
+
+## Deployment foundation
+
+For a Vite React single-page app, use Vercel's Git integration and keep deployment settings close to their framework defaults. A static host does not run Vite's development proxy or a local Ollama process, so local-only AI controls need an explicit hosted-demo boundary until a hosted backend and model provider are added. Set up the Vercel GitHub App with access only to the repository being deployed. This produces production deployments from `main` and preview deployments from future pull requests.
 
 Set practical CI coverage thresholds only after the project has more than the initial learning exercises. The current 100% result is a useful baseline and teaching tool, not a mandate that every future project must enforce 100%.
 

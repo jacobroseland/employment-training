@@ -74,4 +74,5 @@ Concise learning notes live in [docs/learning](docs/learning/). Reusable starter
 
 - Application data persists locally in the browser with `localStorage`.
 - The AI draft API and Ollama model run only on the local machine; no job-listing text is sent to a hosted AI provider.
-- A database, authentication, CI, and deployment remain future learning milestones.
+- The static frontend is deployed at [employment-training.vercel.app](https://employment-training.vercel.app/). GitHub pushes to `main` trigger Vercel production deployments.
+- A database, authentication, and a hosted AI/backend remain future learning milestones.
