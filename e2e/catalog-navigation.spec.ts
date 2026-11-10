@@ -88,10 +88,6 @@ test('opens the technology map and architecture overview from learning materials
     page.getByRole('img', { name: /Employment Training architecture/ }),
   ).toBeVisible()
 
-  await expect(
-    page.getByRole('link', { name: 'Interactive FigJam architecture diagram' }),
-  ).toHaveAttribute('href', expect.stringContaining('figma.com/board/'))
-
   await page.getByRole('link', { name: 'Exercise technology map' }).click()
 
   await expect(page).toHaveURL('/learning/exercise-technology-map')

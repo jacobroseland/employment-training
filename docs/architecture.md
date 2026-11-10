@@ -1,29 +1,66 @@
 # Architecture overview
 
-The companion editable FigJam diagram is created from the same source of truth as this document. It separates the deployed application from local-only development services so the current boundaries stay clear.
+Use the system map above as the visual reference. This page adds the short version: what is deployed, what stays on the development machine, and how the pieces communicate.
 
-## Production runtime
+## System at a glance
 
-1. A user loads the Vite-built React application from Vercel.
-2. The browser application uses Supabase Auth for the account session and the Supabase data API for private application data.
-3. Supabase Row Level Security enforces that each user can access only their own job applications and app-installation rows.
+- **Browser application:** React, TypeScript, React Router, native CSS, and React Markdown power the catalog, exercises, Learning Center, account pages, and protected routes.
+- **Hosted data platform:** Supabase Auth identifies the signed-in user. Supabase Postgres stores their applications and installed-app preferences. Row Level Security (RLS) enforces ownership in the database.
+- **Local AI experiment:** Vite, Express, Zod, and Ollama make up the job-listing draft flow. It is available during local development only.
+- **Quality and delivery:** GitHub Actions verifies changes; Vercel builds and serves the deployed frontend from `main`.
 
-## Local development additions
+## Production request flow
 
-1. Vite serves the client and proxies relative `/api` calls.
-2. The local Express API validates an AI-draft request with Zod.
-3. Express calls a locally running Ollama model and validates the structured response before returning editable form suggestions.
+1. **Vercel** serves the Vite-built React application.
+2. **React Router** selects a view from the URL, including catalog, exercise, learning, and account routes.
+3. The browser uses **`@supabase/supabase-js`** to restore the user’s session and make data requests.
+4. **Supabase Auth** confirms identity; the Supabase data API reads or changes Postgres rows.
+5. **RLS** checks that every application or installed-app row belongs to that signed-in user.
 
-That AI path is intentionally **local-only** today. It is not included in the Vercel production deployment.
+The browser has a public Supabase URL and anonymous key because they are designed for browser use. It never receives a database password, service-role key, or AI-provider credential.
 
-## Delivery path
+## Local AI draft flow
 
-1. Changes are pushed to GitHub.
-2. GitHub Actions runs repository quality checks.
-3. Vercel deploys the `main` branch as production.
+1. The Job Search Pipeline submits copied listing text to a relative `/api` endpoint.
+2. **Vite** proxies that local request to the **Express** server.
+3. **Zod** validates the request, then Express asks the local **Ollama** model for structured job details.
+4. Zod validates the returned shape before the UI shows editable suggestions.
+5. The user reviews the draft before saving it through Supabase.
 
-## Source and diagram
+This is deliberately a local-only service. The deployed Vercel site does not run Express or Ollama, and it does not offer AI drafting yet.
+
+## Stack by responsibility
+
+### Browser and UI
+
+- **`react` and `react-dom`:** components, rendering, state, and interaction.
+- **TypeScript:** data contracts and safer refactoring.
+- **`react-router`:** URL-based, refresh-safe navigation and route protection.
+- **Native CSS:** scoped component styling, responsive behavior, and visible keyboard focus.
+- **`react-markdown`:** renders repository learning notes in the app.
+
+### Data and identity
+
+- **`@supabase/supabase-js`:** browser-safe client for Auth and data access.
+- **Supabase Auth, Postgres, and RLS:** sessions, durable personal data, and database-enforced ownership.
+- **Supabase CLI, SQL migrations, and OrbStack:** local database development using the same schema history as the hosted project.
+
+### Local API and AI
+
+- **`express`:** local API endpoint for AI drafting.
+- **`zod`:** request and LLM-response validation.
+- **`tsx`:** runs the TypeScript Express server in development.
+- **Ollama:** local model runtime; no external AI key is required for this learning workflow.
+
+### Quality and delivery
+
+- **Jest, Testing Library, user-event, and Supertest:** unit, component, interaction, and Express API tests.
+- **Playwright:** end-to-end browser workflows.
+- **MSW and Storybook:** reproducible service states and isolated component/exercise examples.
+- **Prettier, ESLint, and simple-import-sort:** consistent formatting, static analysis, and import organization.
+- **GitHub Actions and Vercel:** automated checks and production deployment.
+
+## Related learning material
 
 - [Exercise technology map](/learning/exercise-technology-map)
 - [Supabase local development and migrations](/learning/supabase-local-development)
-- [Interactive FigJam architecture diagram](https://www.figma.com/board/PmKdPYG1GdMwNMyuQsBss5?utm_source=chatgpt&utm_content=edit_in_figjam&oai_id=v1%2FBMCaYYrzKSHMIobpzni1KaehWkKXmpS30gLfclebN9l2vL8QHZutUZ&request_id=7f49f1ea-f515-455b-a649-f97f49567fbc&architecture=true)

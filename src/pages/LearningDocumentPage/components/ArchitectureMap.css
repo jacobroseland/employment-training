@@ -137,9 +137,20 @@
   fill: #eff6ff;
 }
 
+.architecture-map__node--react > rect,
+.architecture-map__node--content > rect,
+.architecture-map__node--client-data > rect {
+  /* Uses cyan to identify browser-facing application technologies. */
+  stroke: #0891b2;
+  /* Keeps browser nodes visibly separate from hosted services. */
+  fill: #ecfeff;
+}
+
 .architecture-map__node--vite > rect,
 .architecture-map__node--express > rect,
-.architecture-map__node--ollama > rect {
+.architecture-map__node--ollama > rect,
+.architecture-map__node--local-data > rect,
+.architecture-map__node--storybook > rect {
   /* Colors local-only services with violet to separate their boundary. */
   stroke: #7e22ce;
   /* Adds a soft local-development fill. */
@@ -270,6 +281,6 @@
 
   .architecture-map__diagram {
     /* Preserves service-label legibility instead of shrinking the SVG excessively. */
-    min-width: 50rem;
+    min-width: 70rem;
   }
 }

@@ -10,14 +10,14 @@ function ArchitectureMap() {
         <p>System architecture</p>
         <h3 id="architecture-map-title">Employment Training system map</h3>
         <span>
-          Current production, local-development, and delivery boundaries
+          Runtime boundaries, primary packages, quality checks, and deployment
         </span>
       </div>
 
       <figure className="architecture-map__figure">
         <svg
           className="architecture-map__diagram"
-          viewBox="0 0 1200 980"
+          viewBox="0 0 1280 1050"
           role="img"
           aria-labelledby="architecture-map-svg-title architecture-map-svg-description"
         >
@@ -25,9 +25,9 @@ function ArchitectureMap() {
             Employment Training architecture
           </title>
           <desc id="architecture-map-svg-description">
-            A technical architecture diagram showing the browser application,
-            hosted Supabase authentication and database services, local AI draft
-            services, and the GitHub to Vercel delivery pipeline.
+            A technical architecture diagram that maps the React browser
+            application, Supabase hosted services, local development services,
+            test tooling, and the GitHub to Vercel delivery path.
           </desc>
 
           <defs>
@@ -48,200 +48,256 @@ function ArchitectureMap() {
             className="architecture-map__canvas"
             x="0"
             y="0"
-            width="1200"
-            height="980"
+            width="1280"
+            height="1050"
             rx="20"
           />
 
           <g className="architecture-map__zone architecture-map__zone--client">
-            <rect x="40" y="72" width="350" height="570" rx="14" />
+            <rect x="40" y="72" width="380" height="600" rx="14" />
             <text x="68" y="112">
               CLIENT · BROWSER
             </text>
             <text className="architecture-map__zone-subtitle" x="68" y="138">
-              User-facing application
+              UI, routing, and browser-safe data access
             </text>
           </g>
           <g className="architecture-map__zone architecture-map__zone--cloud">
-            <rect x="430" y="72" width="730" height="570" rx="14" />
-            <text x="458" y="112">
-              HOSTED SERVICES
+            <rect x="460" y="72" width="780" height="600" rx="14" />
+            <text x="488" y="112">
+              HOSTED PRODUCTION SERVICES
             </text>
-            <text className="architecture-map__zone-subtitle" x="458" y="138">
-              Production data, identity, and deployment
+            <text className="architecture-map__zone-subtitle" x="488" y="138">
+              Identity, data ownership, and static frontend hosting
             </text>
           </g>
           <g className="architecture-map__zone architecture-map__zone--local">
-            <rect x="40" y="682" width="710" height="250" rx="14" />
-            <text x="68" y="722">
+            <rect x="40" y="712" width="760" height="290" rx="14" />
+            <text x="68" y="752">
               LOCAL DEVELOPMENT ONLY
             </text>
-            <text className="architecture-map__zone-subtitle" x="68" y="748">
-              AI drafting never reaches the deployed Vercel frontend
+            <text className="architecture-map__zone-subtitle" x="68" y="778">
+              Developer tools and AI drafting; not part of the Vercel runtime
             </text>
           </g>
           <g className="architecture-map__zone architecture-map__zone--delivery">
-            <rect x="790" y="682" width="370" height="250" rx="14" />
-            <text x="818" y="722">
+            <rect x="840" y="712" width="400" height="290" rx="14" />
+            <text x="868" y="752">
               QUALITY AND DELIVERY
             </text>
-            <text className="architecture-map__zone-subtitle" x="818" y="748">
-              Every pushed change is verified
+            <text className="architecture-map__zone-subtitle" x="868" y="778">
+              Automated verification before deployment
             </text>
           </g>
 
           <g className="architecture-map__node architecture-map__node--person">
-            <rect x="80" y="190" width="120" height="86" rx="8" />
-            <text x="140" y="226">
+            <rect x="80" y="190" width="125" height="88" rx="8" />
+            <text x="142" y="226">
               User
             </text>
-            <text className="architecture-map__node-detail" x="140" y="250">
-              browser
+            <text className="architecture-map__node-detail" x="142" y="250">
+              web browser
             </text>
           </g>
           <g className="architecture-map__node architecture-map__node--react">
-            <rect x="230" y="190" width="120" height="86" rx="8" />
-            <text x="290" y="220">
-              React app
+            <rect x="235" y="185" width="145" height="110" rx="8" />
+            <text x="307" y="215">
+              React UI
             </text>
-            <text className="architecture-map__node-detail" x="290" y="244">
-              TypeScript
+            <text className="architecture-map__node-detail" x="307" y="239">
+              react + react-dom
             </text>
-            <text className="architecture-map__node-detail" x="290" y="263">
-              Router + CSS
+            <text className="architecture-map__node-detail" x="307" y="258">
+              TypeScript + CSS
+            </text>
+            <text className="architecture-map__node-detail" x="307" y="277">
+              react-router
             </text>
           </g>
+          <g className="architecture-map__node architecture-map__node--content">
+            <rect x="80" y="355" width="300" height="88" rx="8" />
+            <text x="230" y="386">
+              Learning Center
+            </text>
+            <text className="architecture-map__node-detail" x="230" y="411">
+              react-markdown · repository docs
+            </text>
+          </g>
+          <g className="architecture-map__node architecture-map__node--client-data">
+            <rect x="80" y="510" width="300" height="88" rx="8" />
+            <text x="230" y="541">
+              Supabase browser client
+            </text>
+            <text className="architecture-map__node-detail" x="230" y="566">
+              @supabase/supabase-js · sessions + data
+            </text>
+          </g>
+
           <g className="architecture-map__node architecture-map__node--auth">
-            <rect x="480" y="190" width="150" height="86" rx="8" />
-            <text x="555" y="220">
+            <rect x="500" y="190" width="175" height="88" rx="8" />
+            <text x="587" y="221">
               Supabase Auth
             </text>
-            <text className="architecture-map__node-detail" x="555" y="247">
-              session identity
+            <text className="architecture-map__node-detail" x="587" y="247">
+              identity + session
             </text>
           </g>
           <g className="architecture-map__node architecture-map__node--api">
-            <rect x="740" y="190" width="150" height="86" rx="8" />
-            <text x="815" y="220">
-              Supabase API
+            <rect x="760" y="190" width="175" height="88" rx="8" />
+            <text x="847" y="221">
+              Supabase data API
             </text>
-            <text className="architecture-map__node-detail" x="815" y="247">
-              repository calls
+            <text className="architecture-map__node-detail" x="847" y="247">
+              authenticated requests
             </text>
           </g>
           <g className="architecture-map__node architecture-map__node--data">
-            <rect x="1000" y="190" width="120" height="86" rx="8" />
-            <text x="1060" y="220">
-              Postgres
+            <rect x="1020" y="190" width="175" height="88" rx="8" />
+            <text x="1107" y="215">
+              Postgres + RLS
             </text>
-            <text className="architecture-map__node-detail" x="1060" y="244">
-              RLS policies
+            <text className="architecture-map__node-detail" x="1107" y="239">
+              applications + installs
             </text>
-            <text className="architecture-map__node-detail" x="1060" y="263">
-              migrations
+            <text className="architecture-map__node-detail" x="1107" y="258">
+              migrations + ownership
             </text>
           </g>
           <g className="architecture-map__node architecture-map__node--vercel">
-            <rect x="690" y="420" width="160" height="86" rx="8" />
-            <text x="770" y="450">
+            <rect x="750" y="445" width="195" height="88" rx="8" />
+            <text x="847" y="476">
               Vercel
             </text>
-            <text className="architecture-map__node-detail" x="770" y="477">
-              static Vite build
+            <text className="architecture-map__node-detail" x="847" y="501">
+              Vite production build
             </text>
           </g>
+
           <g className="architecture-map__node architecture-map__node--vite">
-            <rect x="80" y="800" width="130" height="86" rx="8" />
-            <text x="145" y="830">
+            <rect x="80" y="825" width="130" height="88" rx="8" />
+            <text x="145" y="856">
               Vite
             </text>
-            <text className="architecture-map__node-detail" x="145" y="857">
-              local proxy
+            <text className="architecture-map__node-detail" x="145" y="881">
+              client + proxy
             </text>
           </g>
           <g className="architecture-map__node architecture-map__node--express">
-            <rect x="315" y="800" width="130" height="86" rx="8" />
-            <text x="380" y="830">
-              Express
+            <rect x="245" y="825" width="165" height="88" rx="8" />
+            <text x="327" y="852">
+              Express API
             </text>
-            <text className="architecture-map__node-detail" x="380" y="857">
-              Zod validation
+            <text className="architecture-map__node-detail" x="327" y="876">
+              Zod + tsx
+            </text>
+            <text className="architecture-map__node-detail" x="327" y="895">
+              request validation
             </text>
           </g>
           <g className="architecture-map__node architecture-map__node--ollama">
-            <rect x="550" y="800" width="130" height="86" rx="8" />
-            <text x="615" y="830">
+            <rect x="445" y="825" width="135" height="88" rx="8" />
+            <text x="512" y="856">
               Ollama
             </text>
-            <text className="architecture-map__node-detail" x="615" y="857">
+            <text className="architecture-map__node-detail" x="512" y="881">
               local model
             </text>
           </g>
+          <g className="architecture-map__node architecture-map__node--local-data">
+            <rect x="615" y="825" width="145" height="88" rx="8" />
+            <text x="687" y="852">
+              Local Supabase
+            </text>
+            <text className="architecture-map__node-detail" x="687" y="876">
+              CLI + OrbStack
+            </text>
+            <text className="architecture-map__node-detail" x="687" y="895">
+              SQL migrations
+            </text>
+          </g>
+          <g className="architecture-map__node architecture-map__node--storybook">
+            <rect x="205" y="935" width="260" height="44" rx="8" />
+            <text x="335" y="963">
+              Storybook + MSW · isolated UI states
+            </text>
+          </g>
+
           <g className="architecture-map__node architecture-map__node--github">
-            <rect x="825" y="800" width="110" height="86" rx="8" />
-            <text x="880" y="830">
+            <rect x="870" y="830" width="130" height="88" rx="8" />
+            <text x="935" y="861">
               GitHub
             </text>
-            <text className="architecture-map__node-detail" x="880" y="857">
+            <text className="architecture-map__node-detail" x="935" y="886">
               main branch
             </text>
           </g>
           <g className="architecture-map__node architecture-map__node--actions">
-            <rect x="1010" y="800" width="110" height="86" rx="8" />
-            <text x="1065" y="830">
-              Actions
+            <rect x="1040" y="810" width="165" height="128" rx="8" />
+            <text x="1122" y="839">
+              GitHub Actions
             </text>
-            <text className="architecture-map__node-detail" x="1065" y="850">
-              test + build
+            <text className="architecture-map__node-detail" x="1122" y="864">
+              Prettier + ESLint
             </text>
-            <text className="architecture-map__node-detail" x="1065" y="869">
-              Storybook
+            <text className="architecture-map__node-detail" x="1122" y="883">
+              Jest + Testing Library
+            </text>
+            <text className="architecture-map__node-detail" x="1122" y="902">
+              Supertest + Playwright
             </text>
           </g>
 
           <g className="architecture-map__connection">
-            <path d="M 200 233 H 230" />
-            <text x="215" y="216">
+            <path d="M 205 234 H 235" />
+            <text x="220" y="217">
               uses
             </text>
-            <path d="M 350 218 H 480" />
-            <text x="415" y="201">
+            <path d="M 307 295 V 355" />
+            <text x="345" y="332">
+              renders docs
+            </text>
+            <path d="M 307 295 V 510" />
+            <text x="348" y="477">
+              uses
+            </text>
+            <path d="M 380 540 H 500 V 234" />
+            <text x="438" y="523">
               session
             </text>
-            <path d="M 350 248 H 740" />
-            <text x="545" y="267">
-              private data requests
+            <path d="M 380 568 H 760 V 252" />
+            <text x="570" y="587">
+              private data
             </text>
-            <path d="M 890 233 H 1000" />
-            <text x="945" y="216">
+            <path d="M 935 234 H 1020" />
+            <text x="977" y="217">
               RLS
             </text>
-            <path d="M 770 420 V 330 H 290 V 276" />
-            <text x="530" y="313">
-              serves production bundle
+            <path d="M 847 445 V 365 H 307 V 295" />
+            <text x="577" y="348">
+              serves production frontend
             </text>
           </g>
           <g className="architecture-map__connection architecture-map__connection--local">
-            <path d="M 290 276 V 620 H 145 V 800" />
-            <text x="162" y="602">
-              /api draft request
+            <path d="M 307 295 V 650 H 145 V 825" />
+            <text x="176" y="631">
+              local /api only
             </text>
-            <path d="M 210 843 H 315" />
-            <text x="262" y="826">
+            <path d="M 210 869 H 245" />
+            <text x="228" y="852">
               proxy
             </text>
-            <path d="M 445 843 H 550" />
-            <text x="497" y="826">
-              validated prompt
+            <path d="M 410 869 H 445" />
+            <text x="428" y="852">
+              draft
             </text>
           </g>
           <g className="architecture-map__connection architecture-map__connection--delivery">
-            <path d="M 935 843 H 1010" />
-            <text x="972" y="826">
+            <path d="M 1000 874 H 1040" />
+            <text x="1020" y="857">
               push
             </text>
-            <path d="M 1065 800 V 570 H 770 V 506" />
-            <text x="928" y="553">
+            <path d="M 1122 810 V 625 H 847 V 533" />
+            <text x="985" y="608">
               verified deployment
             </text>
           </g>
@@ -262,24 +318,24 @@ function ArchitectureMap() {
 
       <dl className="architecture-map__summary">
         <div>
-          <dt>Experience</dt>
+          <dt>Browser-safe by design</dt>
           <dd>
-            React and Router make the catalog and exercises usable as a real
-            browser application.
+            The browser holds only public Supabase configuration; ownership is
+            enforced by database RLS policies.
           </dd>
         </div>
         <div>
-          <dt>Trust</dt>
+          <dt>Local AI boundary</dt>
           <dd>
-            Supabase Auth and database policies protect personal application
-            data at the data layer.
+            Express, Zod, and Ollama are useful learning services without
+            becoming a production dependency or exposing an AI key.
           </dd>
         </div>
         <div>
-          <dt>Acceleration</dt>
+          <dt>Automated delivery</dt>
           <dd>
-            Express, Zod, and Ollama create a safe local draft workflow without
-            exposing a hosted AI key.
+            Formatting, type checks, tests, and the Vite build are verified
+            before Vercel deploys the frontend.
           </dd>
         </div>
       </dl>
