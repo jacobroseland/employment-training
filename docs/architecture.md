@@ -31,13 +31,13 @@ This is deliberately a local-only service. The deployed Vercel site does not run
 
 ## Local GraphQL lab flow
 
-1. The GraphQL API Lab gets the signed-in user's existing Supabase session token and sends a relative `/graphql` request.
+1. The GraphQL API Lab gets the signed-in user's existing Supabase session token and sends a relative `/api/graphql` request.
 2. **Vite** proxies the request to the local **Express + GraphQL Yoga** server during development.
 3. The GraphQL resolver reads the bearer token from request context and calls a token-scoped Supabase data source.
 4. **Supabase Auth** validates the caller, while **Postgres RLS** limits reads and inserts to that caller's rows.
 5. GraphQL returns only the fields selected by the query or mutation.
 
-This is a real authenticated API boundary, but it is intentionally a local learning lab. The deployed Vercel frontend does not yet host `/graphql`; its Job Search Pipeline continues using the existing Supabase browser repository.
+This is a real authenticated API boundary. The local Express server mounts it at `/api/graphql`; `api/graphql.ts` prepares the same route for Vercel Functions. Its production rollout still requires Vercel environment configuration and a deployed verification pass. The Job Search Pipeline continues using the existing Supabase browser repository.
 
 ## Stack by responsibility
 
@@ -48,7 +48,7 @@ This is a real authenticated API boundary, but it is intentionally a local learn
 - **`react-router`:** URL-based, refresh-safe navigation and route protection.
 - **Native CSS:** scoped component styling, responsive behavior, and visible keyboard focus.
 - **`react-markdown`:** renders repository learning notes in the app.
-- **GraphQL client helper:** gets the active Supabase token, sends authenticated `/graphql` requests, and handles HTTP/GraphQL response errors.
+- **GraphQL client helper:** gets the active Supabase token, sends authenticated `/api/graphql` requests, and handles HTTP/GraphQL response errors.
 
 ### Data and identity
 

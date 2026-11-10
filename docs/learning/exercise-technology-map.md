@@ -22,5 +22,5 @@ This is the quick answer to: “What did this exercise teach me?” Each lab bui
 ## Not implemented yet
 
 - A **hosted AI endpoint**. The Ollama draft service intentionally runs only on the local machine today; the deployed Vercel frontend does not expose that API.
-- A **hosted GraphQL endpoint**. The GraphQL API Lab runs through the local Express server. The deployed Vercel frontend does not yet host `/graphql`.
+- A **verified hosted GraphQL endpoint**. The Vercel Function entry point is prepared, but it needs production environment configuration and an authenticated deployment check before we consider `/api/graphql` complete.
 - Broader **GraphQL adoption**. Supabase browser-repository code remains the Job Search Pipeline's product-data path. We will only migrate a feature when there is a concrete API-composition or workflow-contract need.

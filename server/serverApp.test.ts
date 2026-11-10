@@ -59,7 +59,7 @@ describe('GraphQL API', () => {
   test('returns public API information without authentication', async () => {
     const app = createServerApp({ dataSource })
 
-    const response = await request(app).post('/graphql').send({
+    const response = await request(app).post('/api/graphql').send({
       query: '{ apiInfo { name purpose } }',
     })
 
@@ -79,7 +79,7 @@ describe('GraphQL API', () => {
     const app = createServerApp({ dataSource })
 
     const response = await request(app)
-      .post('/graphql')
+      .post('/api/graphql')
       .set('Authorization', 'Bearer valid-access-token')
       .send({
         query: `
@@ -120,7 +120,7 @@ describe('GraphQL API', () => {
   test('returns a null viewer when no bearer token is provided', async () => {
     const app = createServerApp({ dataSource })
 
-    const response = await request(app).post('/graphql').send({
+    const response = await request(app).post('/api/graphql').send({
       query: '{ viewer { id } }',
     })
 
@@ -132,7 +132,7 @@ describe('GraphQL API', () => {
     const app = createServerApp({ dataSource })
 
     const response = await request(app)
-      .post('/graphql')
+      .post('/api/graphql')
       .set('Authorization', 'Bearer valid-access-token')
       .send({
         query: `
@@ -174,7 +174,7 @@ describe('GraphQL API', () => {
     const app = createServerApp({ dataSource })
 
     const response = await request(app)
-      .post('/graphql')
+      .post('/api/graphql')
       .send({
         query: `
         mutation {

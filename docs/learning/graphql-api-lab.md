@@ -4,11 +4,11 @@
 
 The application already has a working Supabase browser client. GraphQL is not replacing it yet. This small server-side lab exists to practice the pieces that make GraphQL useful in a larger application: a schema, resolvers, request context, authentication, authorization-aware data access, and API tests.
 
-The endpoint is local for now:
+The endpoint uses the same relative path locally and in a future Vercel deployment:
 
-    http://127.0.0.1:8787/graphql
+    /api/graphql
 
-Open that address in a browser to use GraphiQL, the built-in query workspace from GraphQL Yoga.
+During local development, open `http://127.0.0.1:8787/api/graphql` in a browser to use GraphiQL, the built-in query workspace from GraphQL Yoga.
 
 ## What was installed
 
@@ -18,7 +18,7 @@ Open that address in a browser to use GraphiQL, the built-in query workspace fro
 - **`graphql-yoga`:** the HTTP server that exposes the schema at `/graphql` and provides GraphiQL during development.
 - **`dotenv`:** loads `.env.local` for the local Node server. It does not put any values into the browser bundle.
 
-GraphQL Yoga mounts on the existing Express server, so REST-style `/api/application-draft` and GraphQL `/graphql` can coexist while we learn their different strengths.
+GraphQL Yoga mounts on the existing Express server, so REST-style `/api/application-draft` and GraphQL `/api/graphql` can coexist while we learn their different strengths.
 
 ## Initial schema and mutation
 
@@ -79,7 +79,7 @@ An unauthenticated mutation returns a GraphQL error with the public `UNAUTHENTIC
 For the public query you just ran, the request moves through these layers:
 
     GraphiQL or client
-        -> POST /graphql
+        -> POST /api/graphql
         -> GraphQL Yoga parses and validates the operation against the schema
         -> Query.apiInfo resolver returns a TypeScript object
         -> GraphQL selects only the requested fields
@@ -156,11 +156,11 @@ The helper is created with `getAccessToken` and `fetchImplementation` dependenci
 
 This is dependency injection in a small, practical form. It avoids requiring a real sign-in or real HTTP server to test headers, response handling, and error behavior.
 
-Vite proxies both `/api` and `/graphql` to the local Express process during development. In the browser, the request therefore stays relative to the application origin:
+Vite proxies `/api` to the local Express process during development. In the browser, the request therefore stays relative to the application origin:
 
-    browser fetch('/graphql') -> Vite proxy -> Express + GraphQL Yoga
+    browser fetch('/api/graphql') -> Vite proxy -> Express + GraphQL Yoga
 
-That keeps the frontend free of hard-coded local ports. A later deployed server route can preserve the same `/graphql` client contract.
+That keeps the frontend free of hard-coded local ports. Vercel can deploy `api/graphql.ts` as a function at this same path, preserving the browser client contract.
 
 ## GraphQL API Lab exercise
 
@@ -201,7 +201,8 @@ This is intentional. A later privileged server workflow may need a service-role 
 
 ## File responsibilities
 
-- `server/serverApp.ts` composes the REST draft app and GraphQL endpoint into one Express application.
+- `server/serverApp.ts` composes the REST draft app and GraphQL endpoint into one local Express application.
+- `api/graphql.ts` is the Vercel Function entry point. It uses the same Yoga server and Supabase data source, but does not start a long-running process.
 - `server/graphql/graphqlServer.ts` defines schema, resolvers, GraphQL context, and GraphiQL configuration.
 - `server/graphql/supabaseGraphQLDataSource.ts` translates Supabase rows into GraphQL-shaped data and performs token-scoped reads.
 - `server/serverApp.test.ts` uses Supertest with a fake data source. It proves public, authenticated, and unauthenticated behavior without contacting a real Supabase project.
@@ -215,7 +216,7 @@ The GraphQL context carries request-specific information, including the bearer t
 
 - No generic GraphQL hook/cache library. The lab deliberately uses the small browser client helper directly.
 - No mutation wiring in the Job Search Pipeline. That would create a second CRUD path for the same screen before there is a product reason to replace the existing Supabase repository.
-- No hosted GraphQL endpoint.
+- No deployed GraphQL verification until the Vercel Function receives its Supabase environment values and is tested against the production domain.
 - No service-role key.
 - No attempt to move all existing Supabase calls behind GraphQL.
 

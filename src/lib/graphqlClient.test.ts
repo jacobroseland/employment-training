@@ -25,7 +25,7 @@ describe('GraphQL client', () => {
     await expect(client.execute({ query: viewerQuery })).resolves.toEqual({
       viewer: { id: 'user-123' },
     })
-    expect(fetchImplementation).toHaveBeenCalledWith('/graphql', {
+    expect(fetchImplementation).toHaveBeenCalledWith('/api/graphql', {
       method: 'POST',
       headers: {
         Authorization: 'Bearer access-token',

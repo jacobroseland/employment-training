@@ -13,6 +13,8 @@ type ViewerWithAccessToken = {
   id: string
 }
 
+export const graphQLEndpoint = '/api/graphql'
+
 function getBearerToken(authorization: string | null) {
   if (!authorization?.startsWith('Bearer ')) {
     return null
@@ -170,7 +172,7 @@ export function createGraphQLServer(dataSource: GraphQLDataSource) {
       authorization: request.headers.get('authorization'),
       dataSource,
     }),
-    graphqlEndpoint: '/graphql',
+    graphqlEndpoint: graphQLEndpoint,
     graphiql: true,
     schema,
   })

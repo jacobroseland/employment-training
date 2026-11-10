@@ -43,7 +43,7 @@ export function createGraphQLClient({
         )
       }
 
-      const response = await fetchImplementation('/graphql', {
+      const response = await fetchImplementation('/api/graphql', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken}`,
