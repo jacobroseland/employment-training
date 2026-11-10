@@ -1,322 +1,275 @@
 .architecture-map {
-  /* Creates a distinct dashboard surface inside the learning document. */
-  overflow: hidden;
-  /* Adds space between the visual's content and its edges. */
-  padding: clamp(1.25rem, 3vw, 2.5rem);
-  /* Rounds the outer surface to match the app's card language. */
-  border-radius: 1.25rem;
-  /* Keeps the visual readable against the dark background. */
-  color: #e2e8f0;
-  /* Layers a subtle blue glow over a deep neutral background. */
-  background:
-    radial-gradient(
-      circle at top right,
-      rgb(59 130 246 / 32%),
-      transparent 35%
-    ),
-    linear-gradient(145deg, #0f172a, #172554 58%, #111827);
-  /* Gives the map a raised, dimensional presence in the document. */
-  box-shadow: 0 1.5rem 3rem rgb(15 23 42 / 20%);
-}
-
-.architecture-map__intro {
-  /* Limits the introductory text to a comfortable line length. */
-  max-width: 48rem;
-}
-
-.architecture-map__intro h3,
-.architecture-map__section-heading h4,
-.architecture-map__journey-step h5,
-.architecture-map__need h5 {
-  /* Removes default heading margins so local layout controls spacing. */
-  margin: 0;
-}
-
-.architecture-map__intro h3 {
-  /* Makes the visual's title prominent without overpowering the page heading. */
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
-  /* Tightens the title for a compact editorial look. */
-  letter-spacing: -0.04em;
-}
-
-.architecture-map__intro > p:last-child {
-  /* Separates the explanation from the title. */
-  margin: 0.75rem 0 0;
-  /* Softens supporting copy while retaining contrast. */
-  color: #cbd5e1;
-}
-
-.architecture-map__eyebrow,
-.architecture-map__need-label {
-  /* Removes browser paragraph spacing from compact labels. */
-  margin: 0;
-  /* Makes labels easy to scan without competing with headings. */
-  font-size: 0.75rem;
-  /* Uses uppercase lettering to visually separate label metadata. */
-  text-transform: uppercase;
-  /* Adds deliberate spacing between uppercase label characters. */
-  letter-spacing: 0.1em;
-  /* Uses the bright accent color as a repeated visual cue. */
-  color: #93c5fd;
-}
-
-.architecture-map__journey,
-.architecture-map__runtime {
-  /* Separates major visual sections from surrounding content. */
-  margin-top: 2rem;
-  /* Adds a translucent panel behind related information. */
-  padding: clamp(1rem, 2vw, 1.5rem);
-  /* Gives grouped information a calm card boundary. */
-  border: 1px solid rgb(148 163 184 / 28%);
-  /* Matches the rounded visual system used across the map. */
-  border-radius: 1rem;
-  /* Distinguishes the panel from the outer map without reducing depth. */
-  background-color: rgb(15 23 42 / 42%);
-}
-
-.architecture-map__section-heading {
-  /* Adds space after the heading before the associated content. */
-  margin-bottom: 1rem;
-}
-
-.architecture-map__section-heading h4 {
-  /* Keeps section headings readable against the dark surface. */
-  color: #f8fafc;
-}
-
-.architecture-map__journey-list,
-.architecture-map__need-list,
-.architecture-map__technology-list {
-  /* Removes default list spacing because grids and gaps control layout. */
-  margin: 0;
-  /* Removes the browser's default list indentation. */
-  padding: 0;
-  /* Removes bullets because each list has its own visual marker. */
-  list-style: none;
-}
-
-.architecture-map__journey-list {
-  /* Lays journey stages out as a responsive sequence of equal cards. */
-  display: grid;
-  /* Fits as many readable journey cards as the available width allows. */
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  /* Creates visual breathing room between journey stages. */
-  gap: 0.75rem;
-}
-
-.architecture-map__journey-step {
-  /* Aligns the stage number and explanatory content in one row. */
-  display: flex;
-  /* Keeps the stage number and copy aligned at their top edges. */
-  align-items: flex-start;
-  /* Separates the stage number from its text. */
-  gap: 0.75rem;
-  /* Adds breathing room inside each journey stage. */
-  padding: 0.875rem;
-  /* Gives each stage a soft visible surface. */
+  /* Separates the technical diagram from the narrative learning content. */
+  margin-bottom: 2rem;
+  /* Creates a clearly bounded engineering-document surface. */
+  border: 1px solid #cbd5e1;
+  /* Softens the diagram container without using a product-card appearance. */
   border-radius: 0.75rem;
-  /* Provides subtle contrast from the containing panel. */
-  background-color: rgb(30 41 59 / 72%);
+  /* Keeps the system-map content readable on the standard page surface. */
+  background-color: #f8fafc;
 }
 
-.architecture-map__journey-step > span {
-  /* Prevents the stage number from shrinking in narrow cards. */
-  flex: 0 0 auto;
-  /* Makes the stage number easy to distinguish while scanning. */
-  font-weight: 800;
-  /* Uses the accent color to establish the journey's sequence. */
-  color: #60a5fa;
+.architecture-map__heading {
+  /* Adds compact spacing around the diagram title area. */
+  padding: 1.25rem 1.25rem 1rem;
+  /* Defines a technical header boundary above the SVG map. */
+  border-bottom: 1px solid #cbd5e1;
 }
 
-.architecture-map__journey-step h5 {
-  /* Keeps the journey action clear and high contrast. */
-  color: #f8fafc;
+.architecture-map__heading > p,
+.architecture-map__heading > span {
+  /* Removes browser default spacing from compact header metadata. */
+  margin: 0;
+  /* Uses small uppercase text for a technical-diagram label. */
+  font-size: 0.75rem;
+  /* Separates uppercase metadata characters for scanability. */
+  letter-spacing: 0.08em;
+  /* Differentiates metadata from the diagram title. */
+  text-transform: uppercase;
+  /* Uses the shared navy accent for engineering context labels. */
+  color: #1d4ed8;
 }
 
-.architecture-map__journey-step p,
-.architecture-map__need
-  > article
-  > p:not(.architecture-map__need-label):not(.architecture-map__boundary),
-.architecture-map__runtime-note {
-  /* Removes browser spacing so the surrounding layout sets rhythm. */
-  margin: 0.25rem 0 0;
-  /* Uses a muted tone for explanatory details. */
-  color: #cbd5e1;
+.architecture-map__heading > h3 {
+  /* Separates the diagram name from its small context label. */
+  margin: 0.25rem 0;
+  /* Keeps the diagram title compact and strongly legible. */
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  /* Creates a slightly tighter technical-title rhythm. */
+  letter-spacing: -0.025em;
+  /* Uses the app's darkest text color for high contrast. */
+  color: #0f172a;
 }
 
-.architecture-map__need-list {
-  /* Creates a responsive grid for the need-to-technology cards. */
-  display: grid;
-  /* Fits cards at a readable minimum width across viewports. */
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  /* Separates cards so each layer is visually distinct. */
-  gap: 1rem;
+.architecture-map__heading > span {
+  /* Returns the longer supporting description to normal casing. */
+  text-transform: none;
+  /* Uses a readable secondary text color for the description. */
+  color: #475569;
 }
 
-.architecture-map__need {
-  /* Adds a colored edge that differentiates the system layers. */
-  border-left: 0.25rem solid var(--architecture-accent);
-  /* Rounds the card while preserving its colored left edge. */
-  border-radius: 0.875rem;
-  /* Provides a translucent card surface over the dark map. */
-  background-color: rgb(30 41 59 / 76%);
-}
-
-.architecture-map__need > article {
-  /* Lets the card content stretch evenly when grid rows align. */
-  height: 100%;
-  /* Stacks the need, tags, result, and boundary label vertically. */
-  display: flex;
-  /* Keeps each content group in a vertical reading order. */
-  flex-direction: column;
-  /* Adds internal breathing room around each card's content. */
+.architecture-map__figure {
+  /* Removes the browser's default figure spacing. */
+  margin: 0;
+  /* Adds diagram padding without affecting the title area. */
   padding: 1rem;
 }
 
-.architecture-map__need h5 {
-  /* Separates the card's need statement from its compact label. */
-  margin-top: 0.25rem;
-  /* Keeps the primary need statement highly readable. */
-  color: #f8fafc;
+.architecture-map__diagram {
+  /* Makes the SVG adapt to the learning page's available width. */
+  width: 100%;
+  /* Preserves the diagram's defined geometry at every screen width. */
+  height: auto;
+  /* Gives the SVG a subtle engineering-paper boundary. */
+  border: 1px solid #dbeafe;
+  /* Rounds only the drawing surface, not the whole page component. */
+  border-radius: 0.5rem;
 }
 
-.architecture-map__need-label {
-  /* Separates subsequent content categories inside each card. */
-  margin-top: 1rem;
-  /* Uses the card-specific accent color for category labels. */
-  color: var(--architecture-accent);
+.architecture-map__canvas {
+  /* Creates the neutral blueprint background. */
+  fill: #f8fafc;
 }
 
-.architecture-map__technology-list {
-  /* Allows technology badges to wrap naturally within a card. */
+.architecture-map__zone > rect {
+  /* Gives system boundaries a lightly tinted surface. */
+  fill: #ffffff;
+  /* Makes the architecture boundaries visually explicit. */
+  stroke: #94a3b8;
+  /* Uses a dashed line to distinguish zones from service nodes. */
+  stroke-dasharray: 8 6;
+  /* Keeps zone boundaries quiet behind nodes and connections. */
+  stroke-width: 1.5;
+}
+
+.architecture-map__zone > text {
+  /* Uses a compact technical-label size for environment names. */
+  font-size: 15px;
+  /* Makes environment names easy to scan. */
+  font-weight: 700;
+  /* Adds spacing to the all-caps zone labels. */
+  letter-spacing: 1.5px;
+  /* Uses navy to identify primary system boundaries. */
+  fill: #1e3a8a;
+}
+
+.architecture-map__zone-subtitle {
+  /* Makes supporting environment copy visually secondary. */
+  font-size: 13px;
+  /* Uses muted slate for system-boundary details. */
+  fill: #64748b;
+}
+
+.architecture-map__node > rect {
+  /* Gives each service a readable white technical-card surface. */
+  fill: #ffffff;
+  /* Defines the individual service-node boundary. */
+  stroke: #64748b;
+  /* Keeps service-node borders distinct from zone boundaries. */
+  stroke-width: 1.5;
+}
+
+.architecture-map__node > text {
+  /* Centers SVG service labels within their rectangular nodes. */
+  text-anchor: middle;
+  /* Makes primary service labels concise and readable. */
+  font-size: 15px;
+  /* Emphasizes the service name over its details. */
+  font-weight: 700;
+  /* Uses dark text for high contrast on white node surfaces. */
+  fill: #0f172a;
+}
+
+.architecture-map__node-detail {
+  /* Makes node details smaller than their service label. */
+  font-size: 12px !important;
+  /* Uses muted slate for implementation details. */
+  fill: #475569 !important;
+}
+
+.architecture-map__node--auth > rect,
+.architecture-map__node--api > rect,
+.architecture-map__node--data > rect,
+.architecture-map__node--vercel > rect {
+  /* Colors hosted production nodes with a consistent blue boundary. */
+  stroke: #2563eb;
+  /* Adds a subtle hosted-service fill without reducing readability. */
+  fill: #eff6ff;
+}
+
+.architecture-map__node--vite > rect,
+.architecture-map__node--express > rect,
+.architecture-map__node--ollama > rect {
+  /* Colors local-only services with violet to separate their boundary. */
+  stroke: #7e22ce;
+  /* Adds a soft local-development fill. */
+  fill: #faf5ff;
+}
+
+.architecture-map__node--github > rect,
+.architecture-map__node--actions > rect {
+  /* Colors quality-and-delivery services with an amber boundary. */
+  stroke: #b45309;
+  /* Adds a soft delivery-system fill. */
+  fill: #fffbeb;
+}
+
+.architecture-map__connection > path {
+  /* Draws clear directional links between system nodes. */
+  fill: none;
+  /* Uses dark slate so arrows remain visible across zone backgrounds. */
+  stroke: #334155;
+  /* Keeps relationship arrows crisp without overpowering nodes. */
+  stroke-width: 2;
+  /* Adds arrowheads that communicate direction of data or deployment flow. */
+  marker-end: url(#architecture-arrow);
+}
+
+.architecture-map__connection > text {
+  /* Centers technical labels around their connecting line. */
+  text-anchor: middle;
+  /* Keeps connector descriptions compact. */
+  font-size: 11px;
+  /* Uses muted slate for relationship metadata. */
+  fill: #475569;
+}
+
+.architecture-map__connection--local > path {
+  /* Uses violet to communicate the local-only request branch. */
+  stroke: #7e22ce;
+  /* Distinguishes the local branch with a dashed relationship line. */
+  stroke-dasharray: 7 5;
+}
+
+.architecture-map__connection--local > text {
+  /* Matches local-branch labels to their violet connections. */
+  fill: #7e22ce;
+}
+
+.architecture-map__connection--delivery > path {
+  /* Uses amber to communicate source-control and deployment flow. */
+  stroke: #b45309;
+}
+
+.architecture-map__connection--delivery > text {
+  /* Matches delivery labels to their amber relationship lines. */
+  fill: #92400e;
+}
+
+.architecture-map__figure > figcaption {
+  /* Wraps diagram-legend items on narrow reading widths. */
   display: flex;
-  /* Moves badges to a new row before they become too narrow. */
+  /* Allows legend items to move to a second line when necessary. */
   flex-wrap: wrap;
-  /* Creates clear separation between adjacent badges. */
-  gap: 0.5rem;
-  /* Separates badges from the Technology label. */
-  margin-top: 0.5rem;
-}
-
-.architecture-map__technology-list > li,
-.architecture-map__boundary {
-  /* Gives compact metadata a softly padded pill shape. */
-  padding: 0.25rem 0.5rem;
-  /* Rounds the metadata surface into a badge. */
-  border-radius: 999px;
-  /* Keeps badge labels compact but readable. */
-  font-size: 0.8125rem;
-}
-
-.architecture-map__technology-list > li {
-  /* Gives technology badges a subtle accent-tinted boundary. */
-  border: 1px solid
-    color-mix(in srgb, var(--architecture-accent), transparent 55%);
-  /* Helps badges feel connected to their card without using solid fills. */
-  background-color: color-mix(
-    in srgb,
-    var(--architecture-accent),
-    transparent 88%
-  );
-  /* Uses light text for contrast on the dark background. */
-  color: #e0f2fe;
-}
-
-.architecture-map__boundary {
-  /* Pushes the environment boundary to the card's bottom edge. */
-  margin: auto 0 0;
-  /* Fits the boundary label to its contents instead of the card width. */
-  width: fit-content;
-  /* Uses a neutral but visible background for boundary context. */
-  background-color: rgb(148 163 184 / 18%);
-  /* Uses a quiet text color for secondary environmental information. */
-  color: #cbd5e1;
-}
-
-.architecture-map__need--experience {
-  /* Assigns blue as the experience-layer accent. */
-  --architecture-accent: #60a5fa;
-}
-
-.architecture-map__need--identity {
-  /* Assigns teal as the data-and-identity-layer accent. */
-  --architecture-accent: #2dd4bf;
-}
-
-.architecture-map__need--ai {
-  /* Assigns violet as the AI-layer accent. */
-  --architecture-accent: #c084fc;
-}
-
-.architecture-map__need--delivery {
-  /* Assigns amber as the quality-and-delivery-layer accent. */
-  --architecture-accent: #fbbf24;
-}
-
-.architecture-map__flow {
-  /* Aligns flow cards and separators in a readable responsive row. */
-  display: flex;
-  /* Allows the flow to wrap without overflowing on small screens. */
-  flex-wrap: wrap;
-  /* Vertically aligns cards and connector symbols. */
-  align-items: center;
-  /* Creates space between cards and arrows. */
+  /* Separates legend items without requiring a table. */
   gap: 0.75rem;
+  /* Gives the legend space beneath the visual diagram. */
+  margin-top: 0.75rem;
 }
 
-.architecture-map__flow-card {
-  /* Lets each flow step grow while preserving a readable base width. */
-  flex: 1 1 12rem;
-  /* Stacks the system label above its description. */
+.architecture-map__legend {
+  /* Adds a small colored rule before each legend description. */
+  border-left: 0.25rem solid #2563eb;
+  /* Indents text away from its color key. */
+  padding-left: 0.5rem;
+  /* Keeps legend labels compact and readable. */
+  font-size: 0.8125rem;
+  /* Uses restrained secondary text for supporting information. */
+  color: #475569;
+}
+
+.architecture-map__legend--local {
+  /* Matches the legend key to local-only service nodes. */
+  border-left-color: #7e22ce;
+}
+
+.architecture-map__legend--delivery {
+  /* Matches the legend key to delivery service nodes. */
+  border-left-color: #b45309;
+}
+
+.architecture-map__summary {
+  /* Places supporting architectural outcomes in a responsive row. */
   display: grid;
-  /* Adds comfortable internal card padding. */
-  padding: 1rem;
-  /* Creates a bright panel that stands out as a runtime node. */
-  border: 1px solid rgb(147 197 253 / 38%);
-  /* Rounds each runtime node. */
-  border-radius: 0.875rem;
-  /* Adds a translucent blue surface that echoes the map's gradient. */
-  background-color: rgb(30 58 138 / 42%);
+  /* Fits the summary statements at comfortable reading widths. */
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  /* Separates summary topics without making them look like cards. */
+  gap: 1rem;
+  /* Removes default definition-list spacing. */
+  margin: 0;
+  /* Adds space above the summary area. */
+  padding: 0 1.25rem 1.25rem;
 }
 
-.architecture-map__flow-card strong {
-  /* Makes the runtime system name easy to scan. */
-  color: #f8fafc;
+.architecture-map__summary > div {
+  /* Creates a quiet top rule for each architectural outcome. */
+  border-top: 1px solid #cbd5e1;
+  /* Separates content from the rule above it. */
+  padding-top: 0.75rem;
 }
 
-.architecture-map__flow-card span {
-  /* Separates the runtime description from its system name. */
-  margin-top: 0.25rem;
-  /* Keeps descriptions secondary but legible. */
-  color: #bfdbfe;
+.architecture-map__summary dt {
+  /* Emphasizes the high-level architectural outcome label. */
+  font-weight: 700;
+  /* Uses dark text for the primary summary label. */
+  color: #0f172a;
 }
 
-.architecture-map__flow-card--local {
-  /* Uses a violet surface to flag the currently local-only AI branch. */
-  border-color: rgb(216 180 254 / 42%);
-  /* Distinguishes the local branch from hosted runtime nodes. */
-  background-color: rgb(88 28 135 / 36%);
+.architecture-map__summary dd {
+  /* Removes browser definition spacing so the component controls rhythm. */
+  margin: 0.25rem 0 0;
+  /* Uses a readable secondary text color for the explanation. */
+  color: #475569;
 }
 
-.architecture-map__flow-arrow,
-.architecture-map__flow-branch {
-  /* Prevents connector symbols from collapsing between flexible cards. */
-  flex: 0 0 auto;
-  /* Makes the direction and branch symbols easy to notice. */
-  font-size: 1.5rem;
-  /* Uses a light accent color for connection indicators. */
-  color: #93c5fd;
-}
+@media (max-width: 42rem) {
+  .architecture-map__figure {
+    /* Allows the wide technical diagram to remain readable through horizontal scrolling. */
+    overflow-x: auto;
+  }
 
-.architecture-map__runtime-note {
-  /* Separates the important deployment boundary note from the flow itself. */
-  margin-top: 1rem;
-}
-
-@media (max-width: 38rem) {
-  .architecture-map__flow-arrow,
-  .architecture-map__flow-branch {
-    /* Hides decorative connector symbols when cards stack vertically. */
-    display: none;
+  .architecture-map__diagram {
+    /* Preserves service-label legibility instead of shrinking the SVG excessively. */
+    min-width: 50rem;
   }
 }

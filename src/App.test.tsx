@@ -113,7 +113,7 @@ describe('App', () => {
     expect(
       screen.getByRole('heading', {
         level: 3,
-        name: 'From user need to working system',
+        name: 'Employment Training system map',
       }),
     ).toBeInTheDocument()
   })

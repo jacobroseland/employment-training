@@ -80,11 +80,13 @@ test('opens the technology map and architecture overview from learning materials
   await expect(
     page.getByRole('heading', {
       level: 3,
-      name: 'From user need to working system',
+      name: 'Employment Training system map',
     }),
   ).toBeVisible()
 
-  await expect(page.getByText('Local machine only')).toBeVisible()
+  await expect(
+    page.getByRole('img', { name: /Employment Training architecture/ }),
+  ).toBeVisible()
 
   await expect(
     page.getByRole('link', { name: 'Interactive FigJam architecture diagram' }),
