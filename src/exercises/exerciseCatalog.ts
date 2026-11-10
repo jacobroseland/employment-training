@@ -1,4 +1,5 @@
 import CountryExplorer from './CountryExplorer/CountryExplorer'
+import GraphQLApiLab from './GraphQLApiLab/GraphQLApiLab'
 import HelloWorld from './HelloWorld/HelloWorld'
 import JobSearchPipeline from './JobSearchPipeline/JobSearchPipeline'
 import type { ComponentType } from 'react'
@@ -57,5 +58,14 @@ export const exerciseCatalog: Exercise[] = [
     status: 'available',
     access: 'account-required',
     Component: JobSearchPipeline,
+  },
+  {
+    id: 'graphql-api-lab',
+    title: 'GraphQL API Lab',
+    description:
+      'Send an authenticated GraphQL query from the browser and inspect the current user’s API response.',
+    status: 'available',
+    access: 'account-required',
+    Component: GraphQLApiLab,
   },
 ]

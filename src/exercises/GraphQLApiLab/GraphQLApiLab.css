@@ -1,0 +1,72 @@
+.graphql-api-lab {
+  /* Keeps the GraphQL experiment readable without resembling a production dashboard. */
+  max-width: 52rem;
+}
+
+.graphql-api-lab > p {
+  /* Gives the lab's explanatory text comfortable space before its query example. */
+  margin-bottom: 1.5rem;
+}
+
+.graphql-api-lab > pre {
+  /* Allows the query to scroll horizontally on narrow screens. */
+  overflow-x: auto;
+  /* Separates the GraphQL operation from surrounding prose. */
+  margin: 0 0 1rem;
+  /* Gives the query a code-editor-like surface. */
+  padding: 1rem;
+  /* Softens the code block edges while preserving contrast. */
+  border-radius: 0.5rem;
+  /* Uses a dark surface to distinguish the operation from returned data. */
+  background-color: #0f172a;
+  /* Maintains high contrast for the GraphQL query. */
+  color: #f8fafc;
+}
+
+.graphql-api-lab > button {
+  /* Gives the primary request action a clear interactive size. */
+  min-height: 2.75rem;
+  /* Separates the action from the explanatory code example. */
+  padding: 0.5rem 1rem;
+}
+
+.graphql-api-lab__result {
+  /* Separates the selected GraphQL response from the request controls. */
+  margin-top: 1.5rem;
+  /* Gives the returned data a clear technical boundary. */
+  border: 1px solid #99f6e4;
+  /* Uses a subtle successful-response surface. */
+  background-color: #f0fdfa;
+  /* Adds interior space around the response details. */
+  padding: 1rem;
+}
+
+.graphql-api-lab__result h3 {
+  /* Keeps the response heading aligned with its values. */
+  margin-top: 0;
+}
+
+.graphql-api-lab__result dl {
+  /* Aligns returned response fields in a compact responsive grid. */
+  display: grid;
+  /* Lets fields wrap naturally on smaller screens. */
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  /* Separates related response fields. */
+  gap: 1rem;
+}
+
+.graphql-api-lab__result dl,
+.graphql-api-lab__result dd {
+  /* Removes browser defaults so the lab controls result spacing. */
+  margin: 0;
+}
+
+.graphql-api-lab__result dt {
+  /* Differentiates response-field labels from their values. */
+  font-weight: 700;
+}
+
+.graphql-api-lab__result ul {
+  /* Adds modest spacing before the returned application list. */
+  margin-bottom: 0;
+}

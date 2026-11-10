@@ -43,7 +43,11 @@ Browser tests use the separate `e2e/` directory and the `.spec.ts` suffix. Keepi
     server/**/*.test.ts -> Jest + Supertest
     e2e/**/*.spec.ts   -> Playwright
 
-The Express application is created by `createApplicationDraftApp()` instead of being coupled directly to the port-listening entry point. Its route tests inject a draft-generator function, then use Supertest to verify the success response, invalid request response, explicit Company/Role header behavior, and safe model-failure response without calling Ollama.
+The REST draft application is created by `createApplicationDraftApp()` instead of being coupled directly to the port-listening entry point. Its route tests inject a draft-generator function, then use Supertest to verify the success response, invalid request response, explicit Company/Role header behavior, and safe model-failure response without calling Ollama.
+
+`createServerApp()` is the next composition level: it mounts both the REST draft route and the GraphQL Yoga endpoint. Its GraphQL tests inject a fake data source, then verify a public query, an authenticated `viewer` query, and an unauthenticated request without calling Supabase. This keeps API behavior tests fast while the production data source still forwards the real bearer token to Supabase and relies on RLS.
+
+`src/lib/graphqlClient.test.ts` injects a fake session-token function and mocked `fetch`. It verifies that the browser helper sends the bearer token, stops before making a request when there is no session, and turns GraphQL field errors into a predictable client error. This avoids requiring jsdom to implement network fetch or a test to expose a real access token.
 
 ## Writing tests
 

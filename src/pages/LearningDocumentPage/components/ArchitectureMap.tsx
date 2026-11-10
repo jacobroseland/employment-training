@@ -77,7 +77,7 @@ function ArchitectureMap() {
               LOCAL DEVELOPMENT ONLY
             </text>
             <text className="architecture-map__zone-subtitle" x="68" y="778">
-              Developer tools and AI drafting; not part of the Vercel runtime
+              Developer tools, AI drafting, and GraphQL; not part of Vercel
             </text>
           </g>
           <g className="architecture-map__zone architecture-map__zone--delivery">
@@ -185,10 +185,10 @@ function ArchitectureMap() {
           <g className="architecture-map__node architecture-map__node--express">
             <rect x="245" y="825" width="165" height="88" rx="8" />
             <text x="327" y="852">
-              Express API
+              Express + Yoga
             </text>
             <text className="architecture-map__node-detail" x="327" y="876">
-              Zod + tsx
+              REST + GraphQL
             </text>
             <text className="architecture-map__node-detail" x="327" y="895">
               request validation
@@ -280,7 +280,7 @@ function ArchitectureMap() {
           <g className="architecture-map__connection architecture-map__connection--local">
             <path d="M 307 295 V 650 H 145 V 825" />
             <text x="176" y="631">
-              local /api only
+              local /api + /graphql
             </text>
             <path d="M 210 869 H 245" />
             <text x="228" y="852">
@@ -327,8 +327,8 @@ function ArchitectureMap() {
         <div>
           <dt>Local AI boundary</dt>
           <dd>
-            Express, Zod, and Ollama are useful learning services without
-            becoming a production dependency or exposing an AI key.
+            Express hosts the local REST and GraphQL labs; Zod and Ollama keep
+            AI drafting useful without becoming a production dependency.
           </dd>
         </div>
         <div>

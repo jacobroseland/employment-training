@@ -34,6 +34,7 @@ The bootstrap should exclude sandbox-specific material: the exercise catalog, He
 - A minimal app shell, one example shared component, and one example test
 - A source structure that favors colocation before abstraction
 - An optional local backend pattern: Express, Zod runtime contracts, a Vite `/api` proxy, and concurrent client/server development scripts
+- An optional GraphQL learning pattern: GraphQL Yoga mounted on the Express app, a schema/resolver/data-source separation, token-scoped Supabase access, and Supertest API coverage with an injected fake data source
 - A Supabase foundation: project-scoped CLI, committed configuration and migrations, a Docker-compatible runtime such as OrbStack, a browser-safe environment template, and per-user RLS conventions
 - An optional auth boundary: one application-level session provider, a reusable sign-in component, protected routes, and feature pages that remain focused on their own data
 - Optional user-preference tables, such as per-user installed-app records, that remain separate from static application metadata and authorization policies
@@ -69,7 +70,8 @@ Build and validate one layer at a time:
 9. **Complete (local-only):** add a small Node/Express backend experiment for the Ollama-powered application draft endpoint.
 10. **Complete:** add persistent data with a local Supabase/Postgres stack. Keep schema migrations in version control, apply them locally first, and enable Row Level Security before browser access.
 11. **Complete:** create a hosted Supabase project, apply the same migrations, and add per-user table ownership through `auth.users`, explicit `authenticated` role grants, and RLS policies. Configure local and deployment environment variables before connecting the browser client. Keep auth session ownership in the app shell and route guards rather than feature components.
-12. **Next when justified:** add a hosted backend/model-provider boundary for the AI-draft feature, then consider GraphQL only when a concrete API-composition or workflow-contract need appears.
+12. **Complete (local-only):** add a small GraphQL Yoga lab beside the REST API. Preserve Supabase RLS by forwarding the signed-in user's token, keep database reads in a replaceable data source, and use GraphQL only where its contract is useful.
+13. **Next when justified:** host the AI/backend boundary and consider moving a product feature behind GraphQL only when a concrete API-composition or workflow-contract need appears.
 
 ## Deployment foundation
 

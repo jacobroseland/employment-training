@@ -11,6 +11,7 @@ These notes are a compact reference for concepts practiced in this sandbox. They
 - [Testing and API mocking](learning/testing-and-api-mocking.md)
 - [Routing](learning/routing.md)
 - [Supabase local development and migrations](learning/supabase-local-development.md)
+- [GraphQL API lab](learning/graphql-api-lab.md)
 - [Exercise technology map](learning/exercise-technology-map.md)
 
 ## System overview

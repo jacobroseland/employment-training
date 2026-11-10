@@ -7,7 +7,7 @@ const applicationDraftRequestSchema = z.object({
   jobDescription: z.string().trim().min(1).max(20_000),
 })
 
-type ApplicationDraftGenerator = (
+export type ApplicationDraftGenerator = (
   jobDescription: string,
 ) => Promise<ApplicationDraft>
 

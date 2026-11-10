@@ -3,6 +3,7 @@ import cssLayoutAndComponentStyling from '../../docs/learning/css-layout-and-com
 import dataFetchingAndUiStates from '../../docs/learning/data-fetching-and-ui-states.md?raw'
 import exerciseTechnologyMap from '../../docs/learning/exercise-technology-map.md?raw'
 import formsAndAccessibility from '../../docs/learning/forms-and-accessibility.md?raw'
+import graphQLApiLab from '../../docs/learning/graphql-api-lab.md?raw'
 import reactComponentPatterns from '../../docs/learning/react-component-patterns.md?raw'
 import routing from '../../docs/learning/routing.md?raw'
 import supabaseLocalDevelopment from '../../docs/learning/supabase-local-development.md?raw'
@@ -37,6 +38,13 @@ export const learningCatalog: LearningDocument[] = [
     description:
       'Local Postgres, schema migrations, authentication, Row Level Security, and hosted Supabase environments.',
     content: supabaseLocalDevelopment,
+  },
+  {
+    id: 'graphql-api-lab',
+    title: 'GraphQL API lab',
+    description:
+      'Schema design, resolvers, request context, Supabase-backed authorization, and GraphQL API tests.',
+    content: graphQLApiLab,
   },
   {
     id: 'react-component-patterns',

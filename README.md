@@ -9,6 +9,7 @@ The app is a catalog of small, self-contained exercises. Each exercise introduce
 - **Hello World** — React component basics, scoped CSS, and animation.
 - **Country Explorer** — data fetching, loading/error/empty states, search, filtering, expandable details, responsive cards, and accessible form feedback.
 - **Job Search Pipeline** — controlled forms, validation, create/edit/delete workflows, sorting/filtering, local persistence, AI-assisted drafting, Supabase authentication, per-user cloud data, and personal app installation state.
+- **GraphQL API Lab** — an authenticated GraphQL query and mutation path, with schema design, resolvers, request context, and Supabase Row Level Security.
 
 The Job Search Pipeline's draft feature uses a small local Express API and Ollama. The browser calls a relative `/api` route through Vite's development proxy; Express validates requests and model output with Zod before returning editable suggestions to the form. The draft flow remains separated behind `generateApplicationDraft()`, so the UI is not coupled to the model provider.
 
@@ -25,6 +26,7 @@ The Job Search Pipeline's draft feature uses a small local Express API and Ollam
 - GitHub Actions quality checks on pull requests and changes pushed to `main`
 - Supabase Auth, Postgres, and Row Level Security for account-scoped data
 - Express and Zod for the local AI-draft API
+- GraphQL and GraphQL Yoga for a local schema-first API lab
 - Ollama structured outputs for local AI experimentation
 - Vercel for static production deployment
 
@@ -81,4 +83,4 @@ Concise learning notes live in [docs/learning](docs/learning/). Start with the [
 - Signed-in application data and personal app-installation choices persist in hosted Supabase Postgres. The Job Search Pipeline retains localStorage only as an unauthenticated/local fallback where appropriate.
 - The AI draft API and Ollama model run only on the local machine; no job-listing text is sent to a hosted AI provider.
 - The static frontend is deployed at [employment-training.vercel.app](https://employment-training.vercel.app/). GitHub pushes to `main` trigger Vercel production deployments.
-- A hosted AI/backend and GraphQL remain future learning milestones.
+- The AI draft endpoint and GraphQL server run only in local development today. Hosting either backend boundary remains a future deployment milestone.
