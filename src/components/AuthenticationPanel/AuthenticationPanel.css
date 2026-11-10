@@ -1,0 +1,116 @@
+.authentication-panel {
+  /* Keep authentication content comfortably readable without using the full page width. */
+  max-width: 34rem;
+  /* Create a distinct protected-area surface. */
+  padding: 1.5rem;
+  /* Define the panel boundary. */
+  border: 1px solid #bfdbfe;
+  /* Match the exercise's rounded visual language. */
+  border-radius: 0.75rem;
+  /* Give the protected area a calm blue-tinted background. */
+  background-color: #eff6ff;
+}
+
+.authentication-panel > h2,
+.authentication-panel > p {
+  /* Let this component control its own heading and introductory spacing. */
+  margin-top: 0;
+}
+
+.authentication-panel > p {
+  /* Keep the explanatory copy visually secondary. */
+  color: #4b5563;
+}
+
+.authentication-form {
+  /* Stack fields and actions with consistent spacing. */
+  display: grid;
+  /* Create readable separation between each form part. */
+  gap: 1rem;
+}
+
+.authentication-form label {
+  /* Keep each label and control together. */
+  display: grid;
+  /* Give the label a compact gap above its control. */
+  gap: 0.5rem;
+  /* Make the field label easy to scan. */
+  color: #374151;
+  /* Emphasize each field label. */
+  font-weight: 600;
+}
+
+.authentication-form input {
+  /* Give text fields a comfortable interactive area. */
+  padding: 0.625rem 0.75rem;
+  /* Define the input boundary. */
+  border: 1px solid #9ca3af;
+  /* Match other exercise controls. */
+  border-radius: 0.5rem;
+  /* Keep typed values readable. */
+  background-color: #ffffff;
+}
+
+.authentication-form input:focus-visible,
+.authentication-form button:focus-visible,
+.authentication-mode-toggle:focus-visible {
+  /* Preserve a visible keyboard-focus indicator. */
+  outline: 2px solid #1d4ed8;
+  /* Separate the focus outline from the control boundary. */
+  outline-offset: 3px;
+}
+
+.authentication-form button {
+  /* Keep the sign-in action easy to target. */
+  justify-self: start;
+  /* Give the primary action a comfortable click target. */
+  padding: 0.625rem 1rem;
+  /* Remove the browser default border. */
+  border: 0;
+  /* Match the app's button corners. */
+  border-radius: 0.5rem;
+  /* Give the primary action a clear visual hierarchy. */
+  background-color: #1d4ed8;
+  /* Ensure the label is readable. */
+  color: #ffffff;
+  /* Make the action easy to scan. */
+  font-weight: 600;
+  /* Indicate that the control is interactive. */
+  cursor: pointer;
+}
+
+.authentication-form button:disabled {
+  /* Show that a duplicate submission is not available. */
+  cursor: progress;
+  /* Visually soften a temporarily unavailable action. */
+  opacity: 0.7;
+}
+
+.authentication-message {
+  /* Remove default paragraph spacing within the compact form. */
+  margin: 0;
+  /* Make feedback distinguishable from field labels. */
+  color: #374151;
+}
+
+.authentication-form [role='alert'] {
+  /* Use a conventional error color in addition to alert semantics. */
+  color: #b91c1c;
+}
+
+.authentication-mode-toggle {
+  /* Separate the account-mode action from the form. */
+  margin-top: 1rem;
+  /* Remove button styling so the action reads like a link. */
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  /* Match the app's interactive link color. */
+  color: #1d4ed8;
+  /* Use familiar link affordances. */
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  /* Indicate that the action is interactive. */
+  cursor: pointer;
+}

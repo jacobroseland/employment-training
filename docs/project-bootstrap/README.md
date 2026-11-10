@@ -34,6 +34,9 @@ The bootstrap should exclude sandbox-specific material: the exercise catalog, He
 - A minimal app shell, one example shared component, and one example test
 - A source structure that favors colocation before abstraction
 - An optional local backend pattern: Express, Zod runtime contracts, a Vite `/api` proxy, and concurrent client/server development scripts
+- A Supabase foundation: project-scoped CLI, committed configuration and migrations, a Docker-compatible runtime such as OrbStack, a browser-safe environment template, and per-user RLS conventions
+- An optional auth boundary: one application-level session provider, a reusable sign-in component, protected routes, and feature pages that remain focused on their own data
+- Optional user-preference tables, such as per-user installed-app records, that remain separate from static application metadata and authorization policies
 
 ## Test foundation recipe
 
@@ -64,7 +67,8 @@ Build and validate one layer at a time:
 7. **Complete:** add a GitHub Actions quality workflow that runs formatting/linting, builds, Jest API/unit tests, Chromium Playwright tests, and the Storybook build on pull requests and changes pushed to `main`.
 8. **Complete:** deploy the Vite single-page app to Vercel through its GitHub integration. Commit a root `vercel.json` catch-all rewrite to `index.html` so direct React Router URLs work in production. Vercel auto-detects Vite and uses its `npm run build` / `dist` defaults.
 9. **Complete (local-only):** add a small Node/Express backend experiment for the Ollama-powered application draft endpoint.
-10. Add persistent data and a hosted backend, such as managed Postgres/Supabase. Introduce GraphQL only when the exercise benefits from it.
+10. **In progress:** add persistent data with a local Supabase/Postgres stack. Keep schema migrations in version control, apply them locally first, and enable Row Level Security before browser access.
+11. **In progress:** create a hosted Supabase project, apply the same migrations, and add per-user table ownership through `auth.users`, explicit `authenticated` role grants, and RLS policies. Configure local and deployment environment variables before connecting the browser client. Keep auth session ownership in the app shell and route guards rather than feature components. Introduce GraphQL only when the exercise benefits from it.
 
 ## Deployment foundation
 

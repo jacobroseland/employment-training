@@ -1,5 +1,6 @@
 import './App.css'
 import AppLayout from './AppLayout'
+import AccountPage from './pages/AccountPage/AccountPage'
 import ExerciseCatalogPage from './pages/ExerciseCatalogPage/ExerciseCatalogPage'
 import ExercisePage from './pages/ExercisePage/ExercisePage'
 import LearningCatalogPage from './pages/LearningCatalogPage/LearningCatalogPage'
@@ -11,6 +12,7 @@ function App() {
     <Routes>
       <Route element={<AppLayout />}>
         <Route index element={<ExerciseCatalogPage />} />
+        <Route path="account" element={<AccountPage />} />
         <Route path="exercises/:exerciseId" element={<ExercisePage />} />
         <Route path="learning" element={<LearningCatalogPage />} />
         <Route path="learning/:documentId" element={<LearningDocumentPage />} />

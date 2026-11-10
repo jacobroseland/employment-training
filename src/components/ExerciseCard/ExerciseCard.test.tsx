@@ -8,6 +8,7 @@ const availableExercise: Exercise = {
   id: 'test-exercise',
   title: 'Test Exercise',
   description: 'A test description.',
+  access: 'public',
   status: 'available',
   Component: () => null,
 }

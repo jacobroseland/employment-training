@@ -1,7 +1,15 @@
 import './JobSearchPipeline.css'
+import { useOptionalAuth } from '../../auth/authContext'
+import { isSupabaseConfigured } from '../../lib/supabaseClient'
 import ApplicationCard from './components/ApplicationCard'
 import ApplicationDraftPanel from './components/ApplicationDraftPanel'
 import ApplicationForm from './components/ApplicationForm'
+import {
+  createJobApplication,
+  deleteJobApplication,
+  loadJobApplications,
+  updateJobApplication,
+} from './JobSearchPipeline.repository'
 import { loadApplications, saveApplications } from './JobSearchPipeline.storage'
 import type {
   ApplicationDraft,
@@ -130,9 +138,14 @@ function toFormValues(application: JobApplication): ApplicationFormValues {
 }
 
 function JobSearchPipeline() {
-  const [applications, setApplications] = useState(() =>
-    loadApplications(initialApplications),
+  const auth = useOptionalAuth()
+  const user = auth?.user ?? null
+  const [applications, setApplications] = useState<JobApplication[]>(() =>
+    isSupabaseConfigured ? [] : loadApplications(initialApplications),
   )
+  const [isApplicationsLoading, setIsApplicationsLoading] =
+    useState(isSupabaseConfigured)
+  const [applicationError, setApplicationError] = useState<string | null>(null)
 
   const [formValues, setFormValues] = useState(emptyApplicationFormValues)
 
@@ -169,8 +182,41 @@ function JobSearchPipeline() {
   }, [editingApplicationId, isApplicationFormVisible])
 
   useEffect(() => {
+    if (isSupabaseConfigured) {
+      return
+    }
+
     saveApplications(applications)
   }, [applications])
+
+  useEffect(() => {
+    if (!isSupabaseConfigured || !user) {
+      return
+    }
+
+    let isCurrent = true
+
+    void loadJobApplications()
+      .then((loadedApplications) => {
+        if (isCurrent) {
+          setApplications(loadedApplications)
+        }
+      })
+      .catch(() => {
+        if (isCurrent) {
+          setApplicationError('Your applications could not be loaded.')
+        }
+      })
+      .finally(() => {
+        if (isCurrent) {
+          setIsApplicationsLoading(false)
+        }
+      })
+
+    return () => {
+      isCurrent = false
+    }
+  }, [user])
 
   const visibleApplications = applications.filter((application) => {
     return statusFilter === 'all' || application.status === statusFilter
@@ -199,29 +245,53 @@ function JobSearchPipeline() {
     },
   )
 
-  function handleApplicationSubmit(values: ApplicationFormValues) {
-    if (editingApplicationId) {
-      setApplications((currentApplications) =>
-        currentApplications.map((application) => {
-          if (application.id !== editingApplicationId) {
-            return application
+  async function handleApplicationSubmit(values: ApplicationFormValues) {
+    try {
+      setApplicationError(null)
+
+      if (isSupabaseConfigured && user) {
+        const savedApplication = editingApplicationId
+          ? await updateJobApplication(editingApplicationId, values)
+          : await createJobApplication(user.id, values)
+
+        setApplications((currentApplications) => {
+          if (!editingApplicationId) {
+            return [savedApplication, ...currentApplications]
           }
 
-          return {
-            ...application,
-            ...toApplicationDetails(values),
-          }
-        }),
-      )
-    } else {
-      setApplications((currentApplications) => [
-        ...currentApplications,
-        createApplication(values),
-      ])
+          return currentApplications.map((application) =>
+            application.id === savedApplication.id
+              ? savedApplication
+              : application,
+          )
+        })
+      } else if (editingApplicationId) {
+        setApplications((currentApplications) =>
+          currentApplications.map((application) => {
+            if (application.id !== editingApplicationId) {
+              return application
+            }
+
+            return {
+              ...application,
+              ...toApplicationDetails(values),
+            }
+          }),
+        )
+      } else {
+        setApplications((currentApplications) => [
+          ...currentApplications,
+          createApplication(values),
+        ])
+      }
+
+      handleFormClear()
+      setIsApplicationFormVisible(false)
+      return true
+    } catch {
+      setApplicationError('Your changes could not be saved. Please try again.')
+      return false
     }
-
-    handleFormClear()
-    setIsApplicationFormVisible(false)
   }
 
   function handleFormValueChange(
@@ -259,18 +329,30 @@ function JobSearchPipeline() {
     setIsApplicationFormVisible(true)
   }
 
-  function handleDeleteApplication(applicationId: string) {
-    setApplications((currentApplications) =>
-      currentApplications.filter(
-        (application) => application.id !== applicationId,
-      ),
-    )
+  async function handleDeleteApplication(applicationId: string) {
+    try {
+      setApplicationError(null)
 
-    if (editingApplicationId === applicationId) {
-      handleFormClear()
+      if (isSupabaseConfigured) {
+        await deleteJobApplication(applicationId)
+      }
+
+      setApplications((currentApplications) =>
+        currentApplications.filter(
+          (application) => application.id !== applicationId,
+        ),
+      )
+
+      if (editingApplicationId === applicationId) {
+        handleFormClear()
+      }
+
+      setPendingDeletionApplicationId(null)
+    } catch {
+      setApplicationError(
+        'This application could not be deleted. Please try again.',
+      )
     }
-
-    setPendingDeletionApplicationId(null)
   }
 
   function handleResetSampleData() {
@@ -288,158 +370,172 @@ function JobSearchPipeline() {
         Job Search Pipeline
       </h2>
 
-      <div className="application-management-actions">
-        <button
-          className="application-form-toggle"
-          type="button"
-          aria-controls="application-form-panel"
-          aria-expanded={isApplicationFormVisible}
-          onClick={() => setIsApplicationFormVisible((isVisible) => !isVisible)}
-        >
-          {isApplicationFormVisible
-            ? 'Hide application form'
-            : editingApplication
-              ? 'Resume editing application'
-              : 'Add an application'}
-        </button>
-
-        {isResetConfirmationVisible ? (
-          <div
-            className="application-reset-confirmation"
-            role="group"
-            aria-label="Reset sample data confirmation"
-          >
-            <span>Replace saved applications with sample data?</span>
-
-            <button
-              type="button"
-              className="application-reset-confirm"
-              onClick={handleResetSampleData}
-            >
-              Confirm reset
-            </button>
-
-            <button
-              type="button"
-              className="application-reset-cancel"
-              onClick={() => setIsResetConfirmationVisible(false)}
-            >
-              Keep saved applications
-            </button>
-          </div>
-        ) : (
+      <>
+        <div className="application-management-actions">
           <button
+            className="application-form-toggle"
             type="button"
-            className="application-reset"
-            onClick={() => setIsResetConfirmationVisible(true)}
+            aria-controls="application-form-panel"
+            aria-expanded={isApplicationFormVisible}
+            onClick={() =>
+              setIsApplicationFormVisible((isVisible) => !isVisible)
+            }
           >
-            Reset sample data
+            {isApplicationFormVisible
+              ? 'Hide application form'
+              : editingApplication
+                ? 'Resume editing application'
+                : 'Add an application'}
           </button>
-        )}
-      </div>
 
-      <section
-        ref={applicationFormSectionRef}
-        id="application-form-panel"
-        className="application-form-section"
-        aria-labelledby="add-application-heading"
-        hidden={!isApplicationFormVisible}
-      >
-        <h3 id="add-application-heading">
-          {editingApplication ? 'Edit application' : 'New application'}
-        </h3>
+          {!isSupabaseConfigured && isResetConfirmationVisible ? (
+            <div
+              className="application-reset-confirmation"
+              role="group"
+              aria-label="Reset sample data confirmation"
+            >
+              <span>Replace saved applications with sample data?</span>
 
-        {!editingApplication ? (
-          <ApplicationDraftPanel onUseDraft={handleUseDraft} />
+              <button
+                type="button"
+                className="application-reset-confirm"
+                onClick={handleResetSampleData}
+              >
+                Confirm reset
+              </button>
+
+              <button
+                type="button"
+                className="application-reset-cancel"
+                onClick={() => setIsResetConfirmationVisible(false)}
+              >
+                Keep saved applications
+              </button>
+            </div>
+          ) : !isSupabaseConfigured ? (
+            <button
+              type="button"
+              className="application-reset"
+              onClick={() => setIsResetConfirmationVisible(true)}
+            >
+              Reset sample data
+            </button>
+          ) : null}
+        </div>
+
+        {applicationError ? (
+          <p className="application-data-error" role="alert">
+            {applicationError}
+          </p>
         ) : null}
 
-        <ApplicationForm
-          key={editingApplicationId ?? 'new-application'}
-          values={formValues}
-          onClear={handleFormClear}
-          onSubmit={handleApplicationSubmit}
-          onValueChange={handleFormValueChange}
-          secondaryActionLabel={
-            editingApplication ? 'Cancel edit' : 'Clear form'
-          }
-          submitLabel={editingApplication ? 'Save changes' : 'Save application'}
-        />
-      </section>
+        <section
+          ref={applicationFormSectionRef}
+          id="application-form-panel"
+          className="application-form-section"
+          aria-labelledby="add-application-heading"
+          hidden={!isApplicationFormVisible}
+        >
+          <h3 id="add-application-heading">
+            {editingApplication ? 'Edit application' : 'New application'}
+          </h3>
 
-      <div className="application-filters">
-        <label className="application-filter-label">
-          <span>Filter by status</span>
+          {!editingApplication ? (
+            <ApplicationDraftPanel onUseDraft={handleUseDraft} />
+          ) : null}
 
-          <span className="application-select-wrapper">
-            <select
-              value={statusFilter}
-              onChange={(event) =>
-                setStatusFilter(event.target.value as StatusFilter)
-              }
-            >
-              {statusOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
+          <ApplicationForm
+            key={editingApplicationId ?? 'new-application'}
+            values={formValues}
+            onClear={handleFormClear}
+            onSubmit={handleApplicationSubmit}
+            onValueChange={handleFormValueChange}
+            secondaryActionLabel={
+              editingApplication ? 'Cancel edit' : 'Clear form'
+            }
+            submitLabel={
+              editingApplication ? 'Save changes' : 'Save application'
+            }
+          />
+        </section>
+
+        <div className="application-filters">
+          <label className="application-filter-label">
+            <span>Filter by status</span>
+
+            <span className="application-select-wrapper">
+              <select
+                value={statusFilter}
+                onChange={(event) =>
+                  setStatusFilter(event.target.value as StatusFilter)
+                }
+              >
+                {statusOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </span>
+          </label>
+          <label className="application-filter-label">
+            <span>Sort by</span>
+
+            <span className="application-select-wrapper">
+              <select
+                value={sortOption}
+                onChange={(event) =>
+                  setSortOption(event.target.value as SortOption)
+                }
+              >
+                {sortOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </span>
+          </label>
+        </div>
+
+        <section
+          className="application-list-section"
+          aria-labelledby="tracked-applications-heading"
+        >
+          <h3 id="tracked-applications-heading">
+            Tracked applications ({sortedApplications.length})
+          </h3>
+
+          {isApplicationsLoading ? (
+            <p role="status">Loading your applications…</p>
+          ) : sortedApplications.length > 0 ? (
+            <ul className="application-list">
+              {sortedApplications.map((application) => (
+                <li key={application.id}>
+                  <ApplicationCard
+                    application={application}
+                    isDeleteConfirmationVisible={
+                      pendingDeletionApplicationId === application.id
+                    }
+                    onDeleteCancel={() => setPendingDeletionApplicationId(null)}
+                    onDeleteConfirm={() =>
+                      handleDeleteApplication(application.id)
+                    }
+                    onDeleteRequest={() =>
+                      setPendingDeletionApplicationId(application.id)
+                    }
+                    onEdit={handleEditApplication}
+                  />
+                </li>
               ))}
-            </select>
-          </span>
-        </label>
-        <label className="application-filter-label">
-          <span>Sort by</span>
-
-          <span className="application-select-wrapper">
-            <select
-              value={sortOption}
-              onChange={(event) =>
-                setSortOption(event.target.value as SortOption)
-              }
-            >
-              {sortOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </span>
-        </label>
-      </div>
-
-      <section
-        className="application-list-section"
-        aria-labelledby="tracked-applications-heading"
-      >
-        <h3 id="tracked-applications-heading">
-          Tracked applications ({sortedApplications.length})
-        </h3>
-
-        {sortedApplications.length > 0 ? (
-          <ul className="application-list">
-            {sortedApplications.map((application) => (
-              <li key={application.id}>
-                <ApplicationCard
-                  application={application}
-                  isDeleteConfirmationVisible={
-                    pendingDeletionApplicationId === application.id
-                  }
-                  onDeleteCancel={() => setPendingDeletionApplicationId(null)}
-                  onDeleteConfirm={() =>
-                    handleDeleteApplication(application.id)
-                  }
-                  onDeleteRequest={() =>
-                    setPendingDeletionApplicationId(application.id)
-                  }
-                  onEdit={handleEditApplication}
-                />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="application-empty-state">
-            No applications match the selected status.
-          </p>
-        )}
-      </section>
+            </ul>
+          ) : (
+            <p className="application-empty-state">
+              No applications match the selected status.
+            </p>
+          )}
+        </section>
+      </>
     </section>
   )
 }

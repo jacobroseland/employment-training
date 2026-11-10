@@ -24,6 +24,7 @@ export const Available: Story = {
       title: 'Country Explorer',
       description:
         'Search for countries, filter returned results by region, and expand a country for its details.',
+      access: 'public',
       status: 'available',
       Component: () => null,
     },

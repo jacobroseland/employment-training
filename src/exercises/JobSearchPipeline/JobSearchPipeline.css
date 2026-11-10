@@ -26,6 +26,17 @@
   gap: 0.75rem;
 }
 
+.application-data-error {
+  /* Separate data-operation feedback from the action controls above it. */
+  margin: 1rem 0 0;
+
+  /* Use a conventional error color in addition to alert semantics. */
+  color: #b91c1c;
+
+  /* Keep the feedback prominent without competing with the page heading. */
+  font-weight: 600;
+}
+
 .application-form-toggle {
   /* Remove button styling so the action reads like an inline link. */
   padding: 0;

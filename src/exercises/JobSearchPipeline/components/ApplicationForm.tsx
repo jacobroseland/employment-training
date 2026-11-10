@@ -9,7 +9,7 @@ import { useState } from 'react'
 type ApplicationFormProps = {
   values: ApplicationFormValues
   onClear: () => void
-  onSubmit: (values: ApplicationFormValues) => void
+  onSubmit: (values: ApplicationFormValues) => boolean | Promise<boolean> | void
   onValueChange: (field: keyof ApplicationFormValues, value: string) => void
   secondaryActionLabel: string
   submitLabel: string
@@ -57,7 +57,7 @@ function ApplicationForm({
     }
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const nextErrors: ApplicationFormErrors = {}
@@ -88,7 +88,7 @@ function ApplicationForm({
       return
     }
 
-    onSubmit({
+    const didSubmit = await onSubmit({
       ...values,
       companyName: values.companyName.trim(),
       roleTitle: values.roleTitle.trim(),
@@ -97,6 +97,10 @@ function ApplicationForm({
       jobUrl: values.jobUrl.trim(),
       notes: values.notes.trim(),
     })
+
+    if (didSubmit === false) {
+      return
+    }
 
     setErrors({})
   }

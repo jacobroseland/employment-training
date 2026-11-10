@@ -1,7 +1,9 @@
+import { useAuth } from './auth/authContext'
 import { Link, Outlet, useLocation } from 'react-router'
 
 function AppLayout() {
   const location = useLocation()
+  const { isConfigured, isLoading, signOut, user } = useAuth()
 
   const isCatalogRoute = location.pathname === '/'
   const isLearningDocumentRoute = location.pathname.startsWith('/learning/')
@@ -28,6 +30,22 @@ function AppLayout() {
         <Link className="learning-docs" to="/learning">
           Learning docs
         </Link>
+
+        {isConfigured && !isLoading ? (
+          user ? (
+            <button
+              className="account-action"
+              type="button"
+              onClick={() => void signOut()}
+            >
+              Sign out
+            </button>
+          ) : (
+            <Link className="account-action" to="/account">
+              Sign in
+            </Link>
+          )
+        ) : null}
       </header>
 
       <main>

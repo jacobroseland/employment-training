@@ -4,6 +4,7 @@ import JobSearchPipeline from './JobSearchPipeline/JobSearchPipeline'
 import type { ComponentType } from 'react'
 
 export type ExerciseStatus = 'available' | 'coming-soon'
+export type ExerciseAccess = 'public' | 'account-required'
 
 type BaseExercise = {
   id: string
@@ -12,6 +13,7 @@ type BaseExercise = {
 }
 
 type AvailableExercise = BaseExercise & {
+  access: ExerciseAccess
   status: 'available'
   Component: ComponentType
 }
@@ -29,6 +31,7 @@ export const exerciseCatalog: Exercise[] = [
     title: 'Hello, World!',
     description: 'Render your first React component.',
     status: 'available',
+    access: 'public',
     Component: HelloWorld,
   },
   {
@@ -43,6 +46,7 @@ export const exerciseCatalog: Exercise[] = [
     description:
       'Search for countries, filter returned results by region, and expand a country for details such as capital, population, languages, and flag.',
     status: 'available',
+    access: 'public',
     Component: CountryExplorer,
   },
   {
@@ -51,6 +55,7 @@ export const exerciseCatalog: Exercise[] = [
     description:
       'Track applications, organize follow-ups, and manage each role through your job search.',
     status: 'available',
+    access: 'account-required',
     Component: JobSearchPipeline,
   },
 ]

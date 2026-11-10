@@ -5,6 +5,7 @@ React Router is installed and provides addressable, refresh-safe navigation for 
 ## Current route model
 
     /                             exercise catalog
+    /account                      sign-in and account screen
     /exercises/:exerciseId        individual exercise
     /learning                     learning-material catalog
     /learning/:documentId         individual learning document
@@ -34,6 +35,7 @@ Path parameters identify the main resource being viewed. They differ from query-
 - Use `useNavigate()` for navigation triggered by an existing callback API, such as `ExerciseCard`'s `onOpen` handler.
 - Use `<Navigate replace />` for corrective redirects. Replacing an invalid URL prevents the browser Back button from returning to the same broken route.
 - Keep catalog data as the source of truth. Route pages find an exercise or document by its URL ID rather than holding the active screen in React state.
+- Use a `returnTo` query parameter for authentication redirects when a visitor needs to sign in before viewing a protected route. The Account page reads it with `useSearchParams()` and can navigate back after authentication.
 
 ## Testing routes
 

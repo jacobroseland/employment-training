@@ -1,4 +1,5 @@
 import App from './App'
+import { AuthProvider } from './auth/AuthProvider'
 import { describe, expect, test } from '@jest/globals'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -7,7 +8,9 @@ import { MemoryRouter } from 'react-router'
 function renderApp(initialEntries = ['/']) {
   return render(
     <MemoryRouter initialEntries={initialEntries}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </MemoryRouter>,
   )
 }

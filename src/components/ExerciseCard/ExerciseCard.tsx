@@ -3,10 +3,34 @@ import type { Exercise } from '../../exercises/exerciseCatalog'
 
 type ExerciseCardProps = {
   exercise: Exercise
-  onOpen: (exerciseId: string) => void
+  onOpen?: (exerciseId: string) => void
+  primaryAction?: {
+    isDisabled?: boolean
+    label: string
+    onClick: () => void
+  }
+  secondaryAction?: {
+    isDisabled?: boolean
+    label: string
+    onClick: () => void
+  }
 }
 
-function ExerciseCard({ exercise, onOpen }: ExerciseCardProps) {
+function ExerciseCard({
+  exercise,
+  onOpen,
+  primaryAction,
+  secondaryAction,
+}: ExerciseCardProps) {
+  const action =
+    primaryAction ??
+    (onOpen
+      ? {
+          label: 'Open exercise',
+          onClick: () => onOpen(exercise.id),
+        }
+      : undefined)
+
   return (
     <>
       <article className="exercise-card">
@@ -16,16 +40,32 @@ function ExerciseCard({ exercise, onOpen }: ExerciseCardProps) {
           {exercise.status === 'available' ? 'Available' : 'Coming soon'}
         </span>
 
-        {exercise.status === 'available' && (
+        {exercise.status === 'available' && action ? (
           <button
             className="open"
             type="button"
-            aria-label={`Open ${exercise.title} exercise`}
-            onClick={() => onOpen(exercise.id)}
+            aria-label={
+              primaryAction
+                ? `${action.label} ${exercise.title}`
+                : `Open ${exercise.title} exercise`
+            }
+            disabled={action.isDisabled}
+            onClick={action.onClick}
           >
-            Open exercise
+            {action.label}
           </button>
-        )}
+        ) : null}
+
+        {secondaryAction ? (
+          <button
+            className="secondary-action"
+            type="button"
+            disabled={secondaryAction.isDisabled}
+            onClick={secondaryAction.onClick}
+          >
+            {secondaryAction.label}
+          </button>
+        ) : null}
       </article>
     </>
   )

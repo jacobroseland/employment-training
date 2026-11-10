@@ -76,6 +76,35 @@
     }
   }
 
+  > .secondary-action {
+    /* Keeps the secondary action aligned with the card's full-width primary action. */
+    align-self: stretch;
+    /* Gives the control a comfortable click target. */
+    padding: 0.5rem 0.75rem;
+    /* Defines the secondary action boundary. */
+    border: 1px solid #64748b;
+    /* Matches the primary action's rounded-control style. */
+    border-radius: 8px;
+    /* Keeps the secondary action visually quieter than the primary action. */
+    background-color: transparent;
+    /* Uses a readable neutral action color. */
+    color: #334155;
+    /* Signals that the action is clickable. */
+    cursor: pointer;
+
+    &:hover {
+      /* Adds a subtle surface when the pointer hovers the control. */
+      background-color: #f1f5f9;
+    }
+
+    &:focus-visible {
+      /* Draws a clear keyboard-focus indicator. */
+      outline: 2px solid #1a1a1a;
+      /* Separates the focus indicator from the control edge. */
+      outline-offset: 2px;
+    }
+  }
+
   .exercise-card-status {
     /* Keeps the status badge only as wide as its label. */
     align-self: flex-start;

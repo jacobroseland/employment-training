@@ -112,6 +112,45 @@
     }
   }
 
+  > .account-action {
+    /* Places the account action beside the learning link in the right header column. */
+    grid-column: 3;
+    /* Keeps the control aligned with the title row. */
+    grid-row: 1;
+    /* Offsets the control so the learning link stays at the right edge. */
+    justify-self: end;
+    /* Reserves room for the learning link without changing the centered title. */
+    margin-right: 8rem;
+    /* Creates a comfortably clickable hit area. */
+    padding: 0.5rem 0.75rem;
+    /* Keeps the border visible against the navy background. */
+    border: 1px solid rgb(255 255 255 / 40%);
+    /* Softens the control's corners. */
+    border-radius: 8px;
+    /* Adds a subtle translucent control surface. */
+    background-color: rgb(255 255 255 / 10%);
+    /* Uses the header's high-contrast text color. */
+    color: inherit;
+    /* Removes the browser's default link underline. */
+    text-decoration: none;
+    /* Matches the surrounding header text. */
+    font: inherit;
+    /* Signals that the control is clickable. */
+    cursor: pointer;
+
+    &:hover {
+      /* Makes the control more visible during pointer hover. */
+      background-color: rgb(255 255 255 / 20%);
+    }
+
+    &:focus-visible {
+      /* Draws a visible keyboard-focus indicator. */
+      outline: 2px solid currentcolor;
+      /* Separates the focus indicator from the control edge. */
+      outline-offset: 2px;
+    }
+  }
+
   @media (max-width: 40rem) {
     /* Switches to one column when space is limited. */
     grid-template-columns: 1fr;
@@ -142,6 +181,17 @@
       /* Anchors the paired action to the right side of the row. */
       justify-self: end;
     }
+
+    > .account-action {
+      /* Keeps the account action in the shared mobile action row. */
+      grid-column: 1;
+      /* Places the account action beneath the title on small screens. */
+      grid-row: 2;
+      /* Aligns the account control at the left side of the action row. */
+      justify-self: start;
+      /* Removes the desktop offset when the actions share the full row. */
+      margin-right: 0;
+    }
   }
 }
 
@@ -161,6 +211,58 @@ main {
     background-color: #f8fafc;
     /* Adds breathing room after the catalog without affecting exercises. */
     padding-bottom: 3rem;
+
+    .exercise-catalog-intro {
+      /* Separates the hub explanation from the catalog groups. */
+      margin: 0 0 1.5rem;
+      /* Keeps introductory content readable on wide screens. */
+      max-width: 44rem;
+    }
+
+    .exercise-catalog-section {
+      /* Separates each catalog group without affecting the card grid. */
+      margin-top: 2.5rem;
+
+      > h3 {
+        /* Removes default spacing so the following copy controls the rhythm. */
+        margin: 0;
+      }
+
+      > p {
+        /* Gives the group description breathing room above its grid. */
+        margin: 0.5rem 0 1rem;
+        /* Visually distinguishes supporting copy from the section heading. */
+        color: #475569;
+      }
+    }
+
+    .exercise-catalog-empty-state {
+      /* Keeps the empty personal-app message visually distinct from the section description. */
+      padding: 1rem;
+      /* Defines a subtle empty-state boundary. */
+      border: 1px dashed #94a3b8;
+      /* Softens the empty-state corners. */
+      border-radius: 0.75rem;
+      /* Uses a quiet neutral surface for supporting content. */
+      background-color: #f8fafc;
+      /* Uses a readable but secondary text color. */
+      color: #475569;
+    }
+
+    .exercise-catalog-error {
+      /* Separates persistence feedback from the surrounding catalog groups. */
+      margin: 1.5rem 0 0;
+      /* Makes the alert easy to identify without relying on color alone. */
+      padding: 0.75rem 1rem;
+      /* Gives the error message a defined container. */
+      border: 1px solid #fca5a5;
+      /* Matches the app's rounded surface language. */
+      border-radius: 0.5rem;
+      /* Gives the alert a light error-tinted background. */
+      background-color: #fef2f2;
+      /* Uses a conventional readable error color. */
+      color: #b91c1c;
+    }
 
     .exercise-grid {
       /* Creates the responsive layout for exercise cards. */
