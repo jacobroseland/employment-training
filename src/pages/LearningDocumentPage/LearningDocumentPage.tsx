@@ -1,5 +1,6 @@
 import MarkdownDocument from '../../components/MarkdownDocument/MarkdownDocument'
 import { learningCatalog } from '../../learning/learningCatalog'
+import ArchitectureMap from './components/ArchitectureMap'
 import { Navigate, useParams } from 'react-router'
 
 function LearningDocumentPage() {
@@ -18,6 +19,8 @@ function LearningDocumentPage() {
       <h2 id="learning-title" className="exercise-title">
         {document.title}
       </h2>
+
+      {document.id === 'architecture-overview' && <ArchitectureMap />}
 
       <MarkdownDocument content={document.content} />
     </section>

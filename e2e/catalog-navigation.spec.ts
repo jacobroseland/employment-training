@@ -78,6 +78,15 @@ test('opens the technology map and architecture overview from learning materials
   ).toBeVisible()
 
   await expect(
+    page.getByRole('heading', {
+      level: 3,
+      name: 'From user need to working system',
+    }),
+  ).toBeVisible()
+
+  await expect(page.getByText('Local machine only')).toBeVisible()
+
+  await expect(
     page.getByRole('link', { name: 'Interactive FigJam architecture diagram' }),
   ).toHaveAttribute('href', expect.stringContaining('figma.com/board/'))
 

@@ -109,6 +109,13 @@ describe('App', () => {
         name: 'Architecture overview',
       }),
     ).toBeInTheDocument()
+
+    expect(
+      screen.getByRole('heading', {
+        level: 3,
+        name: 'From user need to working system',
+      }),
+    ).toBeInTheDocument()
   })
 
   test('opens the Hello World exercise and returns to the catalog', async () => {
