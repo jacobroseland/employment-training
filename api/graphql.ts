@@ -1,8 +1,8 @@
 import {
   createGraphQLServer,
   graphQLEndpoint,
-} from '../server/graphql/graphqlServer.ts'
-import { createSupabaseGraphQLDataSource } from '../server/graphql/supabaseGraphQLDataSource.ts'
+} from '../server/graphql/graphqlServer.js'
+import { createSupabaseGraphQLDataSource } from '../server/graphql/supabaseGraphQLDataSource.js'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 const graphQLServer = createGraphQLServer(createSupabaseGraphQLDataSource())

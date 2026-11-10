@@ -203,6 +203,9 @@ This is intentional. A later privileged server workflow may need a service-role 
 
 - `server/serverApp.ts` composes the REST draft app and GraphQL endpoint into one local Express application.
 - `api/graphql.ts` is the Vercel Function entry point. It uses the same Yoga server and Supabase data source, but does not start a long-running process.
+
+The Vercel Function uses `.js` import specifiers for its local server modules even though their source files are `.ts`. This is the Node ESM convention: TypeScript resolves those references to source while type-checking, then Vercel's runtime resolves the emitted JavaScript files after deployment.
+
 - `server/graphql/graphqlServer.ts` defines schema, resolvers, GraphQL context, and GraphiQL configuration.
 - `server/graphql/supabaseGraphQLDataSource.ts` translates Supabase rows into GraphQL-shaped data and performs token-scoped reads.
 - `server/serverApp.test.ts` uses Supertest with a fake data source. It proves public, authenticated, and unauthenticated behavior without contacting a real Supabase project.
