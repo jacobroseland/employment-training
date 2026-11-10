@@ -18,7 +18,8 @@ function LearningCatalogPage() {
       </h2>
 
       <p className="learning-catalog-intro">
-        Concise notes and the evolving platform roadmap for this sandbox.
+        Concept notes, an exercise technology map, architecture documentation,
+        and the evolving platform roadmap for this sandbox.
       </p>
 
       <ul className="learning-grid">

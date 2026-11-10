@@ -1,5 +1,7 @@
+import architectureOverview from '../../docs/architecture.md?raw'
 import cssLayoutAndComponentStyling from '../../docs/learning/css-layout-and-component-styling.md?raw'
 import dataFetchingAndUiStates from '../../docs/learning/data-fetching-and-ui-states.md?raw'
+import exerciseTechnologyMap from '../../docs/learning/exercise-technology-map.md?raw'
 import formsAndAccessibility from '../../docs/learning/forms-and-accessibility.md?raw'
 import reactComponentPatterns from '../../docs/learning/react-component-patterns.md?raw'
 import routing from '../../docs/learning/routing.md?raw'
@@ -14,6 +16,20 @@ export type LearningDocument = {
 }
 
 export const learningCatalog: LearningDocument[] = [
+  {
+    id: 'exercise-technology-map',
+    title: 'Exercise technology map',
+    description:
+      'A quick map of the technologies and engineering habits practiced in every exercise.',
+    content: exerciseTechnologyMap,
+  },
+  {
+    id: 'architecture-overview',
+    title: 'Architecture overview',
+    description:
+      'How the browser app, Supabase, local AI service, GitHub Actions, and Vercel fit together.',
+    content: architectureOverview,
+  },
   {
     id: 'react-component-patterns',
     title: 'React component patterns',

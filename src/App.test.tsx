@@ -77,6 +77,40 @@ describe('App', () => {
     ).toBeInTheDocument()
   })
 
+  test('opens the exercise technology map from learning materials', async () => {
+    const user = userEvent.setup()
+
+    renderApp(['/learning'])
+
+    await user.click(
+      screen.getByRole('button', { name: /Exercise technology map/ }),
+    )
+
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'Exercise technology map',
+      }),
+    ).toBeInTheDocument()
+  })
+
+  test('opens the architecture overview from learning materials', async () => {
+    const user = userEvent.setup()
+
+    renderApp(['/learning'])
+
+    await user.click(
+      screen.getByRole('button', { name: /Architecture overview/ }),
+    )
+
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'Architecture overview',
+      }),
+    ).toBeInTheDocument()
+  })
+
   test('opens the Hello World exercise and returns to the catalog', async () => {
     const user = userEvent.setup()
 

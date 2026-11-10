@@ -20,7 +20,7 @@ export default defineConfig({
 
   use: {
     // Allows tests to use relative paths such as page.goto('/').
-    baseURL: 'http://127.0.0.1:5173',
+    baseURL: 'http://127.0.0.1:5174',
 
     // Save a trace if a test fails and is retried.
     trace: 'on-first-retry',
@@ -36,12 +36,14 @@ export default defineConfig({
 
   webServer: {
     // Browser tests intercept the draft API, so they need only the Vite client.
-    command: 'npm run dev:client -- --host 127.0.0.1',
+    command:
+      'VITE_SUPABASE_URL= VITE_SUPABASE_PUBLISHABLE_KEY= npm run dev:client -- --host 127.0.0.1 --port 5174',
 
     // Playwright waits for this address to respond before testing.
-    url: 'http://127.0.0.1:5173',
+    url: 'http://127.0.0.1:5174',
 
-    // Reuse your running Vite server locally; CI always starts a fresh server.
-    reuseExistingServer: !process.env.CI,
+    // Use an isolated app server with auth configuration disabled so browser
+    // journeys stay deterministic and do not depend on a personal session.
+    reuseExistingServer: false,
   },
 })

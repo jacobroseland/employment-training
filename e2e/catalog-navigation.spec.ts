@@ -49,3 +49,35 @@ test('opens learning materials and returns to the catalog', async ({
     page.getByRole('heading', { name: 'Exercise Catalog' }),
   ).toBeVisible()
 })
+
+test('opens the technology map and architecture overview from learning materials', async ({
+  page,
+}) => {
+  await page.goto('/learning')
+
+  await page.getByRole('button', { name: /Exercise technology map/ }).click()
+
+  await expect(page).toHaveURL('/learning/exercise-technology-map')
+  await expect(
+    page.getByRole('heading', {
+      level: 2,
+      name: 'Exercise technology map',
+    }),
+  ).toBeVisible()
+
+  await page.getByRole('link', { name: 'Back to learning docs' }).click()
+
+  await page.getByRole('button', { name: /Architecture overview/ }).click()
+
+  await expect(page).toHaveURL('/learning/architecture-overview')
+  await expect(
+    page.getByRole('heading', {
+      level: 2,
+      name: 'Architecture overview',
+    }),
+  ).toBeVisible()
+
+  await expect(
+    page.getByRole('link', { name: 'Interactive FigJam architecture diagram' }),
+  ).toHaveAttribute('href', expect.stringContaining('figma.com/board/'))
+})

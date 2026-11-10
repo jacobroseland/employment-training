@@ -10,6 +10,13 @@ These notes are a compact reference for concepts practiced in this sandbox. They
 - [CSS layout and component styling](learning/css-layout-and-component-styling.md)
 - [Testing and API mocking](learning/testing-and-api-mocking.md)
 - [Routing](learning/routing.md)
+- [Supabase local development and migrations](learning/supabase-local-development.md)
+- [Exercise technology map](learning/exercise-technology-map.md)
+
+## System overview
+
+- [Architecture overview](architecture.md)
+- [Repository guide: where the code lives](repository-guide.md)
 
 ## Reusable project setup
 

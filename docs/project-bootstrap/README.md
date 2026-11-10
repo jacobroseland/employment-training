@@ -67,8 +67,9 @@ Build and validate one layer at a time:
 7. **Complete:** add a GitHub Actions quality workflow that runs formatting/linting, builds, Jest API/unit tests, Chromium Playwright tests, and the Storybook build on pull requests and changes pushed to `main`.
 8. **Complete:** deploy the Vite single-page app to Vercel through its GitHub integration. Commit a root `vercel.json` catch-all rewrite to `index.html` so direct React Router URLs work in production. Vercel auto-detects Vite and uses its `npm run build` / `dist` defaults.
 9. **Complete (local-only):** add a small Node/Express backend experiment for the Ollama-powered application draft endpoint.
-10. **In progress:** add persistent data with a local Supabase/Postgres stack. Keep schema migrations in version control, apply them locally first, and enable Row Level Security before browser access.
-11. **In progress:** create a hosted Supabase project, apply the same migrations, and add per-user table ownership through `auth.users`, explicit `authenticated` role grants, and RLS policies. Configure local and deployment environment variables before connecting the browser client. Keep auth session ownership in the app shell and route guards rather than feature components. Introduce GraphQL only when the exercise benefits from it.
+10. **Complete:** add persistent data with a local Supabase/Postgres stack. Keep schema migrations in version control, apply them locally first, and enable Row Level Security before browser access.
+11. **Complete:** create a hosted Supabase project, apply the same migrations, and add per-user table ownership through `auth.users`, explicit `authenticated` role grants, and RLS policies. Configure local and deployment environment variables before connecting the browser client. Keep auth session ownership in the app shell and route guards rather than feature components.
+12. **Next when justified:** add a hosted backend/model-provider boundary for the AI-draft feature, then consider GraphQL only when a concrete API-composition or workflow-contract need appears.
 
 ## Deployment foundation
 
