@@ -24,6 +24,6 @@ That AI path is intentionally **local-only** today. It is not included in the Ve
 
 ## Source and diagram
 
-- [Exercise technology map](learning/exercise-technology-map.md)
-- [Supabase local development and migrations](learning/supabase-local-development.md)
+- [Exercise technology map](/learning/exercise-technology-map)
+- [Supabase local development and migrations](/learning/supabase-local-development)
 - [Interactive FigJam architecture diagram](https://www.figma.com/board/PmKdPYG1GdMwNMyuQsBss5?utm_source=chatgpt&utm_content=edit_in_figjam&oai_id=v1%2FBMCaYYrzKSHMIobpzni1KaehWkKXmpS30gLfclebN9l2vL8QHZutUZ&request_id=7f49f1ea-f515-455b-a649-f97f49567fbc&architecture=true)

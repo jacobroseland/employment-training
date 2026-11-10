@@ -5,6 +5,7 @@ import exerciseTechnologyMap from '../../docs/learning/exercise-technology-map.m
 import formsAndAccessibility from '../../docs/learning/forms-and-accessibility.md?raw'
 import reactComponentPatterns from '../../docs/learning/react-component-patterns.md?raw'
 import routing from '../../docs/learning/routing.md?raw'
+import supabaseLocalDevelopment from '../../docs/learning/supabase-local-development.md?raw'
 import testingAndApiMocking from '../../docs/learning/testing-and-api-mocking.md?raw'
 import projectBootstrap from '../../docs/project-bootstrap/README.md?raw'
 
@@ -29,6 +30,13 @@ export const learningCatalog: LearningDocument[] = [
     description:
       'How the browser app, Supabase, local AI service, GitHub Actions, and Vercel fit together.',
     content: architectureOverview,
+  },
+  {
+    id: 'supabase-local-development',
+    title: 'Supabase local development and migrations',
+    description:
+      'Local Postgres, schema migrations, authentication, Row Level Security, and hosted Supabase environments.',
+    content: supabaseLocalDevelopment,
   },
   {
     id: 'react-component-patterns',
